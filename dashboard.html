@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <title>RESFET</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/app.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">RESFET</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Connection</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Logs</a>
+            </li>
+          </ul>
+          <ul class="mt-3">
+            <span class="text-muted small">Connection Status:</span>
+            <span class="badge badge-pill badge-success">UDP</span> <span class="badge badge-pill badge-success">TCP</span>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="flex-shrink-0">
+      <div class="container">
+        <h1 class="mt-5">Dashboard</h1>
+        <hr>
+        <div class="row">
+          <div class="col-8">
+            <div id=”message”></div>
+          </div>
+          <div class="col-4">
+            <h6 class="text-muted">Valve</h6>
+            <div class="btn-group btn-block mb-3" role="group">
+              <button type="button" class="btn btn-secondary">Open Valve</button>
+              <button type="button" class="btn btn-secondary">Close Valve</button>
+            </div>
+
+            <h6 class="text-muted">Water Valves</h6>
+            <div class="btn-group btn-block mb-3" role="group">
+              <button type="button" class="btn btn-secondary">Open Valve</button>
+              <button type="button" class="btn btn-secondary">Close Valve</button>
+            </div>
+
+            <h6 class="text-muted">GITVC</h6>
+            <div class="btn-group btn-block mb-5" role="group">
+              <button type="button" class="btn btn-secondary">Open GITVC</button>
+              <button type="button" class="btn btn-secondary">Close GITVC</button>
+            </div>
+
+            <h5 class="text-muted">Testing Suite</h5>
+            <div class="btn-group btn-group-lg btn-block" role="group">
+              <button type="button" class="btn btn-warning" id="btnIgnition">Ignition</button>
+              <button type="button" class="btn btn-danger" id="btnStopIgnition">Emergency Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="vendor/jquery/js/jquery-3.3.1.min.js"></script>
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+  </body>
+</html>
