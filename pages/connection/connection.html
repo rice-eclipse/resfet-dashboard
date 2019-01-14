@@ -2,12 +2,12 @@
 <html lang="en" class="h-100">
   <head>
     <meta charset="utf-8">
-    <title>RESFET</title>
+    <title>Rice Eclipse Software for Engine Testing</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/app.css" rel="stylesheet">
+    <link href="../../css/app.css" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
     <header>
@@ -20,16 +20,16 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link">Connection</a>
+              <a class="nav-link" href="../connection/connection.html">Connection</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashboard.html">Dashboard</a>
+              <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Settings</a>
+              <a class="nav-link disabled" href="../settings/settings.html">Settings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Logs</a>
+              <a class="nav-link disabled" href="../logs/logs.html">Logs</a>
             </li>
           </ul>
           <ul class="mt-3">
@@ -49,27 +49,28 @@
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">IP Address</label>
-            <input type="text" class="form-control" value="127.0.0.1">
+            <input type="text" class="form-control" value="127.0.0.1" id="inputIP">
             <small class="form-text text-muted">IP address of the server.</small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Port (UDP)</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" value="4000">
+            <input type="text" class="form-control" value="4000" id="inputUDP">
             <small class="form-text text-muted">Port for the UDP server.</small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Port (TCP)</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" value="5000">
+            <input type="text" class="form-control" value="5000" id="inputTCP">
+            <small class="form-text text-muted">Port for the TCP server.</small>
           </div>
-          <button type="submit" class="btn btn-primary">Connect</button>
+          <button type="submit" class="btn btn-primary" id="btnConnect">Connect</button>
         </form>
       </div>
     </main>
 
-    <script src="vendor/jquery/js/jquery-3.3.1.min.js"></script>
+    <script src="../../vendor/jquery/js/jquery-3.3.1.min.js"></script>
     <script>
       // You can also require other files to run in this process
-      require('./renderer.js')
+      require('./connection_renderer.js')
     </script>
   </body>
 </html>

@@ -1,10 +1,17 @@
 var net = require('net');
 
 var tcp_client = new net.Socket();
-tcp_client.connect(1337, '127.0.0.1', function() {
-	console.log('Connected to TCP server.');
-	client.write('Hello, server! Love, Client.');
-});
+
+
+function connectTCP(port, ip) {
+	/*
+	*/
+	tcp_client.connect(port, ip, function() {
+		console.log('Connected to TCP server.');
+		client.write('Hello, server! Love, Client.');
+	});
+}
+
 
 client.on('data', function(data) {
 	console.log('Received: ' + data);

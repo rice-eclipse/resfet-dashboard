@@ -7,10 +7,10 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800})
+  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1000, minHeight: 800})
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('pages/connection/connection.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

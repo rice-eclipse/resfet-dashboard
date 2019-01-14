@@ -7,7 +7,12 @@ const path = require('path')
 const BrowserWindow = electron.remote.BrowserWindow
 
 const btnIgnition = document.getElementById('btnIgnition')
+const btnStopIgnition = document.getElementById('btnStopIgnition')
 
 btnIgnition.addEventListener('click', function (event) {
   alert("Ignition!")
+})
+
+btnStopIgnition.addEventListener('click', function (event) {
+  alert("ABORT!")
 })
