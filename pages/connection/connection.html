@@ -46,24 +46,23 @@
         <h1 class="mt-5">Connect to Server</h1>
         <p class="lead">Connect to the MK 1.1 box to control the launch system.</p>
         <hr>
-        <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">IP Address</label>
+            <label>IP Address</label>
             <input type="text" class="form-control" value="127.0.0.1" id="inputIP">
             <small class="form-text text-muted">IP address of the server.</small>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Port (UDP)</label>
+            <label>Port (UDP)</label>
             <input type="text" class="form-control" value="4000" id="inputUDP">
             <small class="form-text text-muted">Port for the UDP server.</small>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Port (TCP)</label>
+            <label>Port (TCP)</label>
             <input type="text" class="form-control" value="5000" id="inputTCP">
             <small class="form-text text-muted">Port for the TCP server.</small>
           </div>
-          <button type="submit" class="btn btn-primary" id="btnConnect">Connect</button>
-        </form>
+          <button class="btn btn-primary" id="btnConnect">Connect</button>
+          <button class="btn btn-secondary" id="btnKill">Kill Connection</button>
       </div>
     </main>
 

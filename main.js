@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, ipcMain, BrowserWindow} = require('electron')
+let tcp = require("./modules/tcp")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -45,6 +46,19 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+ipcMain.on('connectTCP', (event, arg) => {
+    tcp.connectTCP(arg.port, arg.ip)
+});
+
+ipcMain.on('destroyTCP', (event, arg) => {
+    tcp.destroyTCP()
+});
+
+ipcMain.on('sendTCP', (event, arg) => {
+    tcp.sendTCP(arg)
+});
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
