@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, ipcMain, BrowserWindow} = require('electron')
+const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
 let tcp = require("./modules/tcp")
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -8,7 +8,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1000, minHeight: 800})
+  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
 
   // and load the index.html of the app.
   mainWindow.loadFile('pages/connection/connection.html')
@@ -57,6 +57,10 @@ ipcMain.on('destroyTCP', (event, arg) => {
 
 ipcMain.on('sendTCP', (event, arg) => {
     tcp.sendTCP(arg)
+});
+
+ipcMain.on('statusTCP-request', (event, arg) => {
+  event.sender.send('statusTCP-response', tcp.tcp_connected);
 });
 
 
