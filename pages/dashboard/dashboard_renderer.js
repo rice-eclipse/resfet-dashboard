@@ -11,11 +11,19 @@ const bannerTCP = document.getElementById("bannerTCP");
 
 
 btnIgnition.addEventListener('click', function (event) {
-  ipcRenderer.send('sendTCP', 'ignition');
+  var buffer = Buffer.alloc(1);
+
+  buffer.fill(7);
+
+  ipcRenderer.send('sendTCP', buffer);
 })
 
 btnStopIgnition.addEventListener('click', function (event) {
-  ipcRenderer.send('sendTCP', 'stop-ignition');
+  var buffer = Buffer.alloc(1);
+
+  buffer.fill(6);
+
+  ipcRenderer.send('sendTCP', buffer);
 })
 
 ipcRenderer.on('statusTCP-response', (event, arg) => {
