@@ -6,11 +6,11 @@
  * payloads, which each contains a datapoint and a timestamp. The datapoint is
  * the actual numeric reading (e.g. from a load cell), while the timestamp is
  * the time at which the data was sent.
- * 
+ *
  * On the local server created by final_mocked (see the engine controller
  * code), these numbers are slightly different. The header, for example, is 16
  * bytes long instead. Other details are explained in the code itself.
- * 
+ *
  * Note that byte order is always little endian throughout the code.
  *****************************************************************************/
 
@@ -27,7 +27,7 @@ module.exports = {
         UNSET_IGNITION: 6,
         SET_IGNITION: 7,
         NORM_IGNITE: 8,
-    
+
         ///// For now, we only make use of the following 10 types of data: \\\\\
         LC_MAIN_SEND: 9, // datapoint from the main load cell
         LC1_SEND: 10, // datapoint from load cell 1
@@ -40,7 +40,7 @@ module.exports = {
         TC2_SEND: 17, // datapoint from thermocouple 2
         TC3_SEND: 18, // datapoint from thermocouple 3
         ///// End useful data types \\\\\
-    
+
         SET_WATER: 19,
         UNSET_WATER: 20,
         SET_GITVC: 21,
@@ -64,7 +64,7 @@ module.exports = {
     /**
      * Formats the input microsecond timestamp nicely (hours:minutes:seconds).
      * Seconds is truncated to 3 decimal places.
-     * 
+     *
      * @param {number} timestamp a numeric timestamp in microseconds
      * @return {string} a string with the formatted time
      */
@@ -78,7 +78,7 @@ module.exports = {
     },
     /**
      * Reads the header (payload type and number) from a packet.
-     * 
+     *
      * @param {Buffer} packet the packet to be read
      * @return {number[]} if successful, an array of the form [type, number];
      *                    otherwise, an empty array
@@ -95,7 +95,7 @@ module.exports = {
     },
     /**
      * Reads the payload data (datapoints and timestamps) from a packet.
-     * 
+     *
      * @param {Buffer} packet the packet to be read
      * @param {number} number the number of payloads to be read
      * @return {number[][]} if successful, an array of the form
@@ -107,17 +107,17 @@ module.exports = {
         if (packet.length < 16) {
             console.log("ERROR: packet is too short to read any payloads!");
             return [];
-        } else if ((packet.length - 8) % 16 !== 0) {
+        } else if ((packet.length - 8) % 8 !== 0) {
             console.log("ERROR: payloads are truncated/malformed!");
             return [];
-        } else if ((packet.length - 8) < number * 16) {
+        } else if ((packet.length - 8) < number * 8) {
             console.log("ERROR: input number is greater than number of payloads!");
             return [];
         }
         let payloads = [];
         for (let i = 0; i < number; i++) {
-            let data = packet.readUInt32LE(8 + i * 16);
-            let time = packet.readUInt32LE(12 + i * 16);
+            let data = packet.readUInt32LE(8 + i * 8);
+            let time = packet.readUInt32LE(12 + i * 8);
             payloads.push([data, time]);
         }
         return payloads;
