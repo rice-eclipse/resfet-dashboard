@@ -10,4 +10,4 @@ Written in Javascript using Electron framework.
 5. Install the required modules.  
 `> npm install`
 6. Run the software.  
-`> npm run`
+`> npm start`
