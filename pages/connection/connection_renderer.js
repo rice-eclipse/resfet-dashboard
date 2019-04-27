@@ -15,11 +15,15 @@ const bannerTCP = document.getElementById("bannerTCP");
 
 
 btnConnect.addEventListener('click', function (event) {
-  let Data = {
+  let DataTCP = {
       port: valTCP,
       ip: valIP
   };
-  ipcRenderer.send('connectTCP', Data);
+  let DataUDP = {
+    port: valUDP
+  };
+  ipcRenderer.send('connectTCP', DataTCP);
+  ipcRenderer.send('startUDP', DataUDP);
 })
 
 btnKill.addEventListener('click', function (event) {
