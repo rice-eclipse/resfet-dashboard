@@ -11,8 +11,8 @@ const packets = require('./configs/packets.js')
 const tcp_client = new net.Socket();
 
 module.exports = {
-  tcp_connected: false,
-  connectTCP: function(port, ip) {
+	tcp_connected: false,
+	connectTCP: function(port, ip) {
 		/*
 		Connects to the server.
 		*/
@@ -26,7 +26,6 @@ module.exports = {
 		*/
 		tcp_client.write(data);
 		console.log('[TCP] Sent message ('+data+').');
-
 	},
 	destroyTCP: function() {
 		/*
@@ -49,7 +48,7 @@ tcp_client.on('close', function(data) {
 	Emitted when TCP client is disconnected.
 	*/
 	console.log('[TCP] Connection closed. ('+data+').');
-  module.exports.tcp_connected = false;
+  	module.exports.tcp_connected = false;
 });
 
 tcp_client.on('connect', function() {
@@ -57,5 +56,5 @@ tcp_client.on('connect', function() {
 	Emitted when TCP client connects to the server.
 	*/
 	console.log('[TCP] Connection established.');
-  module.exports.tcp_connected = true;
+  	module.exports.tcp_connected = true;
 });

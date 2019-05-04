@@ -2,6 +2,11 @@
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
+body {
+  font: caption;
+  -webkit-user-select: none;
+}
+
 main > .container {
   padding: 60px 15px 0;
 }

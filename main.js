@@ -1,38 +1,41 @@
-// Modules to control application life and create native browser window
+/*
+Written by Alp Yakici and Andrew Obler for Rice Eclipse
+*/
+
+// Modules to control application life and create native browser window.
 const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
+
+// Modules to control UDP & TCP communication with the box.
 let tcp = require("./modules/tcp")
 let udp = require("./modules/udp")
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// Modules for data visualization.
+let visualization = require("./modules/visualization")
+
+// Initializing the window.
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
   mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
-
-  // and load the index.html of the app.
   mainWindow.loadFile('pages/connection/connection.html')
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    /*
+    Emitted when the window is closed.
+    */
     mainWindow = null
   })
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
-// Quit when all windows are closed.
 app.on('window-all-closed', function () {
+  /*
+  Emitted when all windows are closed.
+  */
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -47,6 +50,9 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+// The following are the hooks for TCP & UDP connection.
+// These are accessible from all pages.
 
 ipcMain.on('connectTCP', (event, arg) => {
     tcp.connectTCP(arg.port, arg.ip)

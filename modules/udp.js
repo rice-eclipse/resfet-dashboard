@@ -11,9 +11,9 @@ const packets = require('./configs/packets.js')
 const udp_server = dgram.createSocket('udp4');
 
 module.exports = {
-    startUDP: function(port) {
-        udp_server.bind(port);
-    }
+  startUDP: function(port) {
+    udp_server.bind(port);
+  }
 };
   
 udp_server.on('error', (err) => {
