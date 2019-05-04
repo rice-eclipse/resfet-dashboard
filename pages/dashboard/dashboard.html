@@ -137,109 +137,62 @@
     </main>
 
     <script src="../../vendor/jquery/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
     <script src="../../vendor/chart.js/js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
     <script>
-      // You can also require other files to run in this process
       require('./dashboard_renderer.js')
     </script>
     <script>
     var chart1 = document.getElementById("chart1").getContext('2d');
-    var chartElement1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '',
-                data: [12, 19, 3, 5, 2, 3],
-                lineTension: 0,
-                fill: false
-            }]
+    var myChart = new Chart(chart1, {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: '',
+          data: [],
+          lineTension: 0,
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'realtime'
+          }],
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
+        animation: {
+            duration: 0
+        },
+        hover: {
+            animationDuration: 0
+        },
+        responsiveAnimationDuration: 0,
+        plugins: {
+            streaming: {
+                frameRate: 5
             }
         }
-    });
-    </script>
+      }});
 
-    <script>
-    var chart2 = document.getElementById("chart2").getContext('2d');
-    var chartElement2 = new Chart(chart2, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '',
-                data: [12, 19, 3, 5, 2, 3],
-                lineTension: 0,
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-    </script>
+    function onReceive(event) {
 
-    <script>
-    var chart3 = document.getElementById("chart3").getContext('2d');
-    var chartElement3 = new Chart(chart3, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '',
-                data: [12, 19, 3, 5, 2, 3],
-                lineTension: 0,
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-    </script>
+        myChart.data.datasets[0].data.push({
+            x: event.timestamp,
+            y: event.value
+        });
 
-    <script>
-    var chart4= document.getElementById("chart4").getContext('2d');
-    var chartElement4 = new Chart(chart4, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '',
-                data: [12, 19, 3, 5, 2, 3],
-                lineTension: 0,
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
+        myChart.update({
+            preservation: true
+        });
+    }
+
+    onReceive({timestamp: Date.now(), value: 1000})
     </script>
   </body>
 </html>
