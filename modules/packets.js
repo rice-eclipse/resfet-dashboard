@@ -1,0 +1,81 @@
+/******************************************************************************
+ * This file deals with reading data from TCP packets received from the Pi.
+ *
+ * Each packet consists of an 8-byte header, which contains the type and
+ * number of data payloads being sent, followed by a series of 16-byte
+ * payloads, which each contains a datapoint and a timestamp. The datapoint is
+ * the actual numeric reading (e.g. from a load cell), while the timestamp is
+ * the time at which the data was sent.
+ *
+ * On the local server created by final_mocked (see the engine controller
+ * code), these numbers are slightly different. The header, for example, is 16
+ * bytes long instead. Other details are explained in the code itself.
+ *
+ * Note that byte order is always little endian throughout the code.
+ *****************************************************************************/
+
+module.exports = {
+    formatTimestamp: function(timestamp) {
+        /**
+         * Formats the input microsecond timestamp nicely (hours:minutes:seconds).
+         * Seconds is truncated to 3 decimal places.
+         *
+         * @param {number} timestamp a numeric timestamp in microseconds
+         * @return {string} a string with the formatted time
+         */
+        let hours = Math.floor(timestamp / 3600000000);
+        let minutes = Math.floor(timestamp / 60000000) - hours * 60;
+        let seconds = timestamp / 1000000.0 - hours * 3600 - minutes * 60;
+        return (hours < 10 ? "0" + hours : hours.toString()) + ":" +
+               (minutes < 10 ? "0" + minutes : minutes.toString()) + ":" +
+               (seconds < 10 ? "0" + seconds.toFixed(3) : seconds.toFixed(3));
+    },
+    readHeader: function(packet) {
+        /**
+         * Reads the header (payload type and number) from a packet.
+         *
+         * @param {Buffer} packet the packet to be read
+         * @return {number[]} if successful, an array of the form [type, number];
+         *                    otherwise, an empty array
+         */
+
+        // Header format: type (1 byte), padding (3 bytes), number (4 bytes)
+        if (packet.length < 8) {
+            console.log("ERROR: packet is too short to read header!");
+            return [];
+        }
+        let type = packet.readUInt8(0);
+        let number = packet.readUInt32LE(4);
+        return [type, number];
+    },
+    readPayloads: function(packet, number) {
+        /**
+         * Reads the payload data (datapoints and timestamps) from a packet.
+         *
+         * @param {Buffer} packet the packet to be read
+         * @param {number} number the number of payloads to be read
+         * @return {number[][]} if successful, an array of the form
+         *                      [[data1, time1], [data2, time2], ...]; otherwise, an empty
+         *                      array
+         */
+
+        // Payload format: data (4 bytes), time (4 bytes)
+        if (packet.length < 16) {
+            console.log("ERROR: packet is too short to read any payloads!");
+            return [];
+        } else if ((packet.length - 8) % 8 !== 0) {
+            console.log("ERROR: payloads are truncated/malformed!");
+            return [];
+        } else if ((packet.length - 8) < number * 8) {
+            console.log("ERROR: input number is greater than number of payloads!");
+            return [];
+        }
+        let payloads = [];
+        for (let i = 0; i < number; i++) {
+            let data = packet.readUInt32LE(8 + i * 8);
+            let time = packet.readUInt32LE(12 + i * 8);
+            payloads.push([data, time]);
+        }
+        return payloads;
+    }
+}
