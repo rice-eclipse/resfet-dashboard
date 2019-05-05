@@ -12,6 +12,9 @@ let udp = require("./modules/udp")
 // Modules for data visualization.
 let visualization = require("./modules/visualization")
 
+// Modules for config management.
+let config = require("./modules/config")
+
 // Initializing the window.
 let mainWindow
 
