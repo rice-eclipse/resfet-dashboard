@@ -5,6 +5,7 @@
 body {
   font: caption;
   -webkit-user-select: none;
+  padding-bottom: 30px;
 }
 
 main > .container {
@@ -12,14 +13,11 @@ main > .container {
 }
 
 .footer {
-  background-color: #f5f5f5;
-}
-
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-code {
-  font-size: 80%;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  height: 30px;
+  background-color: #343a40 !important;
+  color: #FFF;
+  padding-top: 6px;
 }

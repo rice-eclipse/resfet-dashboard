@@ -17,9 +17,9 @@ let mainWindow
 
 function createWindow () {
   mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
-  mainWindow.loadFile('pages/connection/connection.html')
+  mainWindow.loadFile('application.html')
 
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     /*
