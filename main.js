@@ -54,6 +54,11 @@ app.on('activate', function () {
   }
 })
 
+// Reading the default configuration file, and setting it globally.
+config.fetchConfigs().then((pathContent) => {
+  config.applyConfig(pathContent[0]);
+})
+
 // The following are the hooks for TCP & UDP connection.
 // These are accessible from all pages.
 
@@ -67,6 +72,10 @@ ipcMain.on('startUDP', (event, arg) => {
 
 ipcMain.on('destroyTCP', (event, arg) => {
     tcp.destroyTCP()
+});
+
+ipcMain.on('destroyUDP', (event, arg) => {
+  udp.destroyUDP(arg.port)
 });
 
 ipcMain.on('sendTCP', (event, arg) => {

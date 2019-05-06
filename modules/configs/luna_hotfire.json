@@ -1,0 +1,84 @@
+[
+    {
+        "name": "Luna Hotfire",
+        "network": {
+            "tcp": {
+                "ip": "192.168.1.137",
+                "port": 1234
+            },
+            "udp": {
+                "port": 4000
+            }
+        },
+        "panels": [
+            {
+                "label": "Thermocouplers",
+                "data": [
+                    "TC1", "TC2", "TC3"
+                ]
+            },
+            {
+                "label": "Feedline Pressure",
+                "data": [
+                    "PT_FEED_SEND"
+                ]
+            }
+        ],
+        "controls":
+        [
+            {
+                "label": "Valve",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Open Valve",
+                        "action": "SET_VALVE"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Close Valve",
+                        "action": "UNSET_VALVE"
+                    }
+                ]
+            }
+        ],
+        "commands": {
+            "ACK_VALUE": 1,
+            "PAYLOAD": 2,
+            "TEXT": 3,
+            "UNSET_VALVE": 4,
+            "SET_VALVE": 5,
+            "UNSET_IGNITION": 6,
+            "SET_IGNITION": 7,
+            "NORM_IGNITE": 8,
+    
+            "LC_MAIN_SEND": 9,
+            "LC1_SEND": 10,
+            "LC2_SEND": 11,
+            "LC3_SEND": 12,
+            "PT_FEED_SEND": 13,
+            "PT_INJE_SEND": 14,
+            "PT_COMB_SEND": 15,
+            "TC1_SEND": 16,
+            "TC2_SEND": 17,
+            "TC3_SEND": 18,
+    
+            "SET_WATER": 19,
+            "UNSET_WATER": 20,
+            "SET_GITVC": 21,
+            "UNSET_GITVC": 22
+        },
+        "calibrations" : {
+            "LC_MAIN_SEND": [-0.3159, 105],
+            "LC1_SEND": [0.0093895, 0],
+            "LC2_SEND": [-0.0092222, 0],
+            "LC3_SEND": [0.0097715, 0],
+            "PT_FEED_SEND": [-0.275787487, 1069],
+            "PT_COMB_SEND": [-0.2810327855, 1068],
+            "PT_INJE_SEND": [-0.2782331275, 1045],
+            "TC1_SEND": [0.1611, -250],
+            "TC2_SEND": [0.1611, -250],
+            "TC3_SEND": [0.1611, -250]
+        }
+    }
+]
