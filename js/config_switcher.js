@@ -11,4 +11,4 @@ config.fetchConfigs().then((pathContent) => {
     }
   }, (err) => {
     console.log(err);
-  });
+});

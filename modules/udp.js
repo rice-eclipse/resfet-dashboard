@@ -6,7 +6,7 @@ Engine does not receive any data using TCP protocol; therefore, this is a one wa
 */
 
 const dgram = require('dgram');
-const packets = require('./packets')
+const packets = require('./packets');
 
 const udp_server = dgram.createSocket('udp4');
 
@@ -23,6 +23,7 @@ udp_server.on('error', (err) => {
 
 udp_server.on('message', (msg, rinfo) => {
   console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
+  // TODO: packet stuff
 });
 
 udp_server.on('listening', () => {

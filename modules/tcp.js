@@ -6,7 +6,6 @@ Engine does not send any data using TCP protocol; therefore, this is a one way c
 */
 
 const net = require('net');
-const packets = require('./packets')
 
 const tcp_client = new net.Socket();
 
