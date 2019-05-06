@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+let config = require("electron").remote.require("./modules/config")
 
 const btnIgnition = document.getElementById('btnIgnition')
 const btnStopIgnition = document.getElementById('btnStopIgnition')
@@ -38,3 +39,7 @@ setInterval( function() {
   ipcRenderer.send('statusTCP-request', {});
 }, 200);
 ipcRenderer.send('statusTCP-request', {});
+
+document.getElementById('configSelect').addEventListener('change', function(){
+  config.applyConfig(this.value)
+});

@@ -54,6 +54,11 @@ app.on('activate', function () {
   }
 })
 
+// Reading the default configuration file, and setting it globally.
+config.fetchConfigs().then((pathContent) => {
+  config.applyConfig(pathContent[0]);
+})
+
 // The following are the hooks for TCP & UDP connection.
 // These are accessible from all pages.
 

@@ -1,5 +1,5 @@
 // Modules for config management.
-let config = require("./../modules/config")
+let config = require("electron").remote.require("./modules/config")
 
 config.fetchConfigs().then((pathContent) => {
     var selectElement = document.getElementById("configSelect");
@@ -11,4 +11,4 @@ config.fetchConfigs().then((pathContent) => {
     }
   }, (err) => {
     console.log(err);
-  });
+});
