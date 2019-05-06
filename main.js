@@ -74,6 +74,10 @@ ipcMain.on('destroyTCP', (event, arg) => {
     tcp.destroyTCP()
 });
 
+ipcMain.on('destroyUDP', (event, arg) => {
+  udp.destroyUDP(arg.port)
+});
+
 ipcMain.on('sendTCP', (event, arg) => {
     tcp.sendTCP(arg)
 });

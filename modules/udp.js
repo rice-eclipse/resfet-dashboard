@@ -12,7 +12,16 @@ const udp_server = dgram.createSocket('udp4');
 
 module.exports = {
   startUDP: function(port) {
+    /*
+		Starts to the server.
+		*/
     udp_server.bind(port);
+  },
+  destroyUDP: function(port) {
+    /*
+		Destroys the server.
+		*/
+    udp_server.close();
   }
 };
   
@@ -23,6 +32,10 @@ udp_server.on('error', (err) => {
 
 udp_server.on('message', (msg, rinfo) => {
   console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
+});
+
+udp_server.on('close', (msg, rinfo) => {
+  console.log(`[UDP] Server closed.`);
 });
 
 udp_server.on('listening', () => {
