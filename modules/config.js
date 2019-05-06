@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports = {
+    configPath: "",
+    config: {},
     fetchConfigs: async function() {
         /**
          * Returns a list of valid configuration files located in ./configs/
@@ -26,8 +28,16 @@ module.exports = {
             });
         });
 
-        let result = await promise
+        let result = await promise;
 
-        return result
+        return result;
+    },
+    applyConfig: function(configPath) {
+        /**
+         * Reads the configPath and sets the configuration parameters.
+         */
+        module.exports.configPath = configPath
+        module.exports.config = require("./configs/"+configPath)[0];
+        console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
     }
 }

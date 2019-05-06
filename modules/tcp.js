@@ -16,8 +16,9 @@ module.exports = {
 		/*
 		Connects to the server.
 		*/
+		console.log('[TCP] Connecting to '+ip+":"+port+"...");
 		tcp_client.connect(port, ip, function() {
-			console.log('[TCP] Connecting to server...');
+			console.log('[TCP] Waiting for establishment...');
 		});
 	},
 	sendTCP: function(data) {
