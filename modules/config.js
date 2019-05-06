@@ -37,7 +37,7 @@ module.exports = {
          * Reads the configPath and sets the configuration parameters.
          */
         module.exports.configPath = configPath
-        module.exports.config = require("./configs/"+configPath);
+        module.exports.config = require("./configs/"+configPath)[0];
         console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
     }
 }
