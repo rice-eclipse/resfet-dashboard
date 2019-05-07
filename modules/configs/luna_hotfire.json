@@ -40,6 +40,36 @@
                         "action": "UNSET_VALVE"
                     }
                 ]
+            },
+            {
+                "label": "Water Valves",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Open Valve",
+                        "action": "SET_VALVE"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Close Valve",
+                        "action": "UNSET_VALVE"
+                    }
+                ]
+            },
+            {
+                "label": "GITVC",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Open Valve",
+                        "action": "SET_VALVE"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Close Valve",
+                        "action": "UNSET_VALVE"
+                    }
+                ]
             }
         ],
         "commands": {
