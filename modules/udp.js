@@ -8,7 +8,7 @@ Engine does not receive any data using TCP protocol; therefore, this is a one wa
 const dgram = require('dgram');
 const packets = require('./packets');
 
-const udp_server = dgram.createSocket('udp4');
+var udp_server = dgram.createSocket('udp4');
 
 module.exports = {
   startUDP: function(port) {
@@ -16,6 +16,26 @@ module.exports = {
 		Starts to the server.
 		*/
     udp_server.bind(port);
+
+    udp_server.on('error', (err) => {
+      console.log(`[UDP] Server Error:\n${err.stack}`);
+      udp_server.close();
+    });
+    
+    udp_server.on('message', (msg, rinfo) => {
+      console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
+      // TODO: packet stuff
+    });
+    
+    udp_server.on('close', (msg, rinfo) => {
+      console.log(`[UDP] Server closed.`);
+      udp_server = dgram.createSocket('udp4');
+    });
+    
+    udp_server.on('listening', () => {
+      let address = udp_server.address();
+      console.log(`[UDP] Server initialized on ${address.address}:${address.port}.`);
+    });
   },
   destroyUDP: function(port) {
     /*
@@ -24,22 +44,3 @@ module.exports = {
     udp_server.close();
   }
 };
-  
-udp_server.on('error', (err) => {
-  console.log(`[UDP] Server Error:\n${err.stack}`);
-  udp_server.close();
-});
-
-udp_server.on('message', (msg, rinfo) => {
-  console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
-  // TODO: packet stuff
-});
-
-udp_server.on('close', (msg, rinfo) => {
-  console.log(`[UDP] Server closed.`);
-});
-
-udp_server.on('listening', () => {
-  const address = udp_server.address();
-  console.log(`[UDP] Server initialized on ${address.address}:${address.port}.`);
-});
