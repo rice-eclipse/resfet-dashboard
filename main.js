@@ -85,3 +85,7 @@ ipcMain.on('sendTCP', (event, arg) => {
 ipcMain.on('statusTCP-request', (event, arg) => {
   event.sender.send('statusTCP-response', tcp.tcp_connected);
 });
+
+ipcMain.on('reformatChart', (event, arg) => {
+    mainWindow.send('reformatChart', arg);
+});

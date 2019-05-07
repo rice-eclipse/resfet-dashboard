@@ -1,6 +1,9 @@
 // Modules for config management.
 let config = require("electron").remote.require("./modules/config")
 
+// Module for network hook calls.
+const { ipcRenderer } = require('electron');
+
 config.fetchConfigs().then((pathContent) => {
     /**
     * Fills the config selector with the available options from configs/ directory.
@@ -25,7 +28,6 @@ function updateConfigUI() {
     document.getElementById('udpAddress').innerHTML = "0.0.0.0:"+config.config.network.udp.port;
 
     updatePanelButtons();
-
     updatePanelSelection();
 }
 
@@ -62,14 +64,24 @@ function updatePanelButtons() {
 
 function updatePanelSelection() {
     /**
-     * Updates the UI panel selection with the information from config.
-     */
+    * Updates the UI panel selection with the information from config.
+    */
+
+    // Initializing all the variables.
 
     var select1 = document.getElementById("panelSelect1");
     var select2 = document.getElementById("panelSelect2");
     var select3 = document.getElementById("panelSelect3");
     var select4 = document.getElementById("panelSelect4");
 
+    // Clearing the select options.
+    select1.innerHTML = "";
+    select2.innerHTML = "";
+    select3.innerHTML = "";
+    select4.innerHTML = "";
+
+    // Loop through all the panel options and fill each select with the options.
+    // Also sets the default panel based on the order of the panels in json.
     for (var i = 0; i < config.config.panels.length; i++) {
         var option = document.createElement("option");
         option.value = i;
@@ -95,6 +107,12 @@ function updatePanelSelection() {
         if(i == 3) { option.selected = true; }
         select4.appendChild(option);
     }
+
+    // Calls the reformatChart hook to update charts accordingly.
+    ipcRenderer.send("reformatChart", {chartid: 0, panel: select1.value})
+    ipcRenderer.send("reformatChart", {chartid: 1, panel: select2.value})
+    ipcRenderer.send("reformatChart", {chartid: 2, panel: select3.value})
+    ipcRenderer.send("reformatChart", {chartid: 3, panel: select4.value})
 }
 
 // Watch the 'configSelect' object in HTML and look for any change.

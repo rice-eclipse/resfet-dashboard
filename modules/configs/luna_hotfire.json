@@ -14,13 +14,31 @@
             {
                 "label": "Thermocouplers",
                 "data": [
-                    "TC1", "TC2", "TC3"
+                    {
+                        "label": "TC1",
+                        "source": "TC1",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "TC2",
+                        "source": "TC2",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    },
+                    {
+                        "label": "TC3",
+                        "source": "TC3",
+                        "color": "rgba(132, 99, 255, 0.2)"
+                    }
                 ]
             },
             {
                 "label": "Feedline Pressure",
                 "data": [
-                    "PT_FEED_SEND"
+                    {
+                        "label": "FEED",
+                        "source": "PT_FEED_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    }
                 ]
             }
         ],
