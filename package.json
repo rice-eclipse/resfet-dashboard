@@ -1,12 +1,12 @@
 {
-  "name": "RESFET",
+  "name": "resfet-dashboard",
   "version": "1.0.0",
-  "description": "Rice Eclipse Software for Engine Testing",
+  "description": "Rice Eclipse Software for Engine Testing Dasboard",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/rice-eclipse/resfet",
+  "repository": "https://github.com/rice-eclipse/resfet-dashboard",
   "keywords": [
     "Rice",
     "Eclipse",
@@ -19,6 +19,11 @@
     "electron": "^4.0.1"
   },
   "dependencies": {
-    "chart.js": "^2.7.3"
+    "chart.js": "^2.7.3",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "chartjs-plugin-streaming": "^1.8.0",
+    "popper.js": "^1.14.3"
   }
 }
