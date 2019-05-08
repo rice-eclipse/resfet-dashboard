@@ -90,6 +90,15 @@
                 ]
             }
         ],
+        "maincontrols":
+        {
+            "ignition": {
+                "action": "NORM_IGNITE"
+            },
+            "anti-ignition": {
+                "action": "UNSET_IGNITION"
+            }
+        },
         "commands": {
             "ACK_VALUE": 1,
             "PAYLOAD": 2,

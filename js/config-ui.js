@@ -60,6 +60,16 @@ function updatePanelButtons() {
 
         panelButtons.appendChild(btngroup);
     }
+
+    // When buttons are clicked, a new TCP call is being made.
+    var panelButtonsList = panelButtons.getElementsByTagName('button');
+    for (var i = 0, len = panelButtonsList.length; i < len; i++) {
+        panelButtonsList[i].onclick = function (){
+            var buffer = Buffer.alloc(1);
+            buffer.fill(config.config.commands[this.dataset.action]);
+            ipcRenderer.send('sendTCP', buffer);
+        }
+    }
 }
 
 function updatePanelSelection() {

@@ -9,9 +9,6 @@ const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
 let tcp = require("./modules/tcp")
 let udp = require("./modules/udp")
 
-// Modules for data visualization.
-let visualization = require("./modules/visualization")
-
 // Modules for config management.
 let config = require("./modules/config")
 
