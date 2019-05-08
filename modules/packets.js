@@ -41,13 +41,17 @@ module.exports = {
     formatDecode: function(decoded) {
 		if (!decoded) {
 			return "";
-		}
+        }
+        
+        let outstr = "";
 		
 		// Print out the header followed by each payload on its own line
-		console.log(`==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====`);
+		outstr += `==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====\n`;
 		decoded[1].forEach(function(triple) {
-			console.log(`>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}`); // TODO: log total timestamp
-		});
+			outstr += `>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}\n`; // TODO: log total timestamp
+        });
+        
+        return outstr;
 	},
 
     /**
