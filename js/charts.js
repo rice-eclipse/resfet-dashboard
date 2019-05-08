@@ -241,7 +241,23 @@ document.getElementById('panelSelect4').addEventListener('change', function() {
 
 // Listening for hooks and calls from other files.
 ipcRenderer.on('plotData' , function(event , data){
-    plotData(data.panel, data.source, {timestamp: Date.now(), value: 0});
+    let datacommand
+
+    for (const i of Object.keys(config.config.commands)) {
+        if (config.config.commands[i] == data.type) {
+            datacommand = i
+        }
+    }
+
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < config.config.panels[panelSelects[i].value].data.length; j++) {
+            if(config.config.panels[panelSelects[i].value].data[j].source == datacommand) {
+                for(var k = 0; k < data.values.length; k++) {
+                    plotData(i, j, {timestamp: Date.now(), value: data.values[k][0]});
+                }
+            }
+        }
+    }
 });
 
 ipcRenderer.on('reformatChart' , function(event , data){

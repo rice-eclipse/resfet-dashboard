@@ -3,11 +3,12 @@
         "name": "Luna Hotfire",
         "network": {
             "tcp": {
-                "ip": "192.168.1.137",
+                "ip": "127.0.0.1",
                 "port": 1234
             },
             "udp": {
-                "port": 4000
+                "port": 1234,
+                "64-bit": true
             }
         },
         "panels": [
@@ -16,17 +17,17 @@
                 "data": [
                     {
                         "label": "TC1",
-                        "source": "TC1",
+                        "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)"
                     },
                     {
                         "label": "TC2",
-                        "source": "TC2",
+                        "source": "TC2_SEND",
                         "color": "rgba(99, 255, 132, 0.2)"
                     },
                     {
                         "label": "TC3",
-                        "source": "TC3",
+                        "source": "TC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
                 ]

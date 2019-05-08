@@ -5,21 +5,22 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 // Modules to control application life and create native browser window.
 const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
 
-// Modules to control UDP & TCP communication with the box.
-let tcp = require("./modules/tcp")
-let udp = require("./modules/udp")
-
 // Modules for config management.
 let config = require("./modules/config")
+global.config = config
 
 // Initializing the window.
 let mainWindow
+
+// Modules to control UDP & TCP communication with the box.
+let tcp = require("./modules/tcp")
+let udp = require("./modules/udp")
 
 function createWindow () {
   mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
   mainWindow.loadFile('application.html')
 
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     /*
