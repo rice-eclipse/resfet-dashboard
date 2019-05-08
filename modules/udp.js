@@ -23,8 +23,9 @@ module.exports = {
     });
     
     udp_server.on('message', (msg, rinfo) => {
-      console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
-      // TODO: packet stuff
+      // console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
+      let decoded = packets.decode(msg, rinfo, true); // TODO: replace using_mocked
+      console.log(packets.formatDecode(decoded));
     });
     
     udp_server.on('close', (msg, rinfo) => {

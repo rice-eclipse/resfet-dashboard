@@ -30,6 +30,25 @@ module.exports = {
                (minutes < 10 ? "0" + minutes : minutes.toString()) + ":" +
                (seconds < 10 ? "0" + seconds.toFixed(3) : seconds.toFixed(3));
     },
+    
+    /**
+     * Formats an output pair from decode() in a more readable way.
+     * 
+     * @param {Array} decoded the pair to be formatted
+     * @return {string} a string with the formatted output, or an empty string
+     * 					if the input is empty
+     */
+    formatDecode: function(decoded) {
+		if (!decoded) {
+			return "";
+		}
+		
+		// Print out the header followed by each payload on its own line
+		console.log(`==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====`);
+		decoded[1].forEach(function(triple) {
+			console.log(`>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}`); // TODO: log total timestamp
+		});
+	},
 
     /**
      * Reads the header and payloads from the given UDP datagram.
@@ -46,13 +65,13 @@ module.exports = {
      */
     decode: function(msg, rinfo, using_mocked) {
         let decoded = [];
-        let header = exports.readHeader(msg, rinfo, using_mocked);
+        let header = module.exports.readHeader(msg, rinfo, using_mocked);
         if (!header) {
             console.log("[ERROR] Could not decode header");
             return [];
         }
         decoded.push(header);
-        let payloads = exports.readPayloads(msg, rinfo, header[1], using_mocked);
+        let payloads = module.exports.readPayloads(msg, rinfo, header[1], using_mocked);
         if (!payloads) {
             console.log("[ERROR] Could not decode payloads");
             return [];
@@ -86,7 +105,7 @@ module.exports = {
             number_offset = 4;
         }
         if (msg_size < expected_size) {
-            console.log("[ERROR] Packet is too short to read header!");
+            console.log("[ERROR] Packet is too short to read header");
             return [];
         }
         let type = msg.readUInt8(0);
