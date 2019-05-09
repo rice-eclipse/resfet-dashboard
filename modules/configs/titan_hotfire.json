@@ -46,7 +46,7 @@
         "controls":
         [
             {
-                "label": "Valve",
+                "label": "Main Valve",
                 "buttons": [
                     {
                         "style": "primary",
@@ -61,32 +61,72 @@
                 ]
             },
             {
-                "label": "Water Valves",
+                "label": "Vent Valve",
                 "buttons": [
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_VALVE"
+                        "action": "SET_VENT"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_VALVE"
+                        "action": "UNSET_VENT"
                     }
                 ]
             },
             {
-                "label": "GITVC",
+                "label": "Tank Valve",
                 "buttons": [
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_VALVE"
+                        "action": "SET_TANK"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_VALVE"
+                        "action": "UNSET_TANK"
+                    }
+                ]
+            },
+            {
+                "label": "Heating Tape",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Turn On",
+                        "action": "SET_TAPE"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Turn Off",
+                        "action": "UNSET_TAPE"
+                    }
+                ]
+            },
+            {
+                "label": "Presets",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Leak Check",
+                        "action": "LEAK_CHECK"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Fill",
+                        "action": "FILL"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Fill Idle",
+                        "action": "FILL_IDLE"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Default/Idle",
+                        "action": "DEFAULT"
                     }
                 ]
             }
@@ -121,10 +161,16 @@
             "TC2_SEND": 17,
             "TC3_SEND": 18,
     
-            "SET_WATER": 19,
-            "UNSET_WATER": 20,
-            "SET_GITVC": 21,
-            "UNSET_GITVC": 22
+            "SET_VENT": 19,
+            "UNSET_VENT": 20,
+            "SET_TANK": 21,
+            "UNSET_TANK": 22,
+            "LEAK_CHECK": 23,
+            "FILL": 24,
+            "FILL_IDLE": 25,
+            "DEFAULT": 26,
+            "SET_TAPE": 27,
+            "UNSET_TAPE": 28
         },
         "calibrations" : {
             "LC_MAIN_SEND": [-0.3159, 105],

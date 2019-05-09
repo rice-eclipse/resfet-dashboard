@@ -46,7 +46,7 @@
         "controls":
         [
             {
-                "label": "Valve",
+                "label": "Main Valve",
                 "buttons": [
                     {
                         "style": "primary",
@@ -61,17 +61,17 @@
                 ]
             },
             {
-                "label": "Water Valves",
+                "label": "Water Valve",
                 "buttons": [
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_VALVE"
+                        "action": "SET_WATER"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_VALVE"
+                        "action": "UNSET_WATER"
                     }
                 ]
             },
@@ -81,12 +81,12 @@
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_VALVE"
+                        "action": "SET_GITVC"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_VALVE"
+                        "action": "UNSET_GITVC"
                     }
                 ]
             }
