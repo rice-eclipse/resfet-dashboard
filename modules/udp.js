@@ -28,7 +28,7 @@ module.exports = {
         let source = global.config.config.commands_inv[decoded[0][0]]
 
         if (source in global.recentdata) {
-            global.recentdata[source] = decoded[-1][0]
+            global.recentdata[source] = decoded[1][decoded[1].length-1][0]
         }
         //console.log(packets.formatDecode(decoded));
     });
