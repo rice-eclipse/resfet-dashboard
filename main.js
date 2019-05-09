@@ -5,6 +5,9 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 // Modules to control application life and create native browser window.
 const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
 
+// Global variable to store the most recent data.
+global.recentdata = {}
+
 // Modules for config management.
 let config = require("./modules/config")
 global.config = config
@@ -20,7 +23,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
   mainWindow.loadFile('application.html')
 
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     /*

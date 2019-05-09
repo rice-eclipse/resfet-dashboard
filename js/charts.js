@@ -2,7 +2,7 @@
 let config = require("electron").remote.require("./modules/config")
 
 // Module for network hook calls.
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, remote } = require('electron');
 
 // Initializing all the variables.
 var chartElems = [];
@@ -24,175 +24,62 @@ panelLabels.push(document.getElementById("panelLabel3"));
 panelLabels.push(document.getElementById("panelLabel4"));
 
 // Initializing all the charts.
-
 var charts = []
 
-charts.push(new Chart(chartElems[0], {
-    type: 'line',
-    data: {
-    datasets: []
-    },
-    options: {
-        legend: {
-            display: true
+for (var i = 0; i < 4; i++) {
+    charts.push(new Chart(chartElems[i], {
+        type: 'line',
+        data: {
+        datasets: []
         },
-        scales: {
-            xAxes: [{
-                type: 'realtime'
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'N/A'
+        options: {
+            legend: {
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    type: 'realtime'
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'N/A'
+                    }
+                }]
+            },
+            animation: {
+                duration: 0
+            },
+            hover: {
+                animationDuration: 0
+            },
+            responsiveAnimationDuration: 0,
+            plugins: {
+                streaming: {
+                    frameRate: 15
                 }
-            }]
-        },
-        animation: {
-            duration: 0
-        },
-        hover: {
-            animationDuration: 0
-        },
-        responsiveAnimationDuration: 0,
-        plugins: {
-            streaming: {
-                frameRate: 15
             }
         }
-    }
-}));
+    }));
+}
 
-charts.push(new Chart(chartElems[1], {
-    type: 'line',
-    data: {
-    datasets: []
-    },
-    options: {
-        legend: {
-            display: true
-        },
-        scales: {
-            xAxes: [{
-                type: 'realtime'
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'N/A'
-                }
-            }]
-        },
-        animation: {
-            duration: 0
-        },
-        hover: {
-            animationDuration: 0
-        },
-        responsiveAnimationDuration: 0,
-        plugins: {
-            streaming: {
-                frameRate: 15
-            }
-        }
-    }
-}));
-
-charts.push(new Chart(chartElems[2], {
-    type: 'line',
-    data: {
-    datasets: []
-    },
-    options: {
-        legend: {
-            display: true
-        },
-        scales: {
-            xAxes: [{
-                type: 'realtime'
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'N/A'
-                }
-            }]
-        },
-        animation: {
-            duration: 0
-        },
-        hover: {
-            animationDuration: 0
-        },
-        responsiveAnimationDuration: 0,
-        plugins: {
-            streaming: {
-                frameRate: 15
-            }
-        }
-    }
-}));
-
-charts.push(new Chart(chartElems[3], {
-    type: 'line',
-    data: {
-    datasets: []
-    },
-    options: {
-        legend: {
-            display: true
-        },
-        scales: {
-            xAxes: [{
-                type: 'realtime'
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'N/A'
-                }
-            }]
-        },
-        animation: {
-            duration: 0
-        },
-        hover: {
-            animationDuration: 0
-        },
-        responsiveAnimationDuration: 0,
-        plugins: {
-            streaming: {
-                frameRate: 15
-            }
-        }
-    }
-}));
-
-function plotData(panel, source, event) {
+function plotData() {
     /**
      * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
      * event, which includes the timestamp and value of the datapoint.
      */
     for (var i = 0; i < 4; i++) {
-        if(panelSelects[i].value == panel) {
-            var chart = charts[i]
+        for(var j = 0; j < charts[i].data.datasets.length; j++) {
+            var source = charts[i].data.datasets[j].datasource
 
-            chart.data.datasets[source].data.push({
-                x: event.timestamp,
-                y: event.value
+            charts[i].data.datasets[j].data.push({
+                x: Date.now(),
+                y: remote.getGlobal('recentdata')[source]
             });
-            chart.update({
+            charts[i].update({
                 preservation: true
             });
         }
@@ -215,7 +102,8 @@ function reformatChart(chartid, panel) {
             lineTension: 0,
             fill: false,
             backgroundColor: config.config.panels[panel].data[i].color,
-            borderColor: config.config.panels[panel].data[i].color
+            borderColor: config.config.panels[panel].data[i].color,
+            datasource: config.config.panels[panel].data[i].source
         });
     }
     chart.update({
@@ -239,27 +127,13 @@ document.getElementById('panelSelect4').addEventListener('change', function() {
     reformatChart(3, this.value)
 });
 
-// Listening for hooks and calls from other files.
-ipcRenderer.on('plotData' , function(event , data){
-    let datacommand
-
-    for (const i of Object.keys(config.config.commands)) {
-        if (config.config.commands[i] == data.type) {
-            datacommand = i
-        }
-    }
-
-    for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < config.config.panels[panelSelects[i].value].data.length; j++) {
-            if(config.config.panels[panelSelects[i].value].data[j].source == datacommand) {
-                for(var k = 0; k < data.values.length; k++) {
-                    plotData(i, j, {timestamp: Date.now(), value: data.values[k][0]});
-                }
-            }
-        }
-    }
-});
-
+// Watch for chart reformat request.
 ipcRenderer.on('reformatChart' , function(event , data){
     reformatChart(data.chartid, data.panel);
 });
+
+setInterval(function(){
+    if(remote.getGlobal('config').configPath != "") {
+        plotData()
+    }
+},200)

@@ -25,11 +25,12 @@ module.exports = {
     udp_server.on('message', (msg, rinfo) => {
         // console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
         let decoded = packets.decode(msg, rinfo, config.config.network.udp["64-bit"]);
-        global.mainWindow.send("plotData", {
-            type: decoded[0][0],
-            values: decoded.slice(1)
-        })
-        console.log(packets.formatDecode(decoded));
+        let source = decoded[0][0]
+
+        if (source in global.recentdata) {
+            global.recentdata[source] = decoded[-1][0]
+        }
+        //console.log(packets.formatDecode(decoded));
     });
     
     udp_server.on('close', (msg, rinfo) => {

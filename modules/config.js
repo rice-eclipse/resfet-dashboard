@@ -38,6 +38,12 @@ module.exports = {
          */
         module.exports.configPath = configPath
         module.exports.config = require("./configs/"+configPath)[0];
+
+        for (const i of Object.keys(module.exports.config.panels)){
+            for (const j of Object.keys(module.exports.config.panels[i].data)) {
+                global.recentdata[module.exports.config.panels[i].data[j].source] = 0
+            }
+        }
         console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
     }
 }
