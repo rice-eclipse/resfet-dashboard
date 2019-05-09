@@ -13,7 +13,7 @@
         },
         "panels": [
             {
-                "label": "Thermocouplers",
+                "label": "Thermocouples",
                 "data": [
                     {
                         "label": "TC1",
@@ -33,12 +33,47 @@
                 ]
             },
             {
-                "label": "Feedline Pressure",
+                "label": "Pressure Transducers",
                 "data": [
                     {
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
                         "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "INJE",
+                        "source": "PT_INJE_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    },
+                    {
+                        "label": "COMB",
+                        "source": "PT_COMB_SEND",
+                        "color": "rgba(132, 99, 255, 0.2)"
+                    }
+                ]
+            },
+            {
+                "label": "Load Cells",
+                "data": [
+                    {
+                        "label": "LC_MAIN",
+                        "source": "LC_MAIN_SEND",
+                        "color": "rgba(0, 0, 0, 0.2)"
+                    },
+                    {
+                        "label": "LC1",
+                        "source": "LC1_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "LC2",
+                        "source": "LC2_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    },
+                    {
+                        "label": "LC3",
+                        "source": "LC3_SEND",
+                        "color": "rgba(132, 99, 255, 0.2)"
                     }
                 ]
             }
