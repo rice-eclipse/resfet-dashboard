@@ -24,8 +24,8 @@ module.exports = {
     
     udp_server.on('message', (msg, rinfo) => {
         // console.log(`[UDP] Received ${msg} from ${rinfo.address}:${rinfo.port}.`);
-        let decoded = packets.decode(msg, rinfo, config.config.network.udp["64-bit"]);
-        let source = decoded[0][0]
+        let decoded = packets.decode(msg, rinfo, global.config.config.network.udp["64-bit"]);
+        let source = global.config.config.commands_inv[decoded[0][0]]
 
         if (source in global.recentdata) {
             global.recentdata[source] = decoded[-1][0]
