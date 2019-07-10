@@ -1,4 +1,6 @@
 # Rice Eclipse Software for Engine Testing Dashboard
+[![Build Status](https://travis-ci.org/rice-eclipse/resfet-dashboard.svg?branch=master)](https://travis-ci.org/rice-eclipse/resfet-dashboard)
+
 RESFET Dashboard is built on Electron and developed by Rice Eclipse Avionics team
 to enable rapid development and testing of Luna and Titan engines. Successor to
 [mk1-1-frontend](https://github.com/rice-eclipse/mk1-1-frontend), RESFET Dashboard is configurable for different testing environments.
