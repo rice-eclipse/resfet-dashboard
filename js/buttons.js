@@ -18,13 +18,11 @@ btnConnect.addEventListener('click', function (event) {
     port: config.config.network.tcp.port,
     ip: config.config.network.tcp.ip
   });
-  ipcRenderer.send('startUDP', {port: config.config.network.udp.port});
 })
 
 // BTN: Disconnect
 btnDisconnect.addEventListener('click', function (event) {
   ipcRenderer.send('destroyTCP', {});
-  ipcRenderer.send('destroyUDP', {});
 })
 
 // BTN: Ignition

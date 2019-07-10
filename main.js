@@ -20,7 +20,7 @@ let tcp = require("./modules/tcp")
 let udp = require("./modules/udp")
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
+  mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900})
   mainWindow.loadFile('application.html')
 
   //mainWindow.webContents.openDevTools()
@@ -64,27 +64,29 @@ config.fetchConfigs().then((pathContent) => {
 // These are accessible from all pages.
 
 ipcMain.on('connectTCP', (event, arg) => {
-    tcp.connectTCP(arg.port, arg.ip)
-});
-
-ipcMain.on('startUDP', (event, arg) => {
-  udp.startUDP(arg.port)
+    tcp.connectTCP(arg.port, arg.ip);
 });
 
 ipcMain.on('destroyTCP', (event, arg) => {
-    tcp.destroyTCP()
-});
-
-ipcMain.on('destroyUDP', (event, arg) => {
-  udp.destroyUDP(arg.port)
+    tcp.destroyTCP();
 });
 
 ipcMain.on('sendTCP', (event, arg) => {
-    tcp.sendTCP(arg)
+    tcp.sendTCP(arg);
 });
 
-ipcMain.on('statusTCP-request', (event, arg) => {
-  event.sender.send('statusTCP-response', tcp.tcp_connected);
+tcp.emitter.on('status', function(data) {
+  mainWindow.send('statusTCP', tcp.tcp_connected);
+
+  if (data === true) {
+    udp.startUDP({port: config.config.network.udp.port})
+  } else {
+    udp.destroyUDP();
+  }
+});
+
+udp.emitter.on('status', function(data) {
+    mainWindow.send('statusUDP', udp.udp_started);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {

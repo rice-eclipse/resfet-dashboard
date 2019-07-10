@@ -1,6 +1,6 @@
 {
   "name": "resfet-dashboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rice Eclipse Software for Engine Testing Dasboard",
   "main": "main.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "Rocket"
   ],
   "author": "Rice Eclipse",
-  "license": "CC0-1.0",
+  "license": "GPL-3.0",
   "devDependencies": {
     "electron": "^4.0.1"
   },
