@@ -17,7 +17,7 @@ module.exports = {
 		*/
 		console.log('[TCP] Connecting to '+ip+":"+port+"...");
 		tcp_client.connect(port, ip, function() {
-			console.log('[TCP] Waiting for establishment...');
+			console.log('[TCP] Connection established.');
 		});
 	},
 	sendTCP: function(data) {
@@ -55,6 +55,6 @@ tcp_client.on('connect', function() {
 	/*
 	Emitted when TCP client connects to the server.
 	*/
-	console.log('[TCP] Connection established.');
+	console.log(`[TCP] Connection status updated as 'established'.`);
   	module.exports.tcp_connected = true;
 });

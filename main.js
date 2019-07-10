@@ -20,7 +20,7 @@ let tcp = require("./modules/tcp")
 let udp = require("./modules/udp")
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 1200, minHeight: 800})
+  mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900})
   mainWindow.loadFile('application.html')
 
   //mainWindow.webContents.openDevTools()
