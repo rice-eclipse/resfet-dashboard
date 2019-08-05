@@ -136,19 +136,10 @@
             }
         },
         "commands": {
-            "ACK_VALUE": 1,
-            "PAYLOAD": 2,
-            "TEXT": 3,
-            "UNSET_VALVE": 4,
-            "SET_VALVE": 5,
-            "UNSET_IGNITION": 6,
-            "SET_IGNITION": 7,
-            "NORM_IGNITE": 8,
-    
-            "LC_MAIN_SEND": 9,
-            "LC1_SEND": 10,
-            "LC2_SEND": 11,
-            "LC3_SEND": 12,
+            "LC_MAIN_SEND": 0,
+            "LC1_SEND": 1,
+            "LC2_SEND": 2,
+            "LC3_SEND": 3,
             "PT_FEED_SEND": 13,
             "PT_INJE_SEND": 14,
             "PT_COMB_SEND": 15,

@@ -100,8 +100,8 @@ module.exports = {
         if (using_mocked) {
             // Header format: type (1 byte), padding (7 bytes),
             // number (4 bytes), padding (4 bytes)
-            expected_size = 16;
-            number_offset = 8;
+            expected_size = 4;
+            number_offset = 2;
         } else {
             // Header format: type (1 byte), padding (3 bytes),
             // number (4 bytes)
@@ -113,7 +113,7 @@ module.exports = {
             return [];
         }
         let type = msg.readUInt8(0);
-        let number = msg.readUInt32LE(number_offset);
+        let number = msg.readUInt16LE(number_offset);
         return [type, number];
     },
 
@@ -135,7 +135,8 @@ module.exports = {
         // Payload format: data (2 bytes), padding (6 bytes),
         // timestamp (8 bytes)
         let msg_size = rinfo.size;
-        let header_size = using_mocked ? 16 : 8;
+        let header_size = using_mocked ? 4 : 8;
+	console.log("Received packet of length " + msg_size);
         if (msg_size < header_size + 16) {
             console.log("[ERROR] Packet is too short to read any payloads");
             return [];
