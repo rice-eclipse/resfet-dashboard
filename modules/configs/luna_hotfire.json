@@ -7,8 +7,7 @@
                 "port": 1234
             },
             "udp": {
-                "port": 1234,
-                "64-bit": true
+                "port": 1234
             }
         },
         "panels": [

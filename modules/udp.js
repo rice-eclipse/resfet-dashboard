@@ -35,7 +35,7 @@ module.exports = {
     
     // Process the retrieved package.
     udp_server.on('message', (msg, rinfo) => {
-        let decoded = packets.decode(msg, rinfo, global.config.config.network.udp["64-bit"]);
+        let decoded = packets.decode(msg, rinfo);
         let source = global.config.config.commands_inv[decoded[0][0]]
 
         if (source in global.recentdata) {

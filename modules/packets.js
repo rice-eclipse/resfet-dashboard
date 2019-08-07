@@ -59,7 +59,6 @@ module.exports = {
      * 
      * @param {Buffer} msg the datagram to be decoded
      * @param {Object} rinfo corresponding rinfo object
-     * @param {boolean} using_mocked whether to use the mock server format
      * @return {Array} if successful, a pair of the form
      *                 [[type, number],
      *                  [[data1, time_lower1, time_upper1],
@@ -67,15 +66,15 @@ module.exports = {
      *                 results of readHeader and readPayloads bundled;
      *                 if unsuccessful, an empty array
      */
-    decode: function(msg, rinfo, using_mocked) {
+    decode: function(msg, rinfo) {
         let decoded = [];
-        let header = module.exports.readHeader(msg, rinfo, using_mocked);
+        let header = module.exports.readHeader(msg, rinfo);
         if (!header) {
             console.log("[ERROR] Could not decode header");
             return [];
         }
         decoded.push(header);
-        let payloads = module.exports.readPayloads(msg, rinfo, header[1], using_mocked);
+        let payloads = module.exports.readPayloads(msg, rinfo, header[1]);
         if (!payloads) {
             console.log("[ERROR] Could not decode payloads");
             return [];
@@ -89,25 +88,14 @@ module.exports = {
      * 
      * @param {Buffer} msg the datagram to be read
      * @param {Object} rinfo corresponding rinfo object
-     * @param {boolean} using_mocked whether to use the mock server header format
      * @return {number[]} if successful, an array of the form [type, number];
      *                    otherwise, an empty array
      */
-    readHeader: function(msg, rinfo, using_mocked) {
+    readHeader: function(msg, rinfo) {
         let msg_size = rinfo.size; // size of msg in bytes
-        let expected_size;
-        let number_offset; // starting index of number in msg
-        if (using_mocked) {
-            // Header format: type (1 byte), padding (7 bytes),
-            // number (4 bytes), padding (4 bytes)
-            expected_size = 4;
-            number_offset = 2;
-        } else {
-            // Header format: type (1 byte), padding (3 bytes),
-            // number (4 bytes)
-            expected_size = 8;
-            number_offset = 4;
-        }
+        let expected_size = 4;
+        let number_offset = 2; // starting index of number in msg
+
         if (msg_size < expected_size) {
             console.log("[ERROR] Packet is too short to read header");
             return [];
@@ -125,18 +113,18 @@ module.exports = {
      * @param {Buffer} msg the datagram, including header
      * @param {Object} rinfo corresponding rinfo object
      * @param {number} number the number from the header
-     * @param {boolean} using_mocked whether to use the mock server format
      * @return {number[][]} if successful, an array of the form
      *                      [[data1, time_lower1, time_upper1],
      *                       [data2, time_lower2, time_upper2],
      *                       ...]; if no payloads could be read, an empty array
      */
-    readPayloads: function(msg, rinfo, number, using_mocked) {
+    readPayloads: function(msg, rinfo, number) {
         // Payload format: data (2 bytes), padding (6 bytes),
         // timestamp (8 bytes)
         let msg_size = rinfo.size;
-        let header_size = using_mocked ? 4 : 8;
-	console.log("Received packet of length " + msg_size);
+        let header_size = 4;
+
+	    console.log("Received packet of length " + msg_size);
         if (msg_size < header_size + 16) {
             console.log("[ERROR] Packet is too short to read any payloads");
             return [];
