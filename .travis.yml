@@ -17,3 +17,6 @@ addons:
 os:
   - linux
   - osx
+
+notifications:
+  slack: riceeclipse:gkom2AO57EGZmxU2wWPEtyR2
