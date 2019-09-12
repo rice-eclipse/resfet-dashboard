@@ -30,7 +30,8 @@
                         "source": "TC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit": "Celcius"
             },
             {
                 "label": "Pressure Transducers",
@@ -50,7 +51,8 @@
                         "source": "PT_COMB_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit":"Pascals"
             },
             {
                 "label": "Load Cells",
@@ -75,7 +77,8 @@
                         "source": "LC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit": "Pasacal"
             }
         ],
         "controls":
