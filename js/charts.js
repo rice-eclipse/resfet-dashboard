@@ -46,7 +46,7 @@ for (var i = 0; i < 4; i++) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'N/A'
+                        labelString: "SDFJSDFJDSJDJ"
                     }
                 }]
             },
@@ -105,6 +105,8 @@ function reformatChart(chartid, panel) {
             borderColor: config.config.panels[panel].data[i].color,
             datasource: config.config.panels[panel].data[i].source
         });
+        
+        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit;
     }
     chart.update({
         preservation: true
