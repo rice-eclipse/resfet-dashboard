@@ -30,7 +30,7 @@ for (var i = 0; i < 4; i++) {
     charts.push(new Chart(chartElems[i], {
         type: 'line',
         data: {
-        datasets: []
+            datasets: []
         },
         options: {
             legend: {
@@ -46,7 +46,7 @@ for (var i = 0; i < 4; i++) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: "SDFJSDFJDSJDJ"
+                        labelString: "N/A"
                     }
                 }]
             },
@@ -90,8 +90,8 @@ function reformatChart(chartid, panel) {
     /**
      * Takes chartid, which is the id [0, 1, 2, 3] of the chart displayed on the dashboard; panel, which is the index of the panel in json.
      */
-    var chart = charts[chartid]
-    var label = panelLabels[chartid]
+    var chart = charts[chartid];
+    var label = panelLabels[chartid];
 
     chart.data.datasets = []
 
@@ -106,13 +106,13 @@ function reformatChart(chartid, panel) {
             datasource: config.config.panels[panel].data[i].source
         });
         
-        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit;
+        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit ? config.config.panels[panel].unit : "N/A";
     }
     chart.update({
         preservation: true
     });
 
-    label.innerHTML = config.config.panels[panel].label
+    label.innerHTML = config.config.panels[panel].label;
 }
 
 // Watch the 'panelSelect' objects in HTML and look for any change.

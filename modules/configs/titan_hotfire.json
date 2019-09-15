@@ -29,7 +29,8 @@
                         "source": "TC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit": "Celcius"
             },
             {
                 "label": "Pressure Transducers",
@@ -49,7 +50,8 @@
                         "source": "PT_COMB_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit": "Pascal"
             },
             {
                 "label": "Load Cells",
@@ -74,7 +76,8 @@
                         "source": "LC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)"
                     }
-                ]
+                ],
+                "unit": "Newton"
             }
         ],
         "controls":
@@ -144,22 +147,22 @@
                 "buttons": [
                     {
                         "style": "primary",
-                        "label": "Leak Check",
+                        "label": "LC",
                         "action": "LEAK_CHECK"
                     },
                     {
                         "style": "primary",
-                        "label": "Fill",
+                        "label": "FILL",
                         "action": "FILL"
                     },
                     {
                         "style": "primary",
-                        "label": "Fill Idle",
+                        "label": "FILL IDLE",
                         "action": "FILL_IDLE"
                     },
                     {
                         "style": "primary",
-                        "label": "Default/Idle",
+                        "label": "DEF IDLE",
                         "action": "DEFAULT"
                     }
                 ]
@@ -205,18 +208,6 @@
             "DEFAULT": 26,
             "SET_TAPE": 27,
             "UNSET_TAPE": 28
-        },
-        "calibrations" : {
-            "LC_MAIN_SEND": [-0.3159, 105],
-            "LC1_SEND": [0.0093895, 0],
-            "LC2_SEND": [-0.0092222, 0],
-            "LC3_SEND": [0.0097715, 0],
-            "PT_FEED_SEND": [-0.275787487, 1069],
-            "PT_COMB_SEND": [-0.2810327855, 1068],
-            "PT_INJE_SEND": [-0.2782331275, 1045],
-            "TC1_SEND": [0.1611, -250],
-            "TC2_SEND": [0.1611, -250],
-            "TC3_SEND": [0.1611, -250]
         }
     }
 ]
