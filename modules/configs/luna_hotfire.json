@@ -17,17 +17,20 @@
                     {
                         "label": "TC1",
                         "source": "TC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "0.1611x - 250"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "0.1611x - 250"
                     },
                     {
                         "label": "TC3",
                         "source": "TC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "0.1611x - 250"
                     }
                 ],
                 "unit": "Celcius"
@@ -38,20 +41,23 @@
                     {
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "-0.275787487x + 1069"
                     },
                     {
                         "label": "INJE",
                         "source": "PT_INJE_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "-0.2782331275x + 1045"
                     },
                     {
                         "label": "COMB",
                         "source": "PT_COMB_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "-0.2810327855x + 1068"
                     }
                 ],
-                "unit":"Pascals"
+                "unit":"Pascal"
             },
             {
                 "label": "Load Cells",
@@ -59,25 +65,29 @@
                     {
                         "label": "LC_MAIN",
                         "source": "LC_MAIN_SEND",
-                        "color": "rgba(0, 0, 0, 0.2)"
+                        "color": "rgba(0, 0, 0, 0.2)",
+                        "calibration": "-0.03159x + 105"
                     },
                     {
                         "label": "LC1",
                         "source": "LC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "0.0093895x"
                     },
                     {
                         "label": "LC2",
                         "source": "LC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "-0.0092222x"
                     },
                     {
                         "label": "LC3",
                         "source": "LC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "0.0097715x"
                     }
                 ],
-                "unit": "Pasacal"
+                "unit": "Newton"
             }
         ],
         "controls":
@@ -153,18 +163,6 @@
             "UNSET_WATER": 20,
             "SET_GITVC": 21,
             "UNSET_GITVC": 22
-        },
-        "calibrations" : {
-            "LC_MAIN_SEND": [-0.3159, 105],
-            "LC1_SEND": [0.0093895, 0],
-            "LC2_SEND": [-0.0092222, 0],
-            "LC3_SEND": [0.0097715, 0],
-            "PT_FEED_SEND": [-0.275787487, 1069],
-            "PT_COMB_SEND": [-0.2810327855, 1068],
-            "PT_INJE_SEND": [-0.2782331275, 1045],
-            "TC1_SEND": [0.1611, -250],
-            "TC2_SEND": [0.1611, -250],
-            "TC3_SEND": [0.1611, -250]
         }
     }
 ]
