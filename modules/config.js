@@ -36,18 +36,20 @@ module.exports = {
         /**
          * Reads the configPath and sets the configuration parameters.
          */
-        module.exports.configPath = configPath
+        module.exports.configPath = configPath;
         module.exports.config = require("./configs/"+configPath)[0];
 
-        module.exports.config.commands_inv = {}
-        
+        // TODO: Divide commands into 'sources' and 'commands' so that this would be unnecessary.
+        module.exports.config.commands_inv = {};
+
         for (const i of Object.keys(module.exports.config.commands)) {
-            module.exports.config.commands_inv[module.exports.config.commands[i]] = i
+            module.exports.config.commands_inv[module.exports.config.commands[i]] = i;
         }
 
+        // TODO: Instead of refreshing what we have, we should essentially pull whenever we get a reading.s
         for (const i of Object.keys(module.exports.config.panels)){
             for (const j of Object.keys(module.exports.config.panels[i].data)) {
-                global.recentdata[module.exports.config.panels[i].data[j].source] = 0
+                global.recentdata[module.exports.config.panels[i].data[j].source] = 0;
             }
         }
         console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
