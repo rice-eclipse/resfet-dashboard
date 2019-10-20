@@ -17,17 +17,20 @@
                     {
                         "label": "TC1",
                         "source": "TC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "x*5/9 + 32"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "x+2"
                     },
                     {
                         "label": "TC3",
                         "source": "TC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "x+2"
                     }
                 ],
                 "unit": "Celcius"

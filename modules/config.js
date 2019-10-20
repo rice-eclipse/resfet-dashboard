@@ -50,6 +50,7 @@ module.exports = {
         for (const i of Object.keys(module.exports.config.panels)){
             for (const j of Object.keys(module.exports.config.panels[i].data)) {
                 global.recentdata[module.exports.config.panels[i].data[j].source] = 0;
+                global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = new Function("x", module.exports.config.panels[i].data[j].calibration);
             }
         }
         console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
