@@ -18,13 +18,13 @@
                         "label": "TC1",
                         "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "0.1611x - 250"
+                        "calibration": "x*5/9 + 32"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "0.1611x - 250"
+                        "calibration": "x*5/9 + 32"
                     },
                     {
                         "label": "TC3",

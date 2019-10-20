@@ -7,6 +7,7 @@ const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
 
 // Global variable to store the most recent data.
 global.recentdata = {}
+global.recentdata_lambda = {}
 
 // Modules for config management.
 let config = require("./modules/config")
