@@ -4,7 +4,8 @@
   "description": "Rice Eclipse Software for Engine Testing Dasboard",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "mocha"
   },
   "repository": "https://github.com/rice-eclipse/resfet-dashboard",
   "keywords": [
@@ -16,7 +17,8 @@
   "author": "Rice Eclipse",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^4.0.1"
+    "electron": "^4.0.1",
+    "mocha": "^6.2.2"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
