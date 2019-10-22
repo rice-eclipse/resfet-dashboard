@@ -1,3 +1,8 @@
+# IDE and editor-related files
+.vscode
+
+# External Nodejs modules
 /node_modules
 
+# OS-specific files
 .DS_Store
