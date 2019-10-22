@@ -77,7 +77,7 @@ function plotData() {
 
             charts[i].data.datasets[j].data.push({
                 x: Date.now(),
-                y: remote.getGlobal('recentdata')[source]
+                y: remote.getGlobal('recentdata_lambda')[source](remote.getGlobal('recentdata')[source])
             });
             charts[i].update({
                 preservation: true

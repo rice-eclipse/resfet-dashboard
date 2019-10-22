@@ -50,6 +50,15 @@ module.exports = {
         for (const i of Object.keys(module.exports.config.panels)){
             for (const j of Object.keys(module.exports.config.panels[i].data)) {
                 global.recentdata[module.exports.config.panels[i].data[j].source] = 0;
+
+                try {
+                    let lambda = new Function("x", "return "+module.exports.config.panels[i].data[j].calibration);
+                    global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = lambda;
+                } catch(e) {
+                    let lambda = new Function("x", "return 0");
+                    global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = lambda;
+                    console.log("[CONF]: Error while importing the lambda configuration "+module.exports.config.panels[i].data[j].calibration+". Reading is default to 0.");
+                }
             }
         }
         console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
