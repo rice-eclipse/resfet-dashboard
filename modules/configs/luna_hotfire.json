@@ -30,7 +30,7 @@
                         "label": "TC3",
                         "source": "TC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)",
-                        "calibration": "0.1611x - 250"
+                        "calibration": "0.1611*x - 250"
                     }
                 ],
                 "unit": "Celcius"
@@ -42,19 +42,19 @@
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "-0.275787487x + 1069"
+                        "calibration": "-0.275787487*x + 1069"
                     },
                     {
                         "label": "INJE",
                         "source": "PT_INJE_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "-0.2782331275x + 1045"
+                        "calibration": "-0.2782331275*x + 1045"
                     },
                     {
                         "label": "COMB",
                         "source": "PT_COMB_SEND",
                         "color": "rgba(132, 99, 255, 0.2)",
-                        "calibration": "-0.2810327855x + 1068"
+                        "calibration": "-0.2810327855*x + 1068"
                     }
                 ],
                 "unit":"Pascal"
@@ -66,25 +66,25 @@
                         "label": "LC_MAIN",
                         "source": "LC_MAIN_SEND",
                         "color": "rgba(0, 0, 0, 0.2)",
-                        "calibration": "-0.03159x + 105"
+                        "calibration": "-0.03159*x + 105"
                     },
                     {
                         "label": "LC1",
                         "source": "LC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "0.0093895x"
+                        "calibration": "0.0093895*x"
                     },
                     {
                         "label": "LC2",
                         "source": "LC2_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "-0.0092222x"
+                        "calibration": "-0.0092222*x"
                     },
                     {
                         "label": "LC3",
                         "source": "LC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)",
-                        "calibration": "0.0097715x"
+                        "calibration": "0.0097715*x"
                     }
                 ],
                 "unit": "Newton"
