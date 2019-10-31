@@ -13,13 +13,20 @@ node_js: '12'
 addons:
   chrome: stable # Install chrome stable on operating systems
 
+services:
+  - xvfb
+
 # A list of operating systems which are used for tests
 os:
   - linux
   - osx
 
-services:
-  - xvfb
+install:
+  - npm install --no-progress
+  - $(npm bin)/electron --version
+
+script:
+  - npm test
 
 notifications:
   slack: riceeclipse:gkom2AO57EGZmxU2wWPEtyR2
