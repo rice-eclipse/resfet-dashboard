@@ -18,5 +18,8 @@ os:
   - linux
   - osx
 
+services:
+  - xvfb
+
 notifications:
   slack: riceeclipse:gkom2AO57EGZmxU2wWPEtyR2
