@@ -3,7 +3,7 @@
         "name": "Luna Hotfire",
         "network": {
             "tcp": {
-                "ip": "127.0.0.1",
+                "ip": "10.212.179.56",
                 "port": 1234
             },
             "udp": {
@@ -152,17 +152,21 @@
             "LC1_SEND": 1,
             "LC2_SEND": 2,
             "LC3_SEND": 3,
-            "PT_FEED_SEND": 13,
-            "PT_INJE_SEND": 14,
-            "PT_COMB_SEND": 15,
-            "TC1_SEND": 16,
-            "TC2_SEND": 17,
-            "TC3_SEND": 18,
+            "PT_COMB_SEND": 4,
+            "PT_INJE_SEND": 5,
+            "PT_FEED_SEND": 6,
+            "TC1_SEND": 7,
+            "TC2_SEND": 8,
+            "TC3_SEND": 9,
     
-            "SET_WATER": 19,
-            "UNSET_WATER": 20,
-            "SET_GITVC": 21,
-            "UNSET_GITVC": 22
+            "UNSET_VALVE": 0,
+            "SET_VALVE": 1,
+            "UNSET_WATER": 2,
+            "SET_WATER": 3,
+            "UNSET_GITVC": 4,
+            "SET_GITVC": 5,
+            "NORM_IGNITE": 6,
+            "UNSET_IGNITION": 7
         }
     }
 ]
