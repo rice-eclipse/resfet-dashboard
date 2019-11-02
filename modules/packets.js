@@ -39,18 +39,18 @@ module.exports = {
      * 					if the input is empty
      */
     formatDecode: function(decoded) {
-		if (!decoded) {
-			return "";
+        if (!decoded) {
+            return "";
         }
-        
+
         let outstr = "";
-		
-		// Print out the header followed by each payload on its own line
-		outstr += `==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====\n`;
-		decoded[1].forEach(function(triple) {
-			outstr += `>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}\n`; // TODO: log total timestamp
+
+        // Print out the header followed by each payload on its own line
+        outstr += `==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====\n`;
+        decoded[1].forEach(function(triple) {
+            outstr += `>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}\n`; // TODO: log total timestamp
         });
-        
+
         return outstr;
 	},
 
