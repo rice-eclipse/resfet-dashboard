@@ -36,12 +36,12 @@ module.exports = {
     // Process the retrieved package.
     udp_server.on('message', (msg, rinfo) => {
         let decoded = packets.decode(msg, rinfo);
-        let source = global.config.config.commands_inv[decoded[0][0]]
+        let source = global.config.config.sources_inv[decoded[0][0]]
 
         if (source in global.recentdata) {
             global.recentdata[source] = decoded[1][decoded[1].length-1][0]
         }
-        console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
+        //console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
     });
     
     // Catch if the server is closed.

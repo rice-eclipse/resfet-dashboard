@@ -33,10 +33,10 @@ module.exports = {
         module.exports.config = require("./configs/"+configPath)[0];
 
         // TODO: Divide commands into 'sources' and 'commands' so that this would be unnecessary.
-        module.exports.config.commands_inv = {};
+        module.exports.config.sources_inv = {};
 
-        for (const i of Object.keys(module.exports.config.commands)) {
-            module.exports.config.commands_inv[module.exports.config.commands[i]] = i;
+        for (const i of Object.keys(module.exports.config.sources)) {
+            module.exports.config.sources_inv[module.exports.config.sources[i]] = i;
         }
 
         // TODO: Instead of refreshing what we have, we should essentially pull whenever we get a reading.s

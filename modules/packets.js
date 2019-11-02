@@ -124,7 +124,7 @@ module.exports = {
         let msg_size = rinfo.size;
         let header_size = 4;
 
-	    console.log("Received packet of length " + msg_size);
+	    //console.log("Received packet of length " + msg_size);
         if (msg_size < header_size + 16) {
             console.log("[ERROR] Packet is too short to read any payloads");
             return [];
@@ -134,7 +134,7 @@ module.exports = {
         // Try to read number payloads, and stop early if the msg is truncated
         for (let i = 0; i < number; i++) {
             if (msg_size - offset < 16) {
-                console.log("[ERROR] Packet is truncated, can only read " + payloads.length + " payloads");
+                //console.log("[ERROR] Packet is truncated, can only read " + payloads.length + " payloads");
                 break;
             }
             let data = msg.readUInt16LE(offset);
