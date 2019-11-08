@@ -1,6 +1,7 @@
 [
     {
         "name": "Titan Hotfire",
+        "purpose": "test",
         "network": {
             "tcp": {
                 "ip": "127.0.0.1",

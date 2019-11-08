@@ -1,0 +1,117 @@
+[
+    {
+        "name": "Real Time Rocket",
+        "purpose": "rtr",
+		"network": {
+            "tcp": {
+                "ip": "127.0.0.1",
+                "port": 1234
+            },
+            "udp": {
+                "port": 1234
+            }
+        },
+        "panels": [
+            {
+                "label": "Altimeter",
+                "data": [
+                    {
+                        "label": "ALT",
+                        "source": "ALT_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    }
+                ],
+                "unit": "meters"
+            },
+            {
+                "label": "GPS",
+                "data": [
+                    {
+                        "label": "GPS_X",
+                        "source": "GPS_X_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "GPS_Y",
+                        "source": "GPS_Y_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    }
+                ],
+                "unit":"degrees"
+            },
+            {
+                "label": "IMU Accelerometer",
+                "data": [
+                    {
+                        "label": "ACCL_X",
+                        "source": "ACCL_X_SEND",
+                        "color": "rgba(0, 0, 0, 0.2)"
+                    },
+                    {
+                        "label": "ACCL_Y",
+                        "source": "ACCL_Y_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "ACCL_Z",
+                        "source": "ACCL_Z_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    }
+                ],
+                "unit": "g"
+            },
+			{
+                "label": "IMU Gyroscope",
+                "data": [
+                    {
+                        "label": "GYRO_X",
+                        "source": "GYRO_Y_SEND",
+                        "color": "rgba(0, 0, 0, 0.2)"
+                    },
+                    {
+                        "label": "GYRO_Y",
+                        "source": "GYRO_Y_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "GYRO_Z",
+                        "source": "GYRO_Z_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    }
+                ],
+                "unit": "dps"
+            },
+			{
+                "label": "IMU Magnetometer",
+                "data": [
+                    {
+                        "label": "MAGN_X",
+                        "source": "MAGN_X_SEND",
+                        "color": "rgba(0, 0, 0, 0.2)"
+                    },
+                    {
+                        "label": "MAGN_Y",
+                        "source": "MAGN_Y_SEND",
+                        "color": "rgba(255, 99, 132, 0.2)"
+                    },
+                    {
+                        "label": "MAGN_Z",
+                        "source": "MAGN_Z_SEND",
+                        "color": "rgba(99, 255, 132, 0.2)"
+                    }
+                ],
+                "unit": "Pasacal"
+            }
+        ],
+        "controls":
+        [
+        ],
+        "maincontrols":
+        {},
+        "commands": {
+            
+        },
+        "calibrations" : {
+        }
+    }
+]

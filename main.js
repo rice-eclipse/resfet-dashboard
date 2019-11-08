@@ -19,8 +19,11 @@ let mainWindow
 let tcp = require("./modules/tcp")
 let udp = require("./modules/udp")
 
-function createWindow () {
-  mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900})
+//Module for serial communication
+let serialRead = require("./modules/serial-read")
+
+function createWindow() {
+  mainWindow = new BrowserWindow({ width: 1200, height: 900, minWidth: 1200, minHeight: 900 })
   mainWindow.loadFile('application.html')
 
   //mainWindow.webContents.openDevTools()
@@ -60,35 +63,39 @@ config.fetchConfigs().then((pathContent) => {
   config.applyConfig(pathContent[0]);
 })
 
+console.log(config.config);
+console.log(config.config.network);
+serialRead.startSerialRead();
+
 // The following are the hooks for TCP & UDP connection.
 // These are accessible from all pages.
 
 ipcMain.on('connectTCP', (event, arg) => {
-    tcp.connectTCP(arg.port, arg.ip);
+  tcp.connectTCP(arg.port, arg.ip);
 });
 
 ipcMain.on('destroyTCP', (event, arg) => {
-    tcp.destroyTCP();
+  tcp.destroyTCP();
 });
 
 ipcMain.on('sendTCP', (event, arg) => {
-    tcp.sendTCP(arg);
+  tcp.sendTCP(arg);
 });
 
-tcp.emitter.on('status', function(data) {
+tcp.emitter.on('status', function (data) {
   mainWindow.send('statusTCP', tcp.tcp_connected);
 
   if (data === true) {
-    udp.startUDP({port: config.config.network.udp.port})
+    udp.startUDP({ port: config.config.network.udp.port })
   } else {
     udp.destroyUDP();
   }
 });
 
-udp.emitter.on('status', function(data) {
-    mainWindow.send('statusUDP', udp.udp_started);
+udp.emitter.on('status', function (data) {
+  mainWindow.send('statusUDP', udp.udp_started);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {
-    mainWindow.send('reformatChart', arg);
-});
+  mainWindow.send('reformatChart', arg);
+})
