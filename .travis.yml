@@ -23,7 +23,6 @@ os:
 
 install:
   - npm install --no-progress
-  - $(npm bin)/electron --version
 
 script:
   - npm test
