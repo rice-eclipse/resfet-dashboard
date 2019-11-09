@@ -5,12 +5,8 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 // Modules to control application life and create native browser window.
 const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron');
 
-// Global variable to store the most recent data.
-global.recentdata = {}
-global.recentdata_lambda = {}
-
 // Module for logging.
-let logger = require("./modules/logging");
+let logger = require("./modules/runtime_logging");
 
 logger.log.info("Initializing RESFET Dashboard.");
 
@@ -20,22 +16,23 @@ global.config = config
 
 // Initializing the window.
 let mainWindow
+global.mainWindow = mainWindow
 
 // Modules to control UDP & TCP communication with the box.
 let tcp = require("./modules/tcp");
 let udp = require("./modules/udp");
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
-  mainWindow.loadFile('application.html');
+  global.mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
+  global.mainWindow.loadFile('application.html');
 
-  //mainWindow.webContents.openDevTools()
+  global.mainWindow.webContents.openDevTools()
 
-  mainWindow.on('closed', function () {
+  global.mainWindow.on('closed', function () {
     /*
     Emitted when the window is closed.
     */
-    mainWindow = null
+   global.mainWindow = null
   })
 }
 
@@ -56,7 +53,7 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (global.mainWindow === null) {
     createWindow();
   }
 })
@@ -82,7 +79,7 @@ ipcMain.on('sendTCP', (event, arg) => {
 });
 
 tcp.emitter.on('status', function(data) {
-  mainWindow.send('statusTCP', tcp.tcp_connected);
+  global.mainWindow.send('statusTCP', tcp.tcp_connected);
 
   if (data === true) {
     udp.startUDP({port: config.config.network.udp.port})
@@ -92,15 +89,15 @@ tcp.emitter.on('status', function(data) {
 });
 
 udp.emitter.on('status', function(data) {
-    mainWindow.send('statusUDP', udp.udp_started);
+  global.mainWindow.send('statusUDP', udp.udp_started);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {
-    mainWindow.send('reformatChart', arg);
+  global.mainWindow.send('reformatChart', arg);
 });
 
 logger.emitter.on('log', function (data) {
-  if (mainWindow) {
-    mainWindow.send('log', data);
+  if (global.mainWindow) {
+    global.mainWindow.send('log', data);
   }
 })

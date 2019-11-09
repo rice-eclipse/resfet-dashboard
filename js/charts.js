@@ -66,26 +66,6 @@ for (var i = 0; i < 4; i++) {
     }));
 }
 
-function plotData() {
-    /**
-     * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
-     * event, which includes the timestamp and value of the datapoint.
-     */
-    for (var i = 0; i < 4; i++) {
-        for(var j = 0; j < charts[i].data.datasets.length; j++) {
-            var source = charts[i].data.datasets[j].datasource
-
-            charts[i].data.datasets[j].data.push({
-                x: Date.now(),
-                y: remote.getGlobal('recentdata_lambda')[source](remote.getGlobal('recentdata')[source])
-            });
-            charts[i].update({
-                preservation: true
-            });
-        }
-    }
-}
-
 function reformatChart(chartid, panel) {
     /**
      * Takes chartid, which is the id [0, 1, 2, 3] of the chart displayed on the dashboard; panel, which is the index of the panel in json.
@@ -115,6 +95,31 @@ function reformatChart(chartid, panel) {
     label.innerHTML = config.config.panels[panel].label;
 }
 
+// Allow different modules to call plotData method.
+module.exports = {
+    plotData : function(time, source, data) {
+        /**
+         * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
+         * event, which includes the timestamp and value of the datapoint.
+         */
+        for (var i = 0; i < 4; i++) {
+            for(var j = 0; j < charts[i].data.datasets.length; j++) {
+                var chart_source = charts[i].data.datasets[j].datasource
+
+                if(chart_source == source) {
+                    charts[i].data.datasets[j].data.push({
+                        x: time,
+                        y: data
+                    });
+                    charts[i].update({
+                        preservation: true
+                    });
+                }
+            }
+        }
+    }
+}
+
 // Watch the 'panelSelect' objects in HTML and look for any change.
 document.getElementById('panelSelect1').addEventListener('change', function() {
     reformatChart(0, this.value)
@@ -134,8 +139,8 @@ ipcRenderer.on('reformatChart' , function(event , data){
     reformatChart(data.chartid, data.panel);
 });
 
-setInterval(function(){
-    if(remote.getGlobal('config').configPath != "") {
-        plotData()
-    }
-},200)
+// setInterval(function(){
+//     if(remote.getGlobal('config').configPath != "") {
+//         plotData()
+//     }
+// },200)

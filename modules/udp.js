@@ -8,7 +8,7 @@ Engine does not receive any data using TCP protocol; therefore, this is a one wa
 const dgram = require('dgram');
 const EventEmitter = require('events');
 const packets = require('./packets');
-const logger = require("./logging");
+const logger = require("./runtime_logging");
 
 var udp_server = dgram.createSocket('udp4');
 
@@ -37,11 +37,18 @@ module.exports = {
     // Process the retrieved package.
     udp_server.on('message', (msg, rinfo) => {
         let decoded = packets.decode(msg, rinfo);
-        let source = global.config.config.sources_inv[decoded[0][0]]
+        let source = global.config.config.sources_inv[decoded[0][0]];
+        let message = decoded[1][decoded[1].length-1][0]
 
-        if (source in global.recentdata) {
-            global.recentdata[source] = decoded[1][decoded[1].length-1][0]
+        try { 
+          let lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
+        } catch(e) {
+          let lambda = new Function("x", "return x");
         }
+
+        // Plot data on Graph.
+        global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${lambda(message)});`);
+
         //console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
     });
     

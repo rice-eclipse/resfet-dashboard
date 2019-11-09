@@ -7,7 +7,7 @@ Engine does not send any data using TCP protocol; therefore, this is a one way c
 
 const net = require('net');
 const EventEmitter = require('events');
-const logger = require("./logging");
+const logger = require("./runtime_logging");
 
 const tcp_client = new net.Socket();
 
