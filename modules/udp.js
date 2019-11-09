@@ -39,11 +39,12 @@ module.exports = {
         let decoded = packets.decode(msg, rinfo);
         let source = global.config.config.sources_inv[decoded[0][0]];
         let message = decoded[1][decoded[1].length-1][0]
+        let lambda; // assigned in try-catch below
 
         try { 
-          let lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
+          lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
         } catch(e) {
-          let lambda = new Function("x", "return x");
+          lambda = new Function("x", "return x");
         }
 
         // Plot data on Graph.
