@@ -26,7 +26,7 @@ function createWindow () {
   global.mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
   global.mainWindow.loadFile('application.html');
 
-  global.mainWindow.webContents.openDevTools()
+  //global.mainWindow.webContents.openDevTools()
 
   global.mainWindow.on('closed', function () {
     /*

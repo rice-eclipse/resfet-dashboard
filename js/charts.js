@@ -138,9 +138,3 @@ document.getElementById('panelSelect4').addEventListener('change', function() {
 ipcRenderer.on('reformatChart' , function(event , data){
     reformatChart(data.chartid, data.panel);
 });
-
-// setInterval(function(){
-//     if(remote.getGlobal('config').configPath != "") {
-//         plotData()
-//     }
-// },200)
