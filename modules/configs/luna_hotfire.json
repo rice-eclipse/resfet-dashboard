@@ -3,7 +3,7 @@
         "name": "Luna Hotfire",
         "network": {
             "tcp": {
-                "ip": "192.168.1.138",
+                "ip": "127.0.0.1",
                 "port": 1234
             },
             "udp": {

@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const logger = require("./logging");
 
 module.exports = {
     configPath: "",
@@ -14,7 +15,7 @@ module.exports = {
             fs.readdir(directoryPath, function (err, files) {    
                 // Handling error
                 if (err) {
-                    rej(console.log('[ERROR] Unable to scan directory: ' + err));
+                    rej(logger.log.error('Unable to scan directory '+directoryPath));
                 }
     
                 res(files);
@@ -50,10 +51,10 @@ module.exports = {
                 } catch(e) {
                     let lambda = new Function("x", "return 0");
                     global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = lambda;
-                    console.log("[CONF]: Error while importing the lambda configuration "+module.exports.config.panels[i].data[j].calibration+". Reading is default to 0.");
+                    logger.log.error("Error while importing the lambda configuration "+module.exports.config.panels[i].data[j].calibration+". Reading is default to 0.");
                 }
             }
         }
-        console.log("[CONF]: Configuration file "+module.exports.configPath+" is applied.");
+        logger.log.info("Configuration file "+module.exports.configPath+" is applied.");
     }
 }
