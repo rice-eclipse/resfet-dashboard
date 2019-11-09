@@ -16,12 +16,19 @@ addons:
 services:
   - xvfb
 
+addons:
+  apt:
+    packages:
+      - xvfb
+
 # A list of operating systems which are used for tests
 os:
   - linux
   - osx
 
 install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - npm install --no-progress
 
 script:
