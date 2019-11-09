@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const logger = require("./logging");
+const logger = require("./runtime_logging");
 
 module.exports = {
     configPath: "",
@@ -40,21 +40,6 @@ module.exports = {
             module.exports.config.sources_inv[module.exports.config.sources[i]] = i;
         }
 
-        // TODO: Instead of refreshing what we have, we should essentially pull whenever we get a reading.s
-        for (const i of Object.keys(module.exports.config.panels)){
-            for (const j of Object.keys(module.exports.config.panels[i].data)) {
-                global.recentdata[module.exports.config.panels[i].data[j].source] = 0;
-
-                try {
-                    let lambda = new Function("x", "return "+module.exports.config.panels[i].data[j].calibration);
-                    global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = lambda;
-                } catch(e) {
-                    let lambda = new Function("x", "return 0");
-                    global.recentdata_lambda[module.exports.config.panels[i].data[j].source] = lambda;
-                    logger.log.error("Error while importing the lambda configuration "+module.exports.config.panels[i].data[j].calibration+". Reading is default to 0.");
-                }
-            }
-        }
         logger.log.info("Configuration file "+module.exports.configPath+" is applied.");
     }
 }

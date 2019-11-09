@@ -14,7 +14,7 @@
  * Note that byte order is always little endian throughout the code.
  *****************************************************************************/
 
-const logger = require("./logging");
+const logger = require("./runtime_logging");
 
 module.exports = {
     /**
