@@ -14,6 +14,8 @@
  * Note that byte order is always little endian throughout the code.
  *****************************************************************************/
 
+const logger = require("./logging");
+
 module.exports = {
     /**
      * Formats the input microsecond timestamp nicely (hours:minutes:seconds).
@@ -70,13 +72,13 @@ module.exports = {
         let decoded = [];
         let header = module.exports.readHeader(msg, rinfo);
         if (!header) {
-            console.log("[ERROR] Could not decode header");
+            logger.log.error("Packets decoder could not decode the header.");
             return [];
         }
         decoded.push(header);
         let payloads = module.exports.readPayloads(msg, rinfo, header[1]);
         if (!payloads) {
-            console.log("[ERROR] Could not decode payloads");
+            logger.log.error("Packets decoder could not decode payloads.");
             return [];
         }
         decoded.push(payloads);
@@ -97,7 +99,7 @@ module.exports = {
         let number_offset = 2; // starting index of number in msg
 
         if (msg_size < expected_size) {
-            console.log("[ERROR] Packet is too short to read header");
+            logger.log.error("Packet is too short to read the header.");
             return [];
         }
         let type = msg.readUInt8(0);
@@ -126,7 +128,7 @@ module.exports = {
 
 	    //console.log("Received packet of length " + msg_size);
         if (msg_size < header_size + 16) {
-            console.log("[ERROR] Packet is too short to read any payloads");
+            logger.log.error("Packet is too short to read any payloads.");
             return [];
         }
         let offset = header_size; // offset into msg
@@ -148,7 +150,7 @@ module.exports = {
             offset += 16; // move to next payload
         }
         if (offset < msg_size) {
-            console.log("[WARNING] Leftover data in packet");
+            logger.log.warn("There is leftover data in packet.");
         }
         return payloads;
     }

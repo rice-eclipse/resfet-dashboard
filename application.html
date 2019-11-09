@@ -73,6 +73,16 @@
                     </div>
               </div>
             </div>
+
+            <div class="card" style="background-color:black; color:white;">
+              <div class="card-body">
+                <div id="logs" style="height: 100px; overflow-y: scroll;">
+
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
           <div class="col-4">
@@ -126,10 +136,11 @@
     <script src="node_modules/chart.js/dist/Chart.min.js"></script>
     <script src="node_modules/chartjs-plugin-streaming/dist/chartjs-plugin-streaming.min.js"></script>
     <script>
-      require('./js/connection-status.js')
-      require('./js/config-ui.js')
-      require("./js/charts.js")
-      require('./js/buttons.js') 
+      require('./js/connection-status.js');
+      require('./js/config-ui.js');
+      require("./js/charts.js");
+      require('./js/buttons.js');
+      require("./js/livelogging.js");
     </script>
   </body>
 </html>

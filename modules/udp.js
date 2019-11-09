@@ -8,6 +8,7 @@ Engine does not receive any data using TCP protocol; therefore, this is a one wa
 const dgram = require('dgram');
 const EventEmitter = require('events');
 const packets = require('./packets');
+const logger = require("./logging");
 
 var udp_server = dgram.createSocket('udp4');
 
