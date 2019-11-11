@@ -3,7 +3,7 @@
         "name": "Luna Hotfire",
         "network": {
             "tcp": {
-                "ip": "127.0.0.1",
+                "ip": "10.212.176.159",
                 "port": 1234
             },
             "udp": {
@@ -112,7 +112,7 @@
                 ]
             },
             {
-                "label": "Water Valve",
+                "label": "Vent Valve",
                 "buttons": [
                     {
                         "style": "primary",
