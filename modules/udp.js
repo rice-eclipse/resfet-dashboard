@@ -12,6 +12,9 @@ const logger = require("./runtime_logging");
 
 var udp_server = dgram.createSocket('udp4');
 
+let idletime = {};
+let timeout = 200;
+
 module.exports = {
   udp_started: false,
   emitter: new EventEmitter(),
@@ -40,15 +43,28 @@ module.exports = {
         let source = global.config.config.sources_inv[decoded[0][0]];
         let message = decoded[1][decoded[1].length-1][0]
         let lambda; // assigned in try-catch below
+        let plot = false;
 
-        try { 
-          lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
-        } catch(e) {
-          lambda = new Function("x", "return x");
+        if (source in idletime) {
+          if(Date.now() - idletime[source] > timeout) {
+            plot = true;
+          }
+        } else {
+          plot = true;
         }
 
-        // Plot data on Graph.
-        global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${lambda(message)});`);
+        if (plot) {
+          idletime[source] = Date.now();
+
+          try { 
+            lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
+          } catch(e) {
+            lambda = new Function("x", "return x");
+          }
+  
+          // Plot data on Graph.
+          global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${lambda(message)});`);
+        }
 
         //console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
     });
