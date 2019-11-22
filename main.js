@@ -3,10 +3,12 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 */
 
 // Modules to control application life and create native browser window.
-const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron');
+const {app, ipcMain, dialog, BrowserWindow} = require('electron');
 
 // Module for logging.
 let logger = require("./modules/runtime_logging");
+let sensor_logger = require("./modules/sensor_logging");
+global.sensor_logger = sensor_logger;
 
 logger.log.info("Initializing RESFET Dashboard.");
 
@@ -74,6 +76,10 @@ ipcMain.on('destroyTCP', (event, arg) => {
     tcp.destroyTCP();
 });
 
+ipcMain.on('toggleLogging', (event, arg) => {
+  sensor_logger.toggle();
+});
+
 ipcMain.on('sendTCP', (event, arg) => {
     tcp.sendTCP(arg);
 });
@@ -90,6 +96,10 @@ tcp.emitter.on('status', function(data) {
 
 udp.emitter.on('status', function(data) {
   global.mainWindow.send('statusUDP', udp.udp_started);
+});
+
+sensor_logger.emitter.on('status', function(data) {
+  global.mainWindow.send('statusLogging', sensor_logger.enabled);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {

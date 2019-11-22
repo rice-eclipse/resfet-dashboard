@@ -22,6 +22,7 @@
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" id="serverConnect">Connect</button>
                 <button class="btn btn-outline-secondary" id="serverDisconnect">Disconnect</button>
+                <button class="btn btn-outline-secondary" id="toggleLogging">Toggle Log Output</button>
               </div>
             </div>
           </div>
@@ -121,11 +122,11 @@
     <footer class="footer">
       <div class="container">
         <div class="row">
-          <div class="col-10">
-            Config: <span id="currentConfig">N/A</span> | TCP Address: <span id="tcpAddress">N/A</span> | UDP Address: <span id="udpAddress">N/A</span>
+          <div class="col-9">
+            Config: <span id="currentConfig">N/A</span> | Logging Directory: <span id="currentLogDir">N/A</span> | TCP Address: <span id="tcpAddress">N/A</span> | UDP Address: <span id="udpAddress">N/A</span>
           </div>
-          <div class="col-2 text-right">
-            <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span> <span class="badge badge-pill badge-danger" id="bannerUDP">UDP</span>
+          <div class="col-3 text-right">
+            <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span> <span class="badge badge-pill badge-danger" id="bannerUDP">UDP</span> <span class="badge badge-pill badge-danger" id="sourceLogging">SRC LOG</span>
           </div>
         </div>
       </div>
@@ -135,9 +136,11 @@
     <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/chart.js/dist/Chart.min.js"></script>
     <script src="node_modules/chartjs-plugin-streaming/dist/chartjs-plugin-streaming.min.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script>
       require('./js/connection-status.js');
       require('./js/config-ui.js');
+      require('./js/logging-ui.js');
       let charts = require("./js/charts.js");
       require('./js/buttons.js');
       require("./js/livelogging.js");

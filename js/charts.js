@@ -2,7 +2,7 @@
 let config = require("electron").remote.require("./modules/config")
 
 // Module for network hook calls.
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 
 // Initializing all the variables.
 var chartElems = [];
