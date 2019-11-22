@@ -3,7 +3,7 @@
         "name": "Luna Hotfire",
         "network": {
             "tcp": {
-                "ip": "10.212.176.159",
+                "ip": "192.168.1.138",
                 "port": 1234
             },
             "udp": {
@@ -22,13 +22,13 @@
                         "label": "TC1",
                         "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "x*5/9 + 32"
+                        "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "x*5/9 + 32"
+                        "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC3",
@@ -37,7 +37,7 @@
                         "calibration": "0.1611*x - 250"
                     }
                 ],
-                "unit": "Celcius"
+                "unit": "°C"
             },
             {
                 "label": "Pressure Transducers",
@@ -61,37 +61,37 @@
                         "calibration": "-0.2810327855*x + 1068"
                     }
                 ],
-                "unit":"Pascal"
+                "unit":"PSI"
             },
             {
                 "label": "Load Cells",
                 "data": [
                     {
-                        "label": "LC_MAIN",
+                        "label": "AXIAL",
                         "source": "LC_MAIN_SEND",
                         "color": "rgba(0, 0, 0, 0.2)",
-                        "calibration": "-0.03159*x + 105"
+                        "calibration": "(-0.0145*x + 47.072) * 2.20462"
                     },
                     {
-                        "label": "LC1",
+                        "label": "LAT1",
                         "source": "LC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "0.0093895*x"
+                        "calibration": "x"
                     },
                     {
-                        "label": "LC2",
+                        "label": "LAT2",
                         "source": "LC2_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "-0.0092222*x"
+                        "calibration": "x"
                     },
                     {
-                        "label": "LC3",
+                        "label": "LAT3",
                         "source": "LC3_SEND",
                         "color": "rgba(132, 99, 255, 0.2)",
-                        "calibration": "0.0097715*x"
+                        "calibration": "x"
                     }
                 ],
-                "unit": "Newton"
+                "unit": "LBS"
             }
         ],
         "controls":

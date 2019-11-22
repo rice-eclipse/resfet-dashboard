@@ -33,7 +33,7 @@ module.exports = {
 		Sends a message to the server.
 		*/
 		
-		logger.log.info("Sent message "+data.readIntLE(0,1)+" over TCP.");
+		logger.log.info("Sent message "+data.readIntLE(0,1)+" ["+global.config.config.commands_inv[data.readIntLE(0,1)]+"] over TCP.");
 		tcp_client.write(data);
 	},
 	destroyTCP: function() {

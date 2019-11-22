@@ -13,7 +13,7 @@ const logger = require("./runtime_logging");
 var udp_server = dgram.createSocket('udp4');
 
 let idletime = {};
-let timeout = 200;
+let timeout = 100;
 
 module.exports = {
   udp_started: false,
@@ -34,15 +34,15 @@ module.exports = {
     // Catch if there is an error.
     udp_server.on('error', (err) => {
       udp_server.close();
-      console.log(`[UDP] Server Error:\n${err.stack}`);
+      logger.log.info(`UDP server error:\n${err.stack}`);
     });
     
     // Process the retrieved package.
     udp_server.on('message', (msg, rinfo) => {
         let decoded = packets.decode(msg, rinfo);
         let source = global.config.config.sources_inv[decoded[0][0]];
-        let message = decoded[1][decoded[1].length-1][0]
-        let lambda; // assigned in try-catch below
+        let message = decoded[1][decoded[1].length-1][0];
+        let lambda = global.config.lambda[source];
         let plot = false;
 
         if (source in idletime) {
@@ -56,12 +56,6 @@ module.exports = {
         if (plot) {
           idletime[source] = Date.now();
 
-          try { 
-            lambda = new Function("x", "return "+global.config.config.panels[i].data[j].calibration);
-          } catch(e) {
-            lambda = new Function("x", "return x");
-          }
-  
           // Plot data on Graph.
           global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${lambda(message)});`);
         }
@@ -71,7 +65,7 @@ module.exports = {
     
     // Catch if the server is closed.
     udp_server.on('close', (msg, rinfo) => {
-      console.log(`[UDP] Server closed.`);
+      logger.log.info(`UDP server closed.`);
       module.exports.udp_started = false;
       module.exports.emitter.emit("status", module.exports.udp_started);
 
@@ -84,7 +78,7 @@ module.exports = {
       let address = udp_server.address();
       module.exports.udp_started = true;
       module.exports.emitter.emit("status", module.exports.udp_started);
-      console.log(`[UDP] Server initialized on ${address.address}:${address.port}.`);
+      logger.log.info(`UDP server initialized on ${address.address}:${address.port}.`);
     });
   },
   destroyUDP: function(port) {
