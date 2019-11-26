@@ -64,6 +64,8 @@ module.exports = {
         }
     },
     log: function(sensor, timestamp, value) {
-
+        if (sensor in module.exports.streams) {
+            module.exports.streams[sensor].write(""+timestamp+" "+value+"\n");
+        }
     }
 }

@@ -43,6 +43,7 @@ module.exports = {
         let source = global.config.config.sources_inv[decoded[0][0]];
         let message = decoded[1][decoded[1].length-1][0];
         let lambda = global.config.lambda[source];
+        let value = lambda(message);
         let plot = false;
 
         if (source in idletime) {
@@ -53,11 +54,14 @@ module.exports = {
           plot = true;
         }
 
+        // Log the value.
+        global.sensor_logger.log(source, Date.toString(), value);
+
         if (plot) {
           idletime[source] = Date.now();
 
           // Plot data on Graph.
-          global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${lambda(message)});`);
+          global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${value});`);
         }
 
         //console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
