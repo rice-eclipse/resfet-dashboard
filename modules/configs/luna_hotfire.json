@@ -46,19 +46,20 @@
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "-0.275787487*x + 1069"
+                        "calibration": "-0.3012*x + 1116.9"
                     },
                     {
                         "label": "INJE",
                         "source": "PT_INJE_SEND",
                         "color": "rgba(99, 255, 132, 0.2)",
-                        "calibration": "-0.2782331275*x + 1045"
+                        "calibration": "-0.3081*x + 1123.7",
+                        "calibration_withzero": "-0.2996*x + 1111.1"
                     },
                     {
                         "label": "COMB",
                         "source": "PT_COMB_SEND",
                         "color": "rgba(132, 99, 255, 0.2)",
-                        "calibration": "-0.2810327855*x + 1068"
+                        "calibration": "-0.3*x + 1108.1"
                     }
                 ],
                 "unit":"PSI"
