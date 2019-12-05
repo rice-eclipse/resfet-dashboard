@@ -33,12 +33,17 @@ module.exports = {
         module.exports.configPath = configPath;
         module.exports.config = require("./configs/"+configPath)[0];
 
-        // TODO: Divide commands into 'sources' and 'commands' so that this would be unnecessary.
         module.exports.config.sources_inv = {};
 
         for (const i of Object.keys(module.exports.config.sources)) {
             module.exports.config.sources_inv[module.exports.config.sources[i]] = i;
         }
+
+        for (const i of Object.keys(module.exports.config.maincontrols)) {
+            // if(key in obj) ... TODO: FINISH THIS!!!
+        }
+
+
 
         logger.log.info("Configuration file "+module.exports.configPath+" is applied.");
     }
