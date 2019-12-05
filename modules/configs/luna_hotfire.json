@@ -77,13 +77,13 @@
                         "label": "LAT1",
                         "source": "LC1_SEND",
                         "color": "rgba(255, 99, 132, 0.2)",
-                        "calibration": "x"
+                        "calibration": "(0.0044*x - 2.5306) * 2.20462"
                     },
                     {
                         "label": "LAT2",
                         "source": "LC2_SEND",
                         "color": "rgba(99, 255, 132, 0.4)",
-                        "calibration": "(-0.0042*x + 15.781) * 2.20462"
+                        "calibration": "(-0.0043*x + 16.128) * 2.20462"
                     },
                     {
                         "label": "LAT3",

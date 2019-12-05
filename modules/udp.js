@@ -55,7 +55,7 @@ module.exports = {
         }
 
         // Log the value.
-        global.sensor_logger.log(source, Date.toString(), value);
+        global.sensor_logger.log(source, Date.now(), value);
 
         if (plot) {
           idletime[source] = Date.now();
