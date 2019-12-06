@@ -1,11 +1,21 @@
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
 
+module.exports = {
+    log: function(timestamp, level, message) {
+        const logs = document.getElementById("logs");
+        if (timestamp != "" && level != "") {
+            logs.innerHTML += `${timestamp} : [${level}] ${message}<br>`;
+        } else {
+            logs.innerHTML += `${message}<br>`;
+        }
+        logs.scrollTop = logs.scrollHeight;
+    }
+}
+
 ipcRenderer.on('log', (event, arg) => {
-    const logs = document.getElementById("logs");
 
     let level = ""
-
     if (arg.level == "info") {
         level = `<span style="color:green;">INFO</span>`
     } else if (arg.level == "error") {
@@ -16,8 +26,5 @@ ipcRenderer.on('log', (event, arg) => {
         level = arg.level
     }
 
-    logs.innerHTML += `${arg.timestamp} : [${level}] ${arg.message}<br>`;
-    
-    logs.scrollTop = logs.scrollHeight;
-
+    module.exports.log(arg.timestamp, level, arg.message);
 });

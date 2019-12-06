@@ -10,9 +10,9 @@
                 "port": 1234
             }
         },
-        "logging": {
-            "tcp": true,
-            "udp": false
+        "test": {
+            "starttime": -10,
+            "finishtime": 12
         },
         "panels": [
             {
@@ -95,8 +95,7 @@
                 "unit": "LBS"
             }
         ],
-        "controls":
-        [
+        "controls": [
             {
                 "label": "Main Valve",
                 "buttons": [
@@ -143,8 +142,7 @@
                 ]
             }
         ],
-        "maincontrols":
-        {
+        "maincontrols": {
             "ignition": {
                 "action": "NORM_IGNITE"
             },
