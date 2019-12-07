@@ -86,8 +86,9 @@ function startInterval() {
       ipcRenderer.send('sendTCP', buffer);
     }
 
-    if (currentTimer == config.config.test.finishtime) {
+    if (currentTimer >= config.config.test.finishtime) {
       unstageIgnition();
+      return false;
     }
 
     currentTimer += 1;
