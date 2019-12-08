@@ -4,12 +4,16 @@
         "purpose": "test",
         "network": {
             "tcp": {
-                "ip": "127.0.0.1",
+                "ip": "192.168.1.138",
                 "port": 1234
             },
             "udp": {
                 "port": 1234
             }
+        },
+        "test": {
+            "starttime": -10,
+            "finishtime": 11
         },
         "panels": [
             {
@@ -18,20 +22,23 @@
                     {
                         "label": "TC1",
                         "source": "TC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC3",
                         "source": "TC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "0.1611*x - 250"
                     }
                 ],
-                "unit": "Celcius"
+                "unit": "°C"
             },
             {
                 "label": "Pressure Transducers",
@@ -39,50 +46,57 @@
                     {
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "-0.3012*x + 1116.9"
                     },
                     {
                         "label": "INJE",
                         "source": "PT_INJE_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.2)",
+                        "calibration": "-0.3081*x + 1123.7",
+                        "calibration_withzero": "-0.2996*x + 1111.1"
                     },
                     {
                         "label": "COMB",
                         "source": "PT_COMB_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "-0.3*x + 1108.1"
                     }
                 ],
-                "unit":"Pascals"
+                "unit":"PSI"
             },
             {
                 "label": "Load Cells",
                 "data": [
                     {
-                        "label": "LC_MAIN",
+                        "label": "AXIAL",
                         "source": "LC_MAIN_SEND",
-                        "color": "rgba(0, 0, 0, 0.2)"
+                        "color": "rgba(0, 0, 0, 0.2)",
+                        "calibration": "(-0.0145*x + 47.072) * 2.20462"
                     },
                     {
-                        "label": "LC1",
+                        "label": "LAT1",
                         "source": "LC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)"
+                        "color": "rgba(255, 99, 132, 0.2)",
+                        "calibration": "(0.0044*x - 2.5306) * 2.20462"
                     },
                     {
-                        "label": "LC2",
+                        "label": "LAT2",
                         "source": "LC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)"
+                        "color": "rgba(99, 255, 132, 0.4)",
+                        "calibration": "(-0.0043*x + 16.128) * 2.20462"
                     },
                     {
-                        "label": "LC3",
+                        "label": "LAT3",
                         "source": "LC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)"
+                        "color": "rgba(132, 99, 255, 0.2)",
+                        "calibration": "0"
                     }
                 ],
-                "unit": "Pasacal"
+                "unit": "LBS"
             }
         ],
-        "controls":
-        [
+        "controls": [
             {
                 "label": "Main Valve",
                 "buttons": [
@@ -99,7 +113,7 @@
                 ]
             },
             {
-                "label": "Water Valve",
+                "label": "Vent Valve",
                 "buttons": [
                     {
                         "style": "primary",
@@ -129,8 +143,7 @@
                 ]
             }
         ],
-        "maincontrols":
-        {
+        "maincontrols": {
             "ignition": {
                 "action": "NORM_IGNITE"
             },
@@ -139,33 +152,26 @@
             }
         },
         "commands": {
+            "UNSET_VALVE": 0,
+            "SET_VALVE": 1,
+            "UNSET_WATER": 2,
+            "SET_WATER": 3,
+            "UNSET_GITVC": 4,
+            "SET_GITVC": 5,
+            "NORM_IGNITE": 6,
+            "UNSET_IGNITION": 7
+        },
+        "sources" : {
             "LC_MAIN_SEND": 0,
             "LC1_SEND": 1,
             "LC2_SEND": 2,
             "LC3_SEND": 3,
-            "PT_FEED_SEND": 13,
-            "PT_INJE_SEND": 14,
-            "PT_COMB_SEND": 15,
-            "TC1_SEND": 16,
-            "TC2_SEND": 17,
-            "TC3_SEND": 18,
-    
-            "SET_WATER": 19,
-            "UNSET_WATER": 20,
-            "SET_GITVC": 21,
-            "UNSET_GITVC": 22
-        },
-        "calibrations" : {
-            "LC_MAIN_SEND": [-0.3159, 105],
-            "LC1_SEND": [0.0093895, 0],
-            "LC2_SEND": [-0.0092222, 0],
-            "LC3_SEND": [0.0097715, 0],
-            "PT_FEED_SEND": [-0.275787487, 1069],
-            "PT_COMB_SEND": [-0.2810327855, 1068],
-            "PT_INJE_SEND": [-0.2782331275, 1045],
-            "TC1_SEND": [0.1611, -250],
-            "TC2_SEND": [0.1611, -250],
-            "TC3_SEND": [0.1611, -250]
+            "PT_COMB_SEND": 4,
+            "PT_INJE_SEND": 5,
+            "PT_FEED_SEND": 6,
+            "TC1_SEND": 7,
+            "TC2_SEND": 8,
+            "TC3_SEND": 9
         }
     }
 ]

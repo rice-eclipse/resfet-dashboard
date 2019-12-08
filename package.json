@@ -1,11 +1,15 @@
 {
   "name": "resfet-dashboard",
-  "version": "1.0.1",
+  "version": "1.1.5",
   "description": "Rice Eclipse Software for Engine Testing Dasboard",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+<<<<<<< HEAD
     "install": "electron-rebuild"
+=======
+    "test": "electron-mocha"
+>>>>>>> master
   },
   "repository": "https://github.com/rice-eclipse/resfet-dashboard",
   "keywords": [
@@ -18,7 +22,12 @@
   "license": "GPL-3.0",
   "devDependencies": {
     "electron": "^4.0.1",
+<<<<<<< HEAD
     "electron-rebuild": "^1.8.6"
+=======
+    "mocha": "^6.2.2",
+    "electron-mocha": "^8.1.2"
+>>>>>>> master
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
@@ -27,6 +36,9 @@
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "popper.js": "^1.14.3",
-    "serialport": "^7.1.5"
+    "serialport": "^7.1.5",
+    "winston": "^3.2.1",
+    "mkdirp": "^0.5.1",
+    "sweetalert2": "^9.3.17"
   }
 }

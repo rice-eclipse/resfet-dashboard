@@ -2,7 +2,7 @@
 let config = require("electron").remote.require("./modules/config")
 
 // Module for network hook calls.
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 
 // Initializing all the variables.
 var chartElems = [];
@@ -30,7 +30,7 @@ for (var i = 0; i < 4; i++) {
     charts.push(new Chart(chartElems[i], {
         type: 'line',
         data: {
-        datasets: []
+            datasets: []
         },
         options: {
             legend: {
@@ -46,7 +46,7 @@ for (var i = 0; i < 4; i++) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: "SDFJSDFJDSJDJ"
+                        labelString: "N/A"
                     }
                 }]
             },
@@ -66,32 +66,12 @@ for (var i = 0; i < 4; i++) {
     }));
 }
 
-function plotData() {
-    /**
-     * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
-     * event, which includes the timestamp and value of the datapoint.
-     */
-    for (var i = 0; i < 4; i++) {
-        for(var j = 0; j < charts[i].data.datasets.length; j++) {
-            var source = charts[i].data.datasets[j].datasource
-
-            charts[i].data.datasets[j].data.push({
-                x: Date.now(),
-                y: remote.getGlobal('recentdata')[source]
-            });
-            charts[i].update({
-                preservation: true
-            });
-        }
-    }
-}
-
 function reformatChart(chartid, panel) {
     /**
      * Takes chartid, which is the id [0, 1, 2, 3] of the chart displayed on the dashboard; panel, which is the index of the panel in json.
      */
-    var chart = charts[chartid]
-    var label = panelLabels[chartid]
+    var chart = charts[chartid];
+    var label = panelLabels[chartid];
 
     chart.data.datasets = []
 
@@ -106,13 +86,38 @@ function reformatChart(chartid, panel) {
             datasource: config.config.panels[panel].data[i].source
         });
         
-        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit;
+        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit ? config.config.panels[panel].unit : "N/A";
     }
     chart.update({
         preservation: true
     });
 
-    label.innerHTML = config.config.panels[panel].label
+    label.innerHTML = config.config.panels[panel].label;
+}
+
+// Allow different modules to call plotData method.
+module.exports = {
+    plotData : function(time, source, data) {
+        /**
+         * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
+         * event, which includes the timestamp and value of the datapoint.
+         */
+        for (var i = 0; i < 4; i++) {
+            for(var j = 0; j < charts[i].data.datasets.length; j++) {
+                var chart_source = charts[i].data.datasets[j].datasource
+
+                if(chart_source == source) {
+                    charts[i].data.datasets[j].data.push({
+                        x: time,
+                        y: data
+                    });
+                    charts[i].update({
+                        preservation: true
+                    });
+                }
+            }
+        }
+    }
 }
 
 // Watch the 'panelSelect' objects in HTML and look for any change.
@@ -133,9 +138,3 @@ document.getElementById('panelSelect4').addEventListener('change', function() {
 ipcRenderer.on('reformatChart' , function(event , data){
     reformatChart(data.chartid, data.panel);
 });
-
-setInterval(function(){
-    if(remote.getGlobal('config').configPath != "") {
-        plotData()
-    }
-},200)

@@ -14,6 +14,8 @@
  * Note that byte order is always little endian throughout the code.
  *****************************************************************************/
 
+const logger = require("./runtime_logging");
+
 module.exports = {
     /**
      * Formats the input microsecond timestamp nicely (hours:minutes:seconds).
@@ -39,18 +41,18 @@ module.exports = {
      * 					if the input is empty
      */
     formatDecode: function(decoded) {
-		if (!decoded) {
-			return "";
+        if (!decoded) {
+            return "";
         }
-        
+
         let outstr = "";
-		
-		// Print out the header followed by each payload on its own line
-		outstr += `==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====\n`;
-		decoded[1].forEach(function(triple) {
-			outstr += `>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}\n`; // TODO: log total timestamp
+
+        // Print out the header followed by each payload on its own line
+        outstr += `==== Type: ${decoded[0][0]}, number: ${decoded[0][1]} ====\n`;
+        decoded[1].forEach(function(triple) {
+            outstr += `>> Got ${triple[0]} at ${module.exports.formatTimestamp(triple[1])}\n`; // TODO: log total timestamp
         });
-        
+
         return outstr;
 	},
 
@@ -70,13 +72,13 @@ module.exports = {
         let decoded = [];
         let header = module.exports.readHeader(msg, rinfo);
         if (!header) {
-            console.log("[ERROR] Could not decode header");
+            logger.log.error("Packets decoder could not decode the header.");
             return [];
         }
         decoded.push(header);
         let payloads = module.exports.readPayloads(msg, rinfo, header[1]);
         if (!payloads) {
-            console.log("[ERROR] Could not decode payloads");
+            logger.log.error("Packets decoder could not decode payloads.");
             return [];
         }
         decoded.push(payloads);
@@ -97,7 +99,7 @@ module.exports = {
         let number_offset = 2; // starting index of number in msg
 
         if (msg_size < expected_size) {
-            console.log("[ERROR] Packet is too short to read header");
+            logger.log.error("Packet is too short to read the header.");
             return [];
         }
         let type = msg.readUInt8(0);
@@ -124,9 +126,9 @@ module.exports = {
         let msg_size = rinfo.size;
         let header_size = 4;
 
-	    console.log("Received packet of length " + msg_size);
+	    //console.log("Received packet of length " + msg_size);
         if (msg_size < header_size + 16) {
-            console.log("[ERROR] Packet is too short to read any payloads");
+            logger.log.error("Packet is too short to read any payloads.");
             return [];
         }
         let offset = header_size; // offset into msg
@@ -134,7 +136,7 @@ module.exports = {
         // Try to read number payloads, and stop early if the msg is truncated
         for (let i = 0; i < number; i++) {
             if (msg_size - offset < 16) {
-                console.log("[ERROR] Packet is truncated, can only read " + payloads.length + " payloads");
+                //console.log("[ERROR] Packet is truncated, can only read " + payloads.length + " payloads");
                 break;
             }
             let data = msg.readUInt16LE(offset);
@@ -148,7 +150,7 @@ module.exports = {
             offset += 16; // move to next payload
         }
         if (offset < msg_size) {
-            console.log("[WARNING] Leftover data in packet");
+            logger.log.warn("There is leftover data in packet.");
         }
         return payloads;
     }

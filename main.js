@@ -3,40 +3,51 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 */
 
 // Modules to control application life and create native browser window.
-const {app, ipcMain, ipcRenderer, BrowserWindow} = require('electron')
+const {app, ipcMain, dialog, BrowserWindow} = require('electron');
 
-// Global variable to store the most recent data.
-global.recentdata = {}
+// Module for logging.
+let logger = require("./modules/runtime_logging");
+let sensor_logger = require("./modules/sensor_logging");
+global.sensor_logger = sensor_logger;
+
+logger.log.info("Initializing RESFET Dashboard.");
 
 // Modules for config management.
-let config = require("./modules/config")
+let config = require("./modules/config");
 global.config = config
 
 // Initializing the window.
 let mainWindow
+global.mainWindow = mainWindow
 
 // Modules to control UDP & TCP communication with the box.
-let tcp = require("./modules/tcp")
-let udp = require("./modules/udp")
+let tcp = require("./modules/tcp");
+let udp = require("./modules/udp");
 
+<<<<<<< HEAD
 //Module for serial communication
 let serialRead = require("./modules/serial-read")
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 1200, height: 900, minWidth: 1200, minHeight: 900 })
   mainWindow.loadFile('application.html')
+=======
+function createWindow () {
+  global.mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
+  global.mainWindow.loadFile('application.html');
+>>>>>>> master
 
-  //mainWindow.webContents.openDevTools()
+  //global.mainWindow.webContents.openDevTools()
 
-  mainWindow.on('closed', function () {
+  global.mainWindow.on('closed', function () {
     /*
     Emitted when the window is closed.
     */
-    mainWindow = null
+   global.mainWindow = null
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', function () {
   /*
@@ -46,15 +57,15 @@ app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })
 
 app.on('activate', function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
+  if (global.mainWindow === null) {
+    createWindow();
   }
 })
 
@@ -78,12 +89,21 @@ ipcMain.on('destroyTCP', (event, arg) => {
   tcp.destroyTCP();
 });
 
+ipcMain.on('toggleLogging', (event, arg) => {
+  sensor_logger.toggle();
+});
+
 ipcMain.on('sendTCP', (event, arg) => {
   tcp.sendTCP(arg);
 });
 
+<<<<<<< HEAD
 tcp.emitter.on('status', function (data) {
   mainWindow.send('statusTCP', tcp.tcp_connected);
+=======
+tcp.emitter.on('status', function(data) {
+  global.mainWindow.send('statusTCP', tcp.tcp_connected);
+>>>>>>> master
 
   if (data === true) {
     udp.startUDP({ port: config.config.network.udp.port })
@@ -92,6 +112,7 @@ tcp.emitter.on('status', function (data) {
   }
 });
 
+<<<<<<< HEAD
 udp.emitter.on('status', function (data) {
   mainWindow.send('statusUDP', udp.udp_started);
 });
@@ -99,3 +120,22 @@ udp.emitter.on('status', function (data) {
 ipcMain.on('reformatChart', (event, arg) => {
   mainWindow.send('reformatChart', arg);
 })
+=======
+udp.emitter.on('status', function(data) {
+  global.mainWindow.send('statusUDP', udp.udp_started);
+});
+
+sensor_logger.emitter.on('status', function(data) {
+  global.mainWindow.send('statusLogging', sensor_logger.enabled);
+});
+
+ipcMain.on('reformatChart', (event, arg) => {
+  global.mainWindow.send('reformatChart', arg);
+});
+
+logger.emitter.on('log', function (data) {
+  if (global.mainWindow) {
+    global.mainWindow.send('log', data);
+  }
+})
+>>>>>>> master
