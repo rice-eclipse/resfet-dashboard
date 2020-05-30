@@ -11,8 +11,8 @@
             }
         },
         "test": {
-            "starttime": -10,
-            "finishtime": 11
+            "starttime": -3,
+            "finishtime": 10
         },
         "panels": [
             {
@@ -21,19 +21,19 @@
                     {
                         "label": "TC1",
                         "source": "TC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)",
+                        "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC2",
                         "source": "TC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)",
+                        "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "0.1611*x - 250"
                     },
                     {
                         "label": "TC3",
                         "source": "TC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)",
+                        "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "0.1611*x - 250"
                     }
                 ],
@@ -45,20 +45,20 @@
                     {
                         "label": "FEED",
                         "source": "PT_FEED_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)",
+                        "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "-0.3012*x + 1116.9"
                     },
                     {
                         "label": "INJE",
                         "source": "PT_INJE_SEND",
-                        "color": "rgba(99, 255, 132, 0.2)",
+                        "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "-0.3081*x + 1123.7",
                         "calibration_withzero": "-0.2996*x + 1111.1"
                     },
                     {
                         "label": "COMB",
                         "source": "PT_COMB_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)",
+                        "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "-0.3*x + 1108.1"
                     }
                 ],
@@ -70,25 +70,25 @@
                     {
                         "label": "AXIAL",
                         "source": "LC_MAIN_SEND",
-                        "color": "rgba(0, 0, 0, 0.2)",
+                        "color": "rgba(0, 0, 0, 0.8)",
                         "calibration": "(-0.0145*x + 47.072) * 2.20462"
                     },
                     {
                         "label": "LAT1",
                         "source": "LC1_SEND",
-                        "color": "rgba(255, 99, 132, 0.2)",
+                        "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "(0.0044*x - 2.5306) * 2.20462"
                     },
                     {
                         "label": "LAT2",
                         "source": "LC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.4)",
+                        "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "(-0.0043*x + 16.128) * 2.20462"
                     },
                     {
                         "label": "LAT3",
                         "source": "LC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.2)",
+                        "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "0"
                     }
                 ],
@@ -112,7 +112,7 @@
                 ]
             },
             {
-                "label": "Vent Valve",
+                "label": "Pressurization Valve",
                 "buttons": [
                     {
                         "style": "primary",
