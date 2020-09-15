@@ -207,6 +207,18 @@
             "SET_TAPE": 27,
             "UNSET_TAPE": 28
         },
+        "sources" : {
+            "TC1_SEND": 0,
+            "TC2_SEND": 1,
+            "TC3_SEND": 2,
+            "PT_FEED_SEND": 3,
+            "PT_INJE_SEND": 4,
+            "PT_COMB_SEND": 5,
+            "LC_MAIN_SEND": 6,
+            "LC1_SEND": 7,
+            "LC2_SEND": 8,
+            "LC3_SEND": 9
+        },
         "calibrations" : {
             "LC_MAIN_SEND": [-0.3159, 105],
             "LC1_SEND": [0.0093895, 0],

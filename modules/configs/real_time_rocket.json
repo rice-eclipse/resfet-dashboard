@@ -111,6 +111,20 @@
         "commands": {
             
         },
+        "sources" : {
+            "ALT_SEND": 0,
+            "GPS_X_SEND": 1,
+            "GPS_Y_SEND": 2,
+            "ACCL_X_SEND": 3,
+            "ACCL_Y_SEND": 4,
+            "ACCL_Z_SEND": 5,
+            "GYRO_X_SEND": 6,
+            "GYRO_Y_SEND": 7,
+            "GYRO_Z_SEND": 8,
+            "MAGN_X_SEND": 9,
+            "MAGN_Y_SEND": 10,
+            "MAGN_Z_SEND": 11
+        },
         "calibrations" : {
         }
     }

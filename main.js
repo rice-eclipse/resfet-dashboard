@@ -24,18 +24,12 @@ global.mainWindow = mainWindow
 let tcp = require("./modules/tcp");
 let udp = require("./modules/udp");
 
-<<<<<<< HEAD
 //Module for serial communication
 let serialRead = require("./modules/serial-read")
 
-function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1200, height: 900, minWidth: 1200, minHeight: 900 })
-  mainWindow.loadFile('application.html')
-=======
 function createWindow () {
   global.mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
   global.mainWindow.loadFile('application.html');
->>>>>>> master
 
   //global.mainWindow.webContents.openDevTools()
 
@@ -97,13 +91,8 @@ ipcMain.on('sendTCP', (event, arg) => {
   tcp.sendTCP(arg);
 });
 
-<<<<<<< HEAD
-tcp.emitter.on('status', function (data) {
-  mainWindow.send('statusTCP', tcp.tcp_connected);
-=======
 tcp.emitter.on('status', function(data) {
   global.mainWindow.send('statusTCP', tcp.tcp_connected);
->>>>>>> master
 
   if (data === true) {
     udp.startUDP({ port: config.config.network.udp.port })
@@ -112,15 +101,6 @@ tcp.emitter.on('status', function(data) {
   }
 });
 
-<<<<<<< HEAD
-udp.emitter.on('status', function (data) {
-  mainWindow.send('statusUDP', udp.udp_started);
-});
-
-ipcMain.on('reformatChart', (event, arg) => {
-  mainWindow.send('reformatChart', arg);
-})
-=======
 udp.emitter.on('status', function(data) {
   global.mainWindow.send('statusUDP', udp.udp_started);
 });
@@ -138,4 +118,3 @@ logger.emitter.on('log', function (data) {
     global.mainWindow.send('log', data);
   }
 })
->>>>>>> master
