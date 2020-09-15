@@ -1,0 +1,4 @@
+
+Arduino LoRa RX Test!
+LoRa radio init OK!
+Set Freq to: 915.00
