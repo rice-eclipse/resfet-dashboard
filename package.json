@@ -17,7 +17,7 @@
   "author": "Rice Eclipse",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^4.0.1",
+    "electron": "^7.2.4",
     "mocha": "^6.2.2",
     "electron-mocha": "^8.1.2"
   },
