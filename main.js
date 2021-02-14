@@ -25,7 +25,15 @@ let tcp = require("./modules/tcp");
 let udp = require("./modules/udp");
 
 function createWindow () {
-  global.mainWindow = new BrowserWindow({width: 1200, height: 900, minWidth: 1200, minHeight: 900});
+  global.mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 900,
+    minWidth: 1200,
+    minHeight: 900,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
   global.mainWindow.loadFile('application.html');
 
   //global.mainWindow.webContents.openDevTools()
