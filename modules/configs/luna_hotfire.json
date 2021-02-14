@@ -35,6 +35,12 @@
                         "source": "TC3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "0.1611*x - 250"
+                    },
+                    {
+                        "label": "TC4",
+                        "source": "TC4_SEND",
+                        "color": "rgba(132, 99, 255, 0.8)",
+                        "calibration": "0.1611*x - 250"
                     }
                 ],
                 "unit": "°C"
@@ -43,20 +49,20 @@
                 "label": "Pressure Transducers",
                 "data": [
                     {
-                        "label": "FEED",
-                        "source": "PT_FEED_SEND",
+                        "label": "COMB",
+                        "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "-0.3012*x + 1116.9"
                     },
                     {
                         "label": "INJE",
-                        "source": "PT_INJE_SEND",
+                        "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "-0.2989*x + 1082.8"
                     },
                     {
-                        "label": "COMB",
-                        "source": "PT_COMB_SEND",
+                        "label": "FEED",
+                        "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "-0.3*x + 1108.1"
                     }
@@ -68,25 +74,25 @@
                 "data": [
                     {
                         "label": "AXIAL",
-                        "source": "LC_MAIN_SEND",
+                        "source": "LC1_SEND",
                         "color": "rgba(0, 0, 0, 0.8)",
                         "calibration": "(-0.0143*x + 46.567) * 2.20462"
                     },
                     {
                         "label": "LAT1",
-                        "source": "LC1_SEND",
+                        "source": "LC2_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "(-0.0041*x + 16.831) * 2.20462"
                     },
                     {
                         "label": "LAT2",
-                        "source": "LC2_SEND",
+                        "source": "LC3_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "(-0.0042*x + 15.582) * 2.20462"
                     },
                     {
                         "label": "LAT3",
-                        "source": "LC3_SEND",
+                        "source": "LC4_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "(-0.0042*x + 16.616) * 2.20462"
                     }
@@ -160,16 +166,19 @@
             "UNSET_IGNITION": 7
         },
         "sources" : {
-            "LC_MAIN_SEND": 0,
-            "LC1_SEND": 1,
-            "LC2_SEND": 2,
-            "LC3_SEND": 3,
-            "PT_COMB_SEND": 4,
-            "PT_INJE_SEND": 5,
-            "PT_FEED_SEND": 6,
-            "TC1_SEND": 7,
-            "TC2_SEND": 8,
-            "TC3_SEND": 9
+            "LC1_SEND": 0,
+            "LC2_SEND": 1,
+            "LC3_SEND": 2,
+            "LC4_SEND": 3,
+            "LC5_SEND": 4,
+            "PT1_SEND": 5,
+            "PT2_SEND": 6,
+            "PT3_SEND": 7,
+            "PT4_SEND": 8,
+            "TC1_SEND": 9,
+            "TC2_SEND": 10,
+            "TC3_SEND": 11,
+            "TC4_SEND": 12
         }
     }
 ]
