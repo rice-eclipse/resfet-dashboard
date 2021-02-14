@@ -17,18 +17,17 @@
   "author": "Rice Eclipse",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^7.2.4",
-    "mocha": "^6.2.2",
-    "electron-mocha": "^8.1.2"
+    "electron": "4.0.1",
+    "mocha": "6.2.2",
+    "electron-mocha": "8.1.2"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.7.3",
+    "chart.js": "2.7.3",
     "chartjs-plugin-streaming": "^1.8.0",
     "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "popper.js": "^1.14.3",
-    "serialport": "^7.1.5",
     "winston": "^3.2.1",
     "mkdirp": "^0.5.1",
     "sweetalert2": "^9.3.17"

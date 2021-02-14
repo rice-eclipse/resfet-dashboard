@@ -92,7 +92,7 @@ function reformatChart(chartid, panel) {
         preservation: true
     });
 
-    label.innerHTML = config.config.panels[panel].label;
+    //label.innerHTML = config.config.panels[panel].label;
 }
 
 // Allow different modules to call plotData method.
