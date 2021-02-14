@@ -43,6 +43,11 @@ module.exports = {
         let source = global.config.config.sources_inv[decoded[0][0]];
         let message = decoded[1][decoded[1].length-1][0];
         let lambda = global.config.lambda[source];
+
+        if (lambda == null || lambda === null) {
+          return;
+        }
+
         let value = lambda(message);
         let plot = false;
 
