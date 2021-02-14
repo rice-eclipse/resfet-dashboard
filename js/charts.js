@@ -34,7 +34,10 @@ for (var i = 0; i < 4; i++) {
         },
         options: {
             legend: {
-                display: true
+                display: true,
+                labels: {
+                    boxWidth: 15
+                }
             },
             scales: {
                 xAxes: [{
