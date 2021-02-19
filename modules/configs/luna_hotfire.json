@@ -102,32 +102,32 @@
         ],
         "controls": [
             {
-                "label": "Main Valve",
+                "label": "Oxidizer (Main)",
                 "buttons": [
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_VALVE"
+                        "action": "SET_DRIVER1"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_VALVE"
+                        "action": "UNSET_DRIVER1"
                     }
                 ]
             },
             {
-                "label": "Pressurization Valve",
+                "label": "Pressurization",
                 "buttons": [
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_WATER"
+                        "action": "SET_DRIVER2"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_WATER"
+                        "action": "UNSET_DRIVER2"
                     }
                 ]
             },
@@ -137,33 +137,39 @@
                     {
                         "style": "primary",
                         "label": "Open Valve",
-                        "action": "SET_GITVC"
+                        "action": "SET_DRIVER3"
                     },
                     {
                         "style": "primary",
                         "label": "Close Valve",
-                        "action": "UNSET_GITVC"
+                        "action": "UNSET_DRIVER3"
                     }
                 ]
             }
         ],
         "maincontrols": {
             "ignition": {
-                "action": "NORM_IGNITE"
+                "action": "START_IGNITION"
             },
             "anti-ignition": {
-                "action": "UNSET_IGNITION"
+                "action": "STOP_IGNITION"
             }
         },
         "commands": {
-            "UNSET_VALVE": 0,
-            "SET_VALVE": 1,
-            "UNSET_WATER": 2,
-            "SET_WATER": 3,
-            "UNSET_GITVC": 4,
-            "SET_GITVC": 5,
-            "NORM_IGNITE": 6,
-            "UNSET_IGNITION": 7
+            "UNSET_DRIVER1": 0,
+            "SET_DRIVER1": 1,
+            "UNSET_DRIVER2": 2,
+            "SET_DRIVER2": 3,
+            "UNSET_DRIVER3": 4,
+            "SET_DRIVER3": 5,
+            "UNSET_DRIVER4": 6,
+            "SET_DRIVER4": 7,
+            "UNSET_DRIVER5": 8,
+            "SET_DRIVER5": 9,
+            "UNSET_DRIVER6": 10,
+            "SET_DRIVER6": 11,
+            "STOP_IGNITION": 12,
+            "START_IGNITION": 13
         },
         "sources" : {
             "LC1_SEND": 0,
