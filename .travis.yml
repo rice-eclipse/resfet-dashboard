@@ -35,4 +35,4 @@ script:
   - npm test
 
 notifications:
-  slack: riceeclipse:gkom2AO57EGZmxU2wWPEtyR2
+  slack: riceeclipse:HVcYx7InaxdEFzQHaatd1UiH
