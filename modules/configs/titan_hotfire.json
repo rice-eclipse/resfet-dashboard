@@ -1,6 +1,6 @@
 [
     {
-        "name": "Luna Hotfire",
+        "name": "Titan II Hotfire",
         "network": {
             "tcp": {
                 "ip": "192.168.1.138",
@@ -19,21 +19,15 @@
                 "label": "Thermocouples",
                 "data": [
                     {
-                        "label": "TC1",
+                        "label": "Oxidizer",
                         "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "0.1611*x - 250"
                     },
                     {
-                        "label": "TC2",
+                        "label": "Auxiliary",
                         "source": "TC2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "0.1611*x - 250"
-                    },
-                    {
-                        "label": "TC3",
-                        "source": "TC3_SEND",
-                        "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "0.1611*x - 250"
                     }
                 ],
@@ -46,19 +40,25 @@
                         "label": "Combustion",
                         "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.3012*x + 1116.9"
+                        "calibration": "-0.3527*x + 1319.4"
                     },
                     {
                         "label": "Injector",
                         "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.2989*x + 1082.8"
+                        "calibration": "-0.276*x + 957"
                     },
                     {
                         "label": "Feedline",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.3*x + 1108.1"
+                        "calibration": "-0.3012*x + 1116.9"
+                    },
+                    {
+                        "label": "Oxidizer",
+                        "source": "PT4_SEND",
+                        "color": "rgba(132, 132, 0, 0.8)",
+                        "calibration": "-0.2994*x + 1099.1"
                     }
                 ],
                 "unit":"PSI"
@@ -70,7 +70,7 @@
                         "label": "Main LC",
                         "source": "LC1_SEND",
                         "color": "rgba(0, 0, 0, 0.8)",
-                        "calibration": "(-0.0143*x + 46.567) * 2.20462"
+                        "calibration": "(-0.0075*x -6.6431) * 2.20462"
                     }
                 ],
                 "unit": "LBS"
@@ -78,7 +78,7 @@
         ],
         "controls": [
             {
-                "label": "Oxidizer (Main)",
+                "label": "Main Feedline Fill Valve",
                 "buttons": [
                     {
                         "style": "primary",
@@ -93,7 +93,7 @@
                 ]
             },
             {
-                "label": "Pressurization",
+                "label": "Oxidizer Tank Vent Valve",
                 "buttons": [
                     {
                         "style": "primary",
@@ -104,6 +104,21 @@
                         "style": "primary",
                         "label": "Close Valve",
                         "action": "UNSET_DRIVER2"
+                    }
+                ]
+            },
+            {
+                "label": "Ground Vent Valve",
+                "buttons": [
+                    {
+                        "style": "primary",
+                        "label": "Open Valve",
+                        "action": "SET_DRIVER3"
+                    },
+                    {
+                        "style": "primary",
+                        "label": "Close Valve",
+                        "action": "UNSET_DRIVER3"
                     }
                 ]
             }
@@ -137,15 +152,13 @@
             "LC2_SEND": 1,
             "LC3_SEND": 2,
             "LC4_SEND": 3,
-            "LC5_SEND": 4,
-            "PT1_SEND": 5,
-            "PT2_SEND": 6,
-            "PT3_SEND": 7,
-            "PT4_SEND": 8,
-            "TC1_SEND": 9,
-            "TC2_SEND": 10,
-            "TC3_SEND": 11,
-            "TC4_SEND": 12
+            "PT1_SEND": 4,
+            "PT2_SEND": 5,
+            "PT3_SEND": 6,
+            "PT4_SEND": 7,
+            "TC1_SEND": 8,
+            "TC2_SEND": 9,
+            "TC3_SEND": 10
         }
     }
 ]
