@@ -29,6 +29,7 @@ function updateConfigUI() {
 
     updatePanelButtons();
     updatePanelSelection();
+    updateSensorList();
 }
 
 function updatePanelButtons() {
@@ -123,6 +124,35 @@ function updatePanelSelection() {
     ipcRenderer.send("reformatChart", {chartid: 1, panel: select2.value})
     ipcRenderer.send("reformatChart", {chartid: 2, panel: select3.value})
     ipcRenderer.send("reformatChart", {chartid: 3, panel: select4.value})
+}
+
+function updateSensorList() {
+    var sensorList = document.getElementById("panelSensors");
+    sensorList.innerHTML = '' 
+
+    for (var i = 0; i < config.config.panels.length; i++) {
+        var label = document.createElement("h6");
+        label.className = "text-muted";
+        label.innerHTML = config.config.panels[i].label
+        sensorList.appendChild(label);
+
+        sensorList.innerHTML += '<table id="sensors-'+i+'" class="table table-sm table-dark"></table>'; // <thead><tr><th scope="col">Sensor</th><th scope="col">Value</th></tr></thead>
+        var table = document.getElementById("sensors-"+i);
+
+        for (var j = 0; j < config.config.panels[i].data.length; j++) {
+
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+
+            var sensor = config.config.panels[i].data[j]
+        
+            cell1.innerHTML = sensor.label;
+            cell2.innerHTML = "N/A";
+            cell2.id = "sensor-" + sensor.source;
+            cell2.classList.add('text-right');
+        }
+    }
 }
 
 // Watch the 'configSelect' object in HTML and look for any change.

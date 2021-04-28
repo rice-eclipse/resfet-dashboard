@@ -27,9 +27,9 @@ let udp = require("./modules/udp");
 function createWindow () {
   global.mainWindow = new BrowserWindow({
     width: 1200,
-    height: 900,
+    height: 940,
     minWidth: 1200,
-    minHeight: 900,
+    minHeight: 940,
     webPreferences: {
       nodeIntegration: true
     }
