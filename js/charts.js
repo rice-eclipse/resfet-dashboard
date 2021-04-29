@@ -124,7 +124,6 @@ module.exports = {
     updateSensorValue : function(source, data) {
         var sensor = document.getElementById("sensor-"+source);
     
-        alert(source)
         if (sensor != null) {
             sensor.innerHTML = data;
         }
