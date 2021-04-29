@@ -67,7 +67,7 @@ module.exports = {
 
           // Plot data on Graph.
           global.mainWindow.webContents.executeJavaScript(`charts.plotData(${Date.now()}, '${source}', ${value});`);
-          global.mainWindow.webContents.executeJavaScript(`charts.updateSensorValue('${source}', ${value});`);
+          global.mainWindow.webContents.executeJavaScript(`charts.updateSensorValue('${source}', ${value.toFixed(2)});`);
         }
 
         //console.log(`[UDP] Received ${packets.formatDecode(decoded)} from ${rinfo.address}:${rinfo.port}.`);
