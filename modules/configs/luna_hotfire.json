@@ -70,7 +70,7 @@
                         "label": "Main LC",
                         "source": "LC1_SEND",
                         "color": "rgba(0, 0, 0, 0.8)",
-                        "calibration": "(-0.0143*x + 46.567) * 2.20462"
+                        "calibration": "(0.0128*x - 7.6506) * 2.20462"
                     }
                 ],
                 "unit": "LBS"
