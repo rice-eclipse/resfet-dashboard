@@ -19,16 +19,22 @@
                 "label": "Thermocouples",
                 "data": [
                     {
-                        "label": "Oxidizer",
+                        "label": "Oxidizer Tank",
                         "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "0.1611*x - 250"
                     },
                     {
-                        "label": "Auxiliary",
+                        "label": "Combustion Chamber",
                         "source": "TC2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
                         "calibration": "0.1611*x - 250"
+                    },
+                    {
+                        "label": "Nozzle Casing",
+                        "source": "TC3_SEND", 
+                        "color": "rgba(180, 212, 85, 0.8)",
+                        "calibration": "0.611 * x - 250"
                     }
                 ],
                 "unit": "°C"
