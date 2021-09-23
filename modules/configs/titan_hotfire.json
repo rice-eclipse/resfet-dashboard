@@ -34,7 +34,7 @@
                         "label": "Nozzle Casing",
                         "source": "TC3_SEND", 
                         "color": "rgba(180, 212, 85, 0.8)",
-                        "calibration": "0.611 * x - 250"
+                        "calibration": "0.1611 * x - 250"
                     }
                 ],
                 "unit": "°C"
