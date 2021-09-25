@@ -25,16 +25,16 @@
                         "calibration": "0.1611*x - 250"
                     },
                     {
-                        "label": "Combustion Chamber",
-                        "source": "TC2_SEND",
-                        "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "0.1611*x - 250"
-                    },
-                    {
                         "label": "Nozzle Casing",
-                        "source": "TC3_SEND", 
+                        "source": "TC2_SEND",
                         "color": "rgba(180, 212, 85, 0.8)",
                         "calibration": "0.1611 * x - 250"
+                    },
+                    {
+                        "label": "Combustion Chamber",
+                        "source": "TC3_SEND",
+                        "color": "rgba(99, 255, 132, 0.8)",
+                        "calibration": "0.1611*x - 250"
                     }
                 ],
                 "unit": "°C"
@@ -84,7 +84,7 @@
         ],
         "controls": [
             {
-                "label": "Main Feedline Fill Valve",
+                "label": "Main Feedline Oxidizer Fill Valve - Default Closed",
                 "buttons": [
                     {
                         "style": "primary",
@@ -99,7 +99,7 @@
                 ]
             },
             {
-                "label": "Oxidizer Tank Vent Valve",
+                "label": "Oxidizer Tank Engine Vent Valve - Default Closed",
                 "buttons": [
                     {
                         "style": "primary",
@@ -114,16 +114,16 @@
                 ]
             },
             {
-                "label": "Ground Vent Valve",
+                "label": "Ground Vent Valve - Default Open",
                 "buttons": [
                     {
                         "style": "primary",
-                        "label": "Open Valve",
+                        "label": "Close Valve",
                         "action": "SET_DRIVER3"
                     },
                     {
                         "style": "primary",
-                        "label": "Close Valve",
+                        "label": "Open Valve",
                         "action": "UNSET_DRIVER3"
                     }
                 ]
