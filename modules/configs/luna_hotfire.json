@@ -46,19 +46,19 @@
                         "label": "Combustion",
                         "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.3012*x + 1116.9"
+                        "calibration": "-0.2965*x + 1119.5"
                     },
                     {
                         "label": "Injector",
                         "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.2989*x + 1082.8"
+                        "calibration": "-0.3469*x + 1309.2"
                     },
                     {
                         "label": "Feedline",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.3*x + 1108.1"
+                        "calibration": "-0.2666*x + 976.27"
                     }
                 ],
                 "unit":"PSI"
