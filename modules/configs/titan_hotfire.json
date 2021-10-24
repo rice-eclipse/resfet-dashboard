@@ -46,25 +46,25 @@
                         "label": "Combustion",
                         "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.2965*x + 1119.5"
+                        "calibration": "-0.3154*x+1174.1"
                     },
                     {
                         "label": "Injector",
                         "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.3469*x + 1309.2"
+                        "calibration": "-0.3495*x + 1304.4"
                     },
                     {
                         "label": "Feedline",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.2666*x + 976.27"
+                        "calibration": "-0.2825*x+1018.5"
                     },
                     {
                         "label": "Oxidizer",
                         "source": "PT4_SEND",
                         "color": "rgba(132, 132, 0, 0.8)",
-                        "calibration": "-0.1339*x + 382.76"
+                        "calibration": "-0.1206*x + 182.05"
                     }
                 ],
                 "unit":"PSI"
