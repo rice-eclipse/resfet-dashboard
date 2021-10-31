@@ -46,7 +46,7 @@ module.exports = {
 
         // Broadcast driver state if not data packet
         if (source === "DRIVER_STATE_SEND") {
-          global.mainWindow.send('driverUpdate', message);
+          module.exports.emitter.emit('driverUpdate', message);
           return;
         }
         
