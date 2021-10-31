@@ -145,7 +145,8 @@
             "TC1_SEND": 9,
             "TC2_SEND": 10,
             "TC3_SEND": 11,
-            "TC4_SEND": 12
+            "TC4_SEND": 12,
+            "DRIVER_STATE_SEND": 13
         }
     }
 ]

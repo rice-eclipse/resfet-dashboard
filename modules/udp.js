@@ -44,12 +44,17 @@ module.exports = {
         let message = decoded[1][decoded[1].length-1][0];
         let lambda = global.config.lambda[source];
 
+        // Broadcast driver state if not data packet
+        if (source === "DRIVER_STATE_SEND") {
+          module.exports.emitter.emit('driverUpdate', message);
+          return;
+        }
+        
         if (lambda == null || lambda === null) {
           return;
         }
 
         let value = lambda(message);
-        let plot = false;
 
         if (source in idletime) {
           if(Date.now() - idletime[source] > timeout) {

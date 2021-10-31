@@ -106,6 +106,10 @@ udp.emitter.on('status', function(data) {
   global.mainWindow.send('statusUDP', udp.udp_started);
 });
 
+udp.emitter.on('driverUpdate', function(data) {
+  global.mainWindow.send('driverUpdate', data);
+});
+
 sensor_logger.emitter.on('status', function(data) {
   global.mainWindow.send('statusLogging', sensor_logger.enabled);
 });
