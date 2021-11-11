@@ -43,7 +43,7 @@
                 "label": "Pressure Transducers",
                 "data": [
                     {
-                        "label": "Combustion",
+                        "label": "Oxidizer",
                         "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
                         "calibration": "-0.3154*x+1174.1"
@@ -61,7 +61,7 @@
                         "calibration": "-0.2825*x+1018.5"
                     },
                     {
-                        "label": "Oxidizer",
+                        "label": "Combustion",
                         "source": "PT4_SEND",
                         "color": "rgba(132, 132, 0, 0.8)",
                         "calibration": "-0.1206*x + 182.05"
