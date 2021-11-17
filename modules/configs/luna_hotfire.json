@@ -46,19 +46,19 @@
                         "label": "Combustion",
                         "source": "PT1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.2965*x + 1119.5"
+                        "calibration": "-0.3113*x+1158.6"
                     },
                     {
                         "label": "Injector",
                         "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.3469*x + 1309.2"
+                        "calibration": "-0.3454*x + 1288.2"
                     },
                     {
                         "label": "Feedline",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.2666*x + 976.27"
+                        "calibration": "-0.2802*x+1009.1"
                     }
                 ],
                 "unit":"PSI"
@@ -70,7 +70,7 @@
                         "label": "Main LC",
                         "source": "LC1_SEND",
                         "color": "rgba(0, 0, 0, 0.8)",
-                        "calibration": "(0.0128*x - 7.6506) * 2.20462"
+                        "calibration": "0.0255*x + 18.218"
                     }
                 ],
                 "unit": "LBS"
