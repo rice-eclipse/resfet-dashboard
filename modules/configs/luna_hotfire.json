@@ -70,7 +70,7 @@
                         "label": "Main LC",
                         "source": "LC1_SEND",
                         "color": "rgba(0, 0, 0, 0.8)",
-                        "calibration": "0.0255*x + 18.218"
+                        "calibration": "0.0255*x - 18.218"
                     }
                 ],
                 "unit": "LBS"
@@ -138,10 +138,10 @@
             "LC3_SEND": 2,
             "LC4_SEND": 3,
             "LC5_SEND": 4,
-            "PT1_SEND": 5,
-            "PT2_SEND": 6,
-            "PT3_SEND": 7,
-            "PT4_SEND": 8,
+            "PT1_SEND": 4,
+            "PT2_SEND": 5,
+            "PT3_SEND": 6,
+            "PT4_SEND": 7,
             "TC1_SEND": 9,
             "TC2_SEND": 10,
             "TC3_SEND": 11,
