@@ -49,16 +49,16 @@
                         "calibration": "-0.3113*x+1158.6"
                     },
                     {
-                        "label": "Injector",
-                        "source": "PT2_SEND",
-                        "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.3454*x + 1288.2"
-                    },
-                    {
                         "label": "Feedline",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
                         "calibration": "-0.2802*x+1009.1"
+                    },
+                    {
+                        "label": "Injector",
+                        "source": "PT2_SEND",
+                        "color": "rgba(99, 255, 132, 0.8)",
+                        "calibration": "-0.3454*x + 1288.2"
                     },
                     {
                         "label": "Combustion",
@@ -67,7 +67,7 @@
                         "calibration": "-0.0982*x + 191.05"
                     }
                 ],
-                "unit":"PSI"
+                "unit": "PSI"
             },
             {
                 "label": "Load Cells",
@@ -153,7 +153,7 @@
             "STOP_IGNITION": 12,
             "START_IGNITION": 13
         },
-        "sources" : {
+        "sources": {
             "LC1_SEND": 0,
             "LC2_SEND": 1,
             "LC3_SEND": 2,
