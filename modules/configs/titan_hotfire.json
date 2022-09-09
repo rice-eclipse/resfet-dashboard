@@ -43,28 +43,28 @@
                 "label": "Pressure Transducers",
                 "data": [
                     {
-                        "label": "Oxidizer",
+                        "label": "Combustion",
                         "source": "PT1_SEND",
-                        "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.3113*x+1158.6"
+                        "color": "rgba(132, 132, 0, 0.8)",
+                        "calibration": "-0.0982*x + 191.05"
                     },
                     {
                         "label": "Feedline",
                         "source": "PT2_SEND",
                         "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.3454*x + 1288.2"
+                        "calibration": "-0.2834*x + 1020.2"
                     },
                     {
                         "label": "Injector",
                         "source": "PT3_SEND",
                         "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.2802*x+1009.1"
+                        "calibration": "-0.3431*x+1277.0"
                     },
                     {
-                        "label": "Combustion",
+                        "label": "Oxidizer",
                         "source": "PT4_SEND",
-                        "color": "rgba(132, 132, 0, 0.8)",
-                        "calibration": "-0.0982*x + 191.05"
+                        "color": "rgba(255, 99, 132, 0.8)",
+                        "calibration": "-0.3151*x+1170.5"
                     }
                 ],
                 "unit": "PSI"
