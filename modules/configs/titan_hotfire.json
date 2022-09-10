@@ -43,31 +43,31 @@
                 "label": "Pressure Transducers",
                 "data": [
                     {
-                        "label": "Oxidizer",
+                        "label": "Combustion",
                         "source": "PT1_SEND",
-                        "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.3113*x+1158.6"
-                    },
-                    {
-                        "label": "Injector",
-                        "source": "PT2_SEND",
-                        "color": "rgba(99, 255, 132, 0.8)",
-                        "calibration": "-0.3454*x + 1288.2"
+                        "color": "rgba(132, 132, 0, 0.8)",
+                        "calibration": "0.378*x-250.33"
                     },
                     {
                         "label": "Feedline",
-                        "source": "PT3_SEND",
-                        "color": "rgba(132, 99, 255, 0.8)",
-                        "calibration": "-0.2802*x+1009.1"
+                        "source": "PT2_SEND",
+                        "color": "rgba(99, 255, 132, 0.8)",
+                        "calibration": "-0.2834*x + 1020.2"
                     },
                     {
-                        "label": "Combustion",
+                        "label": "Injector",
+                        "source": "PT3_SEND",
+                        "color": "rgba(132, 99, 255, 0.8)",
+                        "calibration": "-0.3431*x+1277.0"
+                    },
+                    {
+                        "label": "Oxidizer",
                         "source": "PT4_SEND",
-                        "color": "rgba(132, 132, 0, 0.8)",
-                        "calibration": "-0.0982*x + 191.05"
+                        "color": "rgba(255, 99, 132, 0.8)",
+                        "calibration": "-0.3178*x+1180.7"
                     }
                 ],
-                "unit":"PSI"
+                "unit": "PSI"
             },
             {
                 "label": "Load Cells",
@@ -153,7 +153,7 @@
             "STOP_IGNITION": 12,
             "START_IGNITION": 13
         },
-        "sources" : {
+        "sources": {
             "LC1_SEND": 0,
             "LC2_SEND": 1,
             "LC3_SEND": 2,
