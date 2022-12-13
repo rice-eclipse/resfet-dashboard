@@ -61,24 +61,36 @@ app.on('activate', function () {
   }
 })
 
-// The following are the hooks for TCP & UDP connection.
+// The following are the hooks for TCP connections.
 // These are accessible from all pages.
 
-ipcMain.on('connectTCP', (event, arg) => {
+ipcMain.on('connectTCP', (_, arg) => {
   interface.connectTCP(arg.port, arg.ip);
 });
 
-ipcMain.on('destroyTCP', (event, arg) => {
+ipcMain.on('destroyTCP', (_, _) => {
   interface.destroyTCP();
 });
 
-ipcMain.on('sendTCP', (event, arg) => {
+ipcMain.on('sendTCP', (_, arg) => {
   interface.sendTCP(arg);
 });
 
 interface.emitter.on('status', function (data) {
-  global.mainWindow.send('statusTCP', interface.tcp_connected);
+  global.mainWindow.send('tcp_status', data);
 });
+
+interface.emitter.on("config", (new_config) => {
+  global.mainWindow.send("config", new_config);
+})
+
+interface.emitter.on("sensor_value", (message) => {
+  global.mainWindow.send("sensor_value", message);
+})
+
+interface.emitter.on("driver_value", (message) => {
+  global.mainWindow.send("driver_value", message);
+})
 
 ipcMain.on('reformatChart', (event, arg) => {
   global.mainWindow.send('reformatChart', arg);

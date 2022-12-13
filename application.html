@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" class="h-100">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Rice Eclipse Software for Engine Testing Dashboard</title>
 
@@ -8,154 +9,152 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/app.css" rel="stylesheet">
-  </head>
-  <body class="d-flex flex-column h-100">
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container">
-          <span class="navbar-brand">RESFET Dashboard</span>
+</head>
 
-          <div class="navbar-nav ml-auto">
-            <div class="input-group">
-              <select class="custom-select" id="configSelect"></select>
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" id="serverConnect">Connect</button>
-                <button class="btn btn-outline-secondary" id="serverDisconnect">Disconnect</button>
-                <button class="btn btn-outline-secondary" id="toggleLogging">Toggle Log Output</button>
-              </div>
+<body class="d-flex flex-column h-100">
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container">
+                <span class="navbar-brand">slonk</span>
+
+                <div class="navbar-nav ml-auto">
+                    <div class="input-group">
+                        <select class="custom-select" id="configSelect"></select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="serverConnect">Connect</button>
+                            <button class="btn btn-outline-secondary" id="serverDisconnect">Disconnect</button>
+                            <button class="btn btn-outline-secondary" id="toggleLogging">Toggle Log Output</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
 
     <!-- Begin page content -->
     <main role="main" class="flex-shrink-0 pt-5">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-8">
-
-            <div class="row pb-3">
-              <div class="col-6">
-                <div class="card">
-                    <div class="card-header">
-                      <select class="custom-select custom-select-sm" id="panelSelect1"></select>
-                    </div>
-                  <div class="card-body">
-                    
-                    <canvas id="chart1" height="200px"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
-                  <div class="card">
-                    <div class="card-header">
-                          <select class="custom-select custom-select-sm" id="panelSelect2"></select>
-                        </div>  
-                      <div class="card-body">
-                        
-                        <canvas id="chart2" height="200px"></canvas>
-                      </div>
-                    </div>
-              </div>
-            </div>
-
-            <div class="row pb-3">
-              <div class="col-6">
-                  <div class="card">
-                    <div class="card-header">
-                        <select class="custom-select custom-select-sm" id="panelSelect3"></select>
-                      </div>
-                      <div class="card-body">
-                        
-                        <canvas id="chart3" height="200px"></canvas>
-                      </div>
-                    </div>
-              </div>
-              <div class="col-6">
-                  <div class="card">
-                    <div class="card-header">
-                        <select class="custom-select custom-select-sm" id="panelSelect4"></select>
-                      </div>
-                      <div class="card-body">
-                        
-                        <canvas id="chart4" height="200px"></canvas>
-                      </div>
-                    </div>
-              </div>
-            </div>
-
-            <div class="card" style="background-color:black; color:white;">
-              <div class="card-body">
-                <div id="logs" style="height: 100px; overflow-y: scroll;">
-
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-
-          <div class="col-4">
-            <!--<h6 class="text-muted">Top Row Panels </h6>
-            <div class="input-group mb-3">
-              <select class="custom-select" id="panelSelect1">
-              </select>
-              <select class="custom-select" id="panelSelect2">
-              </select>
-            </div>
-
-            <h6 class="text-muted">Bottom Row Panels </h6>
-            <div class="input-group mb-4">
-              <select class="custom-select" id="panelSelect3">
-              </select>
-              <select class="custom-select" id="panelSelect4">
-              </select>
-            </div>-->
-
-            
-
-            <div id="panelButtons"></div>
-
-            <hr>
-
-            <h5 class="text-muted">Testing Suite</h5>
-            <div class="btn-group btn-group-lg btn-block" role="group">
-              <button type="button" class="btn btn-warning" id="btnIgnition">Ignition</button>
-              <button type="button" class="btn btn-danger" id="btnStopIgnition">Emergency Stop</button>
-            </div>
-
-            <hr>
-
-            <h5 class="text-muted">Live Sensor Values</h5>
-            <div id="panelSensors"></div>
-
-            <hr>
-
-            <h5 class="text-muted">Driver States</h5>
+        <div class="container">
             <div class="row">
-              <h6 class="col-4 d-flex justify-content-center text-center"></div>
-                <span class="badge badge-pill badge-danger driver-ind" id="driver1-ind">1</span><span class="badge badge-pill badge-danger driver-ind" id="driver2-ind">2</span><span class="badge badge-pill badge-danger driver-ind" id="driver3-ind">3</span><span class="badge badge-pill badge-danger driver-ind" id="driver4-ind">4</span><span class="badge badge-pill badge-danger driver-ind" id="driver5-ind">5</span><span class="badge badge-pill badge-danger driver-ind" id="driver6-ind">6</span>
-              </h6>
+
+                <div class="col-8">
+
+                    <div class="row pb-3">
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <select class="custom-select custom-select-sm" id="panelSelect1"></select>
+                                </div>
+                                <div class="card-body">
+
+                                    <canvas id="chart1" height="200px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <select class="custom-select custom-select-sm" id="panelSelect2"></select>
+                                </div>
+                                <div class="card-body">
+
+                                    <canvas id="chart2" height="200px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pb-3">
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <select class="custom-select custom-select-sm" id="panelSelect3"></select>
+                                </div>
+                                <div class="card-body">
+
+                                    <canvas id="chart3" height="200px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <select class="custom-select custom-select-sm" id="panelSelect4"></select>
+                                </div>
+                                <div class="card-body">
+
+                                    <canvas id="chart4" height="200px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="background-color:black; color:white;">
+                        <div class="card-body">
+                            <div id="logs" style="height: 100px; overflow-y: scroll;">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-4">
+
+                    <div id="panelButtons">
+                        <!-- Panel containing driver actuation buttons. -->
+                        <!-- This will be overwritten later when a new configuration arrives. -->
+                    </div>
+                    <hr>
+
+                    <h5 class="text-muted">Testing Suite</h5>
+                    <div class="btn-group btn-group-lg btn-block" role="group">
+                        <button type="button" class="btn btn-warning" id="btnIgnition">Ignition</button>
+                        <button type="button" class="btn btn-danger" id="btnStopIgnition">Emergency Stop</button>
+                    </div>
+
+                    <hr>
+
+                    <h5 class="text-muted">Live Sensor Values</h5>
+                    <div id="panelSensors">
+                        <!-- Panel containing live sensor readings. -->
+                        <!-- This will be overwritten later when a new configuration arrives. -->
+                    </div>
+                    <hr>
+
+                    <h5 class="text-muted">Driver States</h5>
+                    <div class="row">
+                        <h6 class="col-4 d-flex justify-content-center text-center">
+                    </div>
+                    <span class="badge badge-pill badge-danger driver-ind" id="driver1-ind">1</span><span
+                        class="badge badge-pill badge-danger driver-ind" id="driver2-ind">2</span><span
+                        class="badge badge-pill badge-danger driver-ind" id="driver3-ind">3</span><span
+                        class="badge badge-pill badge-danger driver-ind" id="driver4-ind">4</span><span
+                        class="badge badge-pill badge-danger driver-ind" id="driver5-ind">5</span><span
+                        class="badge badge-pill badge-danger driver-ind" id="driver6-ind">6</span>
+                    </h6>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+        </div>
     </main>
 
     <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-9">
-            Config: <span id="currentConfig">N/A</span> | Logging Directory: <span id="currentLogDir">N/A</span> | TCP Address: <span id="tcpAddress">N/A</span> | UDP Address: <span id="udpAddress">N/A</span>
-          </div>
-          <div class="col-3 text-right">
-            <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span> <span class="badge badge-pill badge-danger" id="bannerUDP">UDP</span> <span class="badge badge-pill badge-danger" id="sourceLogging">SRC LOG</span>
-          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    Config: <span id="currentConfig">N/A</span> | Logging Directory: <span id="currentLogDir">N/A</span>
+                    | TCP
+                    Address: <span id="tcpAddress">N/A</span> | UDP Address: <span id="udpAddress">N/A</span>
+                </div>
+                <div class="col-3 text-right">
+                    <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span> <span
+                        class="badge badge-pill badge-danger" id="bannerUDP">UDP</span> <span
+                        class="badge badge-pill badge-danger" id="sourceLogging">SRC LOG</span>
+                </div>
+            </div>
         </div>
-      </div>
     </footer>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -164,13 +163,14 @@
     <script src="node_modules/chartjs-plugin-streaming/dist/chartjs-plugin-streaming.min.js"></script>
     <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script>
-      require('./js/connection-status.js');
-      require('./js/driver-states.js');
-      require('./js/config-ui.js');
-      require('./js/logging-ui.js');
-      let charts = require("./js/charts.js");
-      require('./js/buttons.js');
-      let livelog = require("./js/livelogging.js");
+        require('./js/connection-status.js');
+        require('./js/driver-states.js');
+        require('./js/config-ui.js');
+        require('./js/logging-ui.js');
+        let charts = require("./js/charts.js");
+        require('./js/buttons.js');
+        let livelog = require("./js/livelogging.js");
     </script>
-  </body>
+</body>
+
 </html>

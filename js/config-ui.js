@@ -1,63 +1,39 @@
 // Modules for config management.
-let config = require("electron").remote.require("./modules/config")
+const interface = require("electron").remote.require("./modules/interface")
 
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
+const { config } = require("winston");
 
-config.fetchConfigs().then((pathContent) => {
-    /**
-    * Fills the config selector with the available options from configs/ directory.
-    */
-    var selectElement = document.getElementById("configSelect");
-    for (var i = 0; i < pathContent.length; i++) {
-        var option = document.createElement("option");
-        option.value = pathContent[i];
-        option.text = pathContent[i];
-        selectElement.appendChild(option);
-    }
-}, (err) => {
-    console.log(err);
-});
-
-function updateConfigUI() {
-    /**
-    * Updates the UI elements with values from the config.
-    */
-    document.getElementById('currentConfig').innerHTML = config.configPath;
-    document.getElementById('tcpAddress').innerHTML = config.config.network.tcp.ip + ":" + config.config.network.tcp.port;
-    document.getElementById('udpAddress').innerHTML = "0.0.0.0:" + config.config.network.udp.port;
-
-    updatePanelButtons();
-    updatePanelSelection();
-    updateSensorList();
-}
-
+/**
+ * Update the control panel buttons based on the current configuration.
+ * 
+ * If this current configuration hasn't changed since the last time this was called, this will be a 
+ * no-op.
+ */
 function updatePanelButtons() {
-    /**
-    * Updates the UI buttons with the information from the config.
-    */
-    var panelButtons = document.getElementById("panelButtons");
+    let panelButtons = document.getElementById("panelButtons");
 
+    // Clear out the pannel so we can overwrite it with some new buttons.
     panelButtons.innerHTML = "";
 
-    for (var i = 0; i < config.config.controls.length; i++) {
-        var label = document.createElement("h6");
+    for (let i = 0; i < interface.config.drivers.length; i++) {
+        let driver = interface.config.drivers[i];
+
+        // Label for the driver
+        let label = document.createElement("h6");
         label.className = "text-muted";
-        label.innerHTML = config.config.controls[i].label
+        label.innerHTML = driver.label
         panelButtons.appendChild(label);
 
-        var btngroup = document.createElement("div");
+        // Group containing the buttons
+        let btngroup = document.createElement("div");
         btngroup.className = "btn-group btn-block mb-3";
         btngroup.role = "group";
 
-        for (var j = 0; j < config.config.controls[i].buttons.length; j++) {
-            var btn = document.createElement("button");
-            btn.className = "btn btn-" + config.config.controls[i].buttons[j].style;
-            btn.innerHTML = config.config.controls[i].buttons[j].label;
-            btn.dataset.action = config.config.controls[i].buttons[j].action;
-
-            btngroup.appendChild(btn);
-        }
+        // Add actuate and deactuate buttons
+        btngroup.appendChild(make_driver_button("Actuate", i, true));
+        btngroup.appendChild(make_driver_button("Deactuate", i, false));
 
         panelButtons.appendChild(btngroup);
     }
@@ -73,94 +49,95 @@ function updatePanelButtons() {
     }
 }
 
-function updatePanelSelection() {
-    /**
-    * Updates the UI panel selection with the information from config.
-    */
-
-    // Initializing all the variables.
-
-    var select1 = document.getElementById("panelSelect1");
-    var select2 = document.getElementById("panelSelect2");
-    var select3 = document.getElementById("panelSelect3");
-    var select4 = document.getElementById("panelSelect4");
-
-    // Clearing the select options.
-    select1.innerHTML = "";
-    select2.innerHTML = "";
-    select3.innerHTML = "";
-    select4.innerHTML = "";
-
-    // Loop through all the panel options and fill each select with the options.
-    // Also sets the default panel based on the order of the panels in json.
-    for (var i = 0; i < config.config.panels.length; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = config.config.panels[i].label;
-        if (i == 0) { option.selected = true; }
-        select1.appendChild(option);
-
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = config.config.panels[i].label;
-        if (i == 1) { option.selected = true; }
-        select2.appendChild(option);
-
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = config.config.panels[i].label;
-        if (i == 2) { option.selected = true; }
-        select3.appendChild(option);
-
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = config.config.panels[i].label;
-        if (i == 3) { option.selected = true; }
-        select4.appendChild(option);
-    }
-
-    // Calls the reformatChart hook to update charts accordingly.
-    ipcRenderer.send("reformatChart", { chartid: 0, panel: select1.value })
-    ipcRenderer.send("reformatChart", { chartid: 1, panel: select2.value })
-    ipcRenderer.send("reformatChart", { chartid: 2, panel: select3.value })
-    ipcRenderer.send("reformatChart", { chartid: 3, panel: select4.value })
+/**
+ * Helper function to create a button for actuating drivers.
+ * @param {string} label The label of the button. 
+ * @param {int} id The ID of the driver to be actuated.
+ * @param {bool} direction The direction of the button to be actuated (true for active, false for 
+ *  inactive).
+ */
+function make_driver_button(label, id, direction) {
+    let button = document.createElement("button");
+    button.className = "btn btn-primary";
+    button.innerHTML = label;
+    button.onclick((_) => {
+        interface.sendTCP({
+            "type": "Actuate",
+            "driver_id": id,
+            "value": direction,
+        });
+    })
 }
 
+/**
+ * Update the chart-panel graphs with new configuration information.
+ * The chart-panel graphs are little dropdowns that let the user choose which graph has which data.
+ */
+function updateChartSelectorList() {
+
+    // all the dropdowns
+    let selection_dropdowns = [];
+
+    // remove previous dropdown options and collect the selection panels
+    for (let i = 0; i < 4; i++) {
+        let selection_dropdown = document.getElementById("panelSelect" + i);
+        selection_dropdowns.push(selection_dropdown);
+        selection_dropdown.innerHTML = "";
+    }
+
+    // collect new sources of chart-able data
+    let source_id = 0;
+    for (group in interface.config.sensor_groups) {
+        for (sensor in group.sensors) {
+            // need a new option for each selector
+            for (let i = 0; i < 4; i++) {
+                let option = document.createElement("option");
+                option.value = sensor.label;
+                option.text = sensor.label;
+                if (i == source_id) {
+                    // by default, first four sources get to be on
+                    option.selected = true;
+                }
+                selection_dropdowns[i].appendChild(option);
+            }
+            source_id += 1;
+        }
+    }
+
+    // notify charts that it needs to be reformatted with this new data
+    for (let i = 0; i < 4; i++) {
+        ipcRenderer.send("reformatChart", { chartid: i, panel: selection_dropdowns[i].value });
+    }
+}
+
+/**
+ * Update the list of sensors and their readings.
+ */
 function updateSensorList() {
     var sensorList = document.getElementById("panelSensors");
-    sensorList.innerHTML = ''
+    sensorList.innerHTML = "";
 
-    for (var i = 0; i < config.config.panels.length; i++) {
-        var label = document.createElement("h6");
+    let source_id = 0;
+    for (group in interface.config.sensor_groups) {
+        let label = document.createElement("h6");
         label.className = "text-muted";
-        label.innerHTML = config.config.panels[i].label
+        label.innerHTML = group.label
         sensorList.appendChild(label);
 
-        sensorList.innerHTML += '<table id="sensors-' + i + '" class="table table-sm table-dark"></table>'; // <thead><tr><th scope="col">Sensor</th><th scope="col">Value</th></tr></thead>
-        var table = document.getElementById("sensors-" + i);
+        sensorList.innerHTML += '<table id="groups-' + i + '" class="table table-sm table-dark"></table>';
+        for (sensor in group.sensors) {
+            let row = table.insertRow();
+            let label_cell = row.insertCell(0);
+            let adc_cell = row.insertCell(1);
+            let calib_cell = row.insertCell(2);
 
-        for (var j = 0; j < config.config.panels[i].data.length; j++) {
-
-            var row = table.insertRow();
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-
-            var sensor = config.config.panels[i].data[j]
-
-            cell1.innerHTML = sensor.label;
-            cell2.innerHTML = "N/A";
-            cell2.id = "sensor-" + sensor.source;
-            cell2.classList.add('text-right');
+            label_cell.innerHTML = sensor.label;
+            adc_cell.innerHTML = "N/A"; // no readings, so this text should be N/A for now
+            adc_cell.id = "sensor-adc-" + sensor.label;
+            adc_cell.classList.add("text-right"); // right align ADC value
+            calib_cell.innerHTML = "N/A";
+            calib_cell.id = "sensor-calib-" + sensor.label;
+            calib_cell.classList.add("text-right"); // right align calibrated reading
         }
     }
 }
-
-// Watch the 'configSelect' object in HTML and look for any change.
-document.getElementById('configSelect').addEventListener('change', function () {
-    buttons
-    config.applyConfig(this.value)
-    updateConfigUI()
-});
-
-// Update the UI with the initial config on boot.
-updateConfigUI()
