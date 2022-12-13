@@ -1,13 +1,12 @@
 {
-  "name": "resfet-dashboard",
+  "name": "slonkboard",
   "version": "1.2.0",
-  "description": "Rice Eclipse Software for Engine Testing Dasboard",
+  "description": "Rice Eclipse's engine controller dashboard",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "electron-mocha"
+    "start": "electron ."
   },
-  "repository": "https://github.com/rice-eclipse/resfet-dashboard",
+  "repository": "https://github.com/rice-eclipse/slonkboard",
   "keywords": [
     "Rice",
     "Eclipse",
@@ -17,13 +16,11 @@
   "author": "Rice Eclipse",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^7.2.4",
-    "mocha": "^6.2.2",
-    "electron-mocha": "^8.1.2"
+    "electron": "^7.2.4"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "chart.js": "2.7.3",
+    "chart.js": "^2.7.3",
     "chartjs-plugin-streaming": "^1.8.0",
     "jquery": "^3.5.0",
     "moment": "^2.24.0",
