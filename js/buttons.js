@@ -39,7 +39,7 @@ btnToggleLogs.addEventListener('click', function (event) {
 
 // BTN: Ignition
 btnIgnition.addEventListener('click', function (event) {
-  if(!remote.getGlobal('sensor_logger').enabled) {
+  if (!remote.getGlobal('sensor_logger').enabled) {
     Swal.fire({
       title: 'Logging is not enabled.',
       text: 'You are about to ignite the engine, but the logging is currently not enabled. Do you still want to continue?',
@@ -72,12 +72,12 @@ function startInterval() {
     return false;
   }
 
-  interval = setInterval(function() {
+  interval = setInterval(function () {
     if (currentTimer < 0) {
-      livelog.log("","",`<span style="color:yellow;">`+currentTimer+` seconds until ignition.</span>`);
+      livelog.log("", "", `<span style="color:yellow;">` + currentTimer + ` seconds until ignition.</span>`);
     }
     if (currentTimer > 0) {
-      livelog.log("","",`<span style="color:yellow;">`+currentTimer+` seconds elapsed since ignition.</span>`);
+      livelog.log("", "", `<span style="color:yellow;">` + currentTimer + ` seconds elapsed since ignition.</span>`);
     }
 
     if (currentTimer == 0) {

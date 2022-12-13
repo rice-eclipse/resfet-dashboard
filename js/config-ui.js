@@ -24,8 +24,8 @@ function updateConfigUI() {
     * Updates the UI elements with values from the config.
     */
     document.getElementById('currentConfig').innerHTML = config.configPath;
-    document.getElementById('tcpAddress').innerHTML = config.config.network.tcp.ip+":"+config.config.network.tcp.port;
-    document.getElementById('udpAddress').innerHTML = "0.0.0.0:"+config.config.network.udp.port;
+    document.getElementById('tcpAddress').innerHTML = config.config.network.tcp.ip + ":" + config.config.network.tcp.port;
+    document.getElementById('udpAddress').innerHTML = "0.0.0.0:" + config.config.network.udp.port;
 
     updatePanelButtons();
     updatePanelSelection();
@@ -52,7 +52,7 @@ function updatePanelButtons() {
 
         for (var j = 0; j < config.config.controls[i].buttons.length; j++) {
             var btn = document.createElement("button");
-            btn.className = "btn btn-"+config.config.controls[i].buttons[j].style;
+            btn.className = "btn btn-" + config.config.controls[i].buttons[j].style;
             btn.innerHTML = config.config.controls[i].buttons[j].label;
             btn.dataset.action = config.config.controls[i].buttons[j].action;
 
@@ -65,7 +65,7 @@ function updatePanelButtons() {
     // When buttons are clicked, a new TCP call is being made.
     var panelButtonsList = panelButtons.getElementsByTagName('button');
     for (var i = 0, len = panelButtonsList.length; i < len; i++) {
-        panelButtonsList[i].onclick = function (){
+        panelButtonsList[i].onclick = function () {
             var buffer = Buffer.alloc(1);
             buffer.fill(config.config.commands[this.dataset.action]);
             ipcRenderer.send('sendTCP', buffer);
@@ -97,38 +97,38 @@ function updatePanelSelection() {
         var option = document.createElement("option");
         option.value = i;
         option.text = config.config.panels[i].label;
-        if(i == 0) { option.selected = true; }
+        if (i == 0) { option.selected = true; }
         select1.appendChild(option);
 
         var option = document.createElement("option");
         option.value = i;
         option.text = config.config.panels[i].label;
-        if(i == 1) { option.selected = true; }
+        if (i == 1) { option.selected = true; }
         select2.appendChild(option);
 
         var option = document.createElement("option");
         option.value = i;
         option.text = config.config.panels[i].label;
-        if(i == 2) { option.selected = true; }
+        if (i == 2) { option.selected = true; }
         select3.appendChild(option);
 
         var option = document.createElement("option");
         option.value = i;
         option.text = config.config.panels[i].label;
-        if(i == 3) { option.selected = true; }
+        if (i == 3) { option.selected = true; }
         select4.appendChild(option);
     }
 
     // Calls the reformatChart hook to update charts accordingly.
-    ipcRenderer.send("reformatChart", {chartid: 0, panel: select1.value})
-    ipcRenderer.send("reformatChart", {chartid: 1, panel: select2.value})
-    ipcRenderer.send("reformatChart", {chartid: 2, panel: select3.value})
-    ipcRenderer.send("reformatChart", {chartid: 3, panel: select4.value})
+    ipcRenderer.send("reformatChart", { chartid: 0, panel: select1.value })
+    ipcRenderer.send("reformatChart", { chartid: 1, panel: select2.value })
+    ipcRenderer.send("reformatChart", { chartid: 2, panel: select3.value })
+    ipcRenderer.send("reformatChart", { chartid: 3, panel: select4.value })
 }
 
 function updateSensorList() {
     var sensorList = document.getElementById("panelSensors");
-    sensorList.innerHTML = '' 
+    sensorList.innerHTML = ''
 
     for (var i = 0; i < config.config.panels.length; i++) {
         var label = document.createElement("h6");
@@ -136,8 +136,8 @@ function updateSensorList() {
         label.innerHTML = config.config.panels[i].label
         sensorList.appendChild(label);
 
-        sensorList.innerHTML += '<table id="sensors-'+i+'" class="table table-sm table-dark"></table>'; // <thead><tr><th scope="col">Sensor</th><th scope="col">Value</th></tr></thead>
-        var table = document.getElementById("sensors-"+i);
+        sensorList.innerHTML += '<table id="sensors-' + i + '" class="table table-sm table-dark"></table>'; // <thead><tr><th scope="col">Sensor</th><th scope="col">Value</th></tr></thead>
+        var table = document.getElementById("sensors-" + i);
 
         for (var j = 0; j < config.config.panels[i].data.length; j++) {
 
@@ -146,7 +146,7 @@ function updateSensorList() {
             var cell2 = row.insertCell(1);
 
             var sensor = config.config.panels[i].data[j]
-        
+
             cell1.innerHTML = sensor.label;
             cell2.innerHTML = "N/A";
             cell2.id = "sensor-" + sensor.source;
@@ -156,7 +156,8 @@ function updateSensorList() {
 }
 
 // Watch the 'configSelect' object in HTML and look for any change.
-document.getElementById('configSelect').addEventListener('change', function() {
+document.getElementById('configSelect').addEventListener('change', function () {
+    buttons
     config.applyConfig(this.value)
     updateConfigUI()
 });
