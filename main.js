@@ -64,15 +64,15 @@ app.on('activate', function () {
 // The following are the hooks for TCP connections.
 // These are accessible from all pages.
 
-ipcMain.on('connectTCP', (_, arg) => {
+ipcMain.on('connectTCP', (_event, arg) => {
   interface.connectTCP(arg.port, arg.ip);
 });
 
-ipcMain.on('destroyTCP', (_, _) => {
+ipcMain.on('destroyTCP', (_event, _arg) => {
   interface.destroyTCP();
 });
 
-ipcMain.on('sendTCP', (_, arg) => {
+ipcMain.on('sendTCP', (_event, arg) => {
   interface.sendTCP(arg);
 });
 
@@ -92,7 +92,7 @@ interface.emitter.on("driver_value", (message) => {
   global.mainWindow.send("driver_value", message);
 })
 
-ipcMain.on('reformatChart', (event, arg) => {
+ipcMain.on('reformatChart', (_event, arg) => {
   global.mainWindow.send('reformatChart', arg);
 });
 
