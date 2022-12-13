@@ -8,7 +8,7 @@ const { app, ipcMain, dialog, BrowserWindow } = require('electron');
 // Module for runtime charting if 
 const logger = require("./modules/runtime_logging");
 const sensor_logger = require("./modules/sensor_logging");
-const tcp = require("./modules/tcp")
+const interface = require("./modules/interface")
 global.sensor_logger = sensor_logger;
 
 logger.log.info("Initializing RESFET Dashboard.");
@@ -65,19 +65,19 @@ app.on('activate', function () {
 // These are accessible from all pages.
 
 ipcMain.on('connectTCP', (event, arg) => {
-  tcp.connectTCP(arg.port, arg.ip);
+  interface.connectTCP(arg.port, arg.ip);
 });
 
 ipcMain.on('destroyTCP', (event, arg) => {
-  tcp.destroyTCP();
+  interface.destroyTCP();
 });
 
 ipcMain.on('sendTCP', (event, arg) => {
-  tcp.sendTCP(arg);
+  interface.sendTCP(arg);
 });
 
-tcp.emitter.on('status', function (data) {
-  global.mainWindow.send('statusTCP', tcp.tcp_connected);
+interface.emitter.on('status', function (data) {
+  global.mainWindow.send('statusTCP', interface.tcp_connected);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {

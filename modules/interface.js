@@ -12,7 +12,17 @@ const logger = require("./runtime_logging");
 const tcp_client = new net.Socket();
 
 module.exports = {
+	/**
+	 * The currently active configuration.
+	 * This will be updated with a new object whenever we receive a configuration message.
+	 * 
+	 * At the start of program execution, `config` will be `null`.
+	 * For a description of the keys and values in `config`, refer to the API specification.
+	 */
 	config: null,
+	/**
+	 * Whether there is currently an active TCP connection to a controller.
+	 */
 	tcp_connected: false,
 	/**
 	 * The event emitter for TCP.
