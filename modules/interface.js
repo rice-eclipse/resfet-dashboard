@@ -9,7 +9,7 @@ const net = require('net');
 const EventEmitter = require('events');
 const logger = require("./runtime_logging");
 
-const tcp_client = new net.Socket();
+const tcpClient = new net.Socket();
 
 module.exports = {
 	/**
@@ -23,7 +23,7 @@ module.exports = {
 	/**
 	 * Whether there is currently an active TCP connection to a controller.
 	 */
-	tcp_connected: false,
+	tcpConnected: false,
 	/**
 	 * The event emitter for TCP.
 	 * Sends out events based on the goings-on of the current TCP connection.
@@ -48,20 +48,20 @@ module.exports = {
 	/**
 	 * Connect to a `slonk` controller instance at a given address.
 	 * This function is a no-op if the current TCP client is already connected (i.e. if 
-	 * `tcp_connected` is `false`).
+	 * `tcpConnected` is `false`).
 	 * 
 	 * @param {*} port The port to connect on.
 	 * @param {*} ip The IP address of the controller instants to connect to.
 	 */
-	connectTCP: function (port, ip) {
+	connectTcp: function (port, ip) {
 
 		// Don't bother connecting if TCP is already running.
 		// TODO: should this instead destroy the TCP conenction?
-		if (!module.exports.tcp_connected) {
+		if (!module.exports.tcpConnected) {
 
 			logger.log.info("Connecting to " + ip + ":" + port + " over TCP.");
 
-			tcp_client.connect(port, ip);
+			tcpClient.connect(port, ip);
 		}
 	},
 	/**
@@ -69,24 +69,24 @@ module.exports = {
 	 * 
 	 * @param {object} command The object to be sent to the server.
 	 */
-	sendTCP: function (command) {
+	sendTcp: function (command) {
 		let command_str = JSON.stringify(command)
 		logger.log.info("Sent command " + command_str + " over TCP.");
-		tcp_client.write(command_str);
+		tcpClient.write(command_str);
 	},
 	/**
 	 * Destroy the currently active TCP connection.
 	 * 
 	 * This function will do nothing if there is no TCP connection.
 	 */
-	destroyTCP: function () {
-		if (module.exports.tcp_connected) {
-			tcp_client.destroy();
+	destroyTcp: function () {
+		if (module.exports.tcpConnected) {
+			tcpClient.destroy();
 		}
 	}
 };
 
-tcp_client.on('data', function (text) {
+tcpClient.on('data', function (text) {
 	// We just received some data from the controller.
 	// Send that information down the correct pipeline using the emitter.
 
@@ -111,25 +111,25 @@ tcp_client.on('data', function (text) {
 	}
 });
 
-tcp_client.on('close', function (data) {
+tcpClient.on('close', function (data) {
 	/*
 	Emitted when TCP client is disconnected.
 	*/
 	logger.log.info("Connection closed over TCP.");
-	module.exports.tcp_connected = false;
+	module.exports.tcpConnected = false;
 	module.exports.emitter.emit("status", false);
 });
 
-tcp_client.on('connect', function () {
+tcpClient.on('connect', function () {
 	/*
 	Emitted when TCP client connects to the server.
 	*/
 	logger.log.info("Connection established over TCP.");
-	module.exports.tcp_connected = true;
+	module.exports.tcpConnected = true;
 	module.exports.emitter.emit("status", true);
 });
 
-tcp_client.on('error', function (err) {
+tcpClient.on('error', function (err) {
 	if (err.code == 'ECONNREFUSED') {
 		logger.log.warn(`Server could not be reached on ${err.address}:${err.port} over TCP.`);
 	}

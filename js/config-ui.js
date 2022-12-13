@@ -76,13 +76,13 @@ function make_driver_button(label, id, direction) {
 function updateChartSelectorList() {
 
     // all the dropdowns
-    let selection_dropdowns = [];
+    let selectionDropdowns = [];
 
     // remove previous dropdown options and collect the selection panels
     for (let i = 0; i < 4; i++) {
-        let selection_dropdown = document.getElementById("panelSelect" + i);
-        selection_dropdowns.push(selection_dropdown);
-        selection_dropdown.innerHTML = "";
+        let selectionDropdown = document.getElementById("panelSelect" + i);
+        selectionDropdowns.push(selectionDropdown);
+        selectionDropdown.innerHTML = "";
     }
 
     // collect new sources of chart-able data
@@ -98,7 +98,7 @@ function updateChartSelectorList() {
                     // by default, first four sources get to be on
                     option.selected = true;
                 }
-                selection_dropdowns[i].appendChild(option);
+                selectionDropdowns[i].appendChild(option);
             }
             source_id += 1;
         }
@@ -106,7 +106,7 @@ function updateChartSelectorList() {
 
     // notify charts that it needs to be reformatted with this new data
     for (let i = 0; i < 4; i++) {
-        ipcRenderer.send("reformatChart", { chartid: i, panel: selection_dropdowns[i].value });
+        ipcRenderer.send("reformatChart", { chartid: i, panel: selectionDropdowns[i].value });
     }
 }
 
@@ -127,17 +127,17 @@ function updateSensorList() {
         sensorList.innerHTML += '<table id="groups-' + i + '" class="table table-sm table-dark"></table>';
         for (sensor in group.sensors) {
             let row = table.insertRow();
-            let label_cell = row.insertCell(0);
-            let adc_cell = row.insertCell(1);
-            let calib_cell = row.insertCell(2);
+            let labelCell = row.insertCell(0);
+            let adcCell = row.insertCell(1);
+            let calibCell = row.insertCell(2);
 
-            label_cell.innerHTML = sensor.label;
-            adc_cell.innerHTML = "N/A"; // no readings, so this text should be N/A for now
-            adc_cell.id = "sensor-adc-" + sensor.label;
-            adc_cell.classList.add("text-right"); // right align ADC value
-            calib_cell.innerHTML = "N/A";
-            calib_cell.id = "sensor-calib-" + sensor.label;
-            calib_cell.classList.add("text-right"); // right align calibrated reading
+            labelCell.innerHTML = sensor.label;
+            adcCell.innerHTML = "N/A"; // no readings, so this text should be N/A for now
+            adcCell.id = "sensor-adc-" + sensor.label;
+            adcCell.classList.add("text-right"); // right align ADC value
+            calibCell.innerHTML = "N/A";
+            calibCell.id = "sensor-calib-" + sensor.label;
+            calibCell.classList.add("text-right"); // right align calibrated reading
         }
     }
 }
