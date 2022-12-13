@@ -8,9 +8,6 @@ const { ipcRenderer, remote } = require('electron');
 const btnConnect = document.getElementById('serverConnect')
 const btnDisconnect = document.getElementById('serverDisconnect')
 
-// Retrieving reinit logs button.
-const btnToggleLogs = document.getElementById('toggleLogging')
-
 // Retrieving ignition buttons.
 const btnIgnition = document.getElementById('btnIgnition')
 const btnStopIgnition = document.getElementById('btnStopIgnition')

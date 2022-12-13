@@ -5,7 +5,7 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 // Modules to control application life and create native browser window.
 const { app, ipcMain, dialog, BrowserWindow } = require('electron');
 
-// Module for logging.
+// Module for runtime charting if 
 const logger = require("./modules/runtime_logging");
 const sensor_logger = require("./modules/sensor_logging");
 const tcp = require("./modules/tcp")
@@ -61,11 +61,6 @@ app.on('activate', function () {
   }
 })
 
-// Reading the default configuration file, and setting it globally.
-config.fetchConfigs().then((pathContent) => {
-  config.applyConfig(pathContent[0]);
-})
-
 // The following are the hooks for TCP & UDP connection.
 // These are accessible from all pages.
 
@@ -77,34 +72,12 @@ ipcMain.on('destroyTCP', (event, arg) => {
   tcp.destroyTCP();
 });
 
-ipcMain.on('toggleLogging', (event, arg) => {
-  sensor_logger.toggle();
-});
-
 ipcMain.on('sendTCP', (event, arg) => {
   tcp.sendTCP(arg);
 });
 
 tcp.emitter.on('status', function (data) {
   global.mainWindow.send('statusTCP', tcp.tcp_connected);
-
-  if (data === true) {
-    udp.startUDP({ port: config.config.network.udp.port })
-  } else {
-    udp.destroyUDP();
-  }
-});
-
-udp.emitter.on('status', function (data) {
-  global.mainWindow.send('statusUDP', udp.udp_started);
-});
-
-udp.emitter.on('driverUpdate', function (data) {
-  global.mainWindow.send('driverUpdate', data);
-});
-
-sensor_logger.emitter.on('status', function (data) {
-  global.mainWindow.send('statusLogging', sensor_logger.enabled);
 });
 
 ipcMain.on('reformatChart', (event, arg) => {
