@@ -3,28 +3,21 @@ Written by Alp Yakici and Andrew Obler for Rice Eclipse
 */
 
 // Modules to control application life and create native browser window.
-const {app, ipcMain, dialog, BrowserWindow} = require('electron');
+const { app, ipcMain, dialog, BrowserWindow } = require('electron');
 
 // Module for logging.
-let logger = require("./modules/runtime_logging");
-let sensor_logger = require("./modules/sensor_logging");
+const logger = require("./modules/runtime_logging");
+const sensor_logger = require("./modules/sensor_logging");
+const tcp = require("./modules/tcp")
 global.sensor_logger = sensor_logger;
 
 logger.log.info("Initializing RESFET Dashboard.");
-
-// Modules for config management.
-let config = require("./modules/config");
-global.config = config
 
 // Initializing the window.
 let mainWindow
 global.mainWindow = mainWindow
 
-// Modules to control UDP & TCP communication with the box.
-let tcp = require("./modules/tcp");
-let udp = require("./modules/udp");
-
-function createWindow () {
+function createWindow() {
   global.mainWindow = new BrowserWindow({
     width: 1200,
     height: 940,
@@ -42,7 +35,7 @@ function createWindow () {
     /*
     Emitted when the window is closed.
     */
-   global.mainWindow = null
+    global.mainWindow = null
   })
 }
 
@@ -77,11 +70,11 @@ config.fetchConfigs().then((pathContent) => {
 // These are accessible from all pages.
 
 ipcMain.on('connectTCP', (event, arg) => {
-    tcp.connectTCP(arg.port, arg.ip);
+  tcp.connectTCP(arg.port, arg.ip);
 });
 
 ipcMain.on('destroyTCP', (event, arg) => {
-    tcp.destroyTCP();
+  tcp.destroyTCP();
 });
 
 ipcMain.on('toggleLogging', (event, arg) => {
@@ -89,28 +82,28 @@ ipcMain.on('toggleLogging', (event, arg) => {
 });
 
 ipcMain.on('sendTCP', (event, arg) => {
-    tcp.sendTCP(arg);
+  tcp.sendTCP(arg);
 });
 
-tcp.emitter.on('status', function(data) {
+tcp.emitter.on('status', function (data) {
   global.mainWindow.send('statusTCP', tcp.tcp_connected);
 
   if (data === true) {
-    udp.startUDP({port: config.config.network.udp.port})
+    udp.startUDP({ port: config.config.network.udp.port })
   } else {
     udp.destroyUDP();
   }
 });
 
-udp.emitter.on('status', function(data) {
+udp.emitter.on('status', function (data) {
   global.mainWindow.send('statusUDP', udp.udp_started);
 });
 
-udp.emitter.on('driverUpdate', function(data) {
+udp.emitter.on('driverUpdate', function (data) {
   global.mainWindow.send('driverUpdate', data);
 });
 
-sensor_logger.emitter.on('status', function(data) {
+sensor_logger.emitter.on('status', function (data) {
   global.mainWindow.send('statusLogging', sensor_logger.enabled);
 });
 

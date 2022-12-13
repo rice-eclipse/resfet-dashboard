@@ -12,76 +12,115 @@ const logger = require("./runtime_logging");
 const tcp_client = new net.Socket();
 
 module.exports = {
+	config: null,
 	tcp_connected: false,
+	/**
+	 * The event emitter for TCP.
+	 * Sends out events based on the goings-on of the current TCP connection.
+	 * 
+	 * # Events
+	 * 
+	 * - `status`: `bool` - Emitted every time the TCP connection status has changed.
+	 * 	Emits `false` after disconnection and `true` after connection.
+	 * - `config`: `object` - Emitted every time a new `Configuration` message is received from the 
+	 * 	controller. 
+	 * 	The attached object is the new configuration (see the API specification for its keys and 
+	 * 	values).
+	 * 	Used to overwrite the current configuration.
+	 * - `sensor_value`: `object` - Emitted every time a new `SensorValue` message is received from
+	 * 	the controller. 
+	 * 	The attached object is the message received as-is.
+	 * - `driver_value`: `object` - Emitted every time a new `DriverValue` message is received from
+	 * 	the controller.
+	 * 	The attached object is the message received as-is.
+	 */
 	emitter: new EventEmitter(),
-	connectTCP: function(port, ip) {
-		/*
-		Connects to the server.
-		*/
+	/**
+	 * Connect to a `slonk` controller instance at a given address.
+	 * This function is a no-op if the current TCP client is already connected (i.e. if 
+	 * `tcp_connected` is `false`).
+	 * 
+	 * @param {*} port The port to connect on.
+	 * @param {*} ip The IP address of the controller instants to connect to.
+	 */
+	connectTCP: function (port, ip) {
 
-		// If TCP is running, then skip.
-		if(module.exports.tcp_connected === true) {
-			return;
+		// Don't bother connecting if TCP is already running.
+		// TODO: should this instead destroy the TCP conenction?
+		if (!module.exports.tcp_connected) {
+
+			logger.log.info("Connecting to " + ip + ":" + port + " over TCP.");
+
+			tcp_client.connect(port, ip);
 		}
-
-		logger.log.info("Connecting to "+ip+":"+port+" over TCP.");
-
-		tcp_client.connect(port, ip);
 	},
-	sendTCP: function(data) {
-		/*
-		Sends a message to the server.
-		*/
-		
-		logger.log.info("Sent message "+data.readIntLE(0,1)+" ["+global.config.config.commands_inv[data.readIntLE(0,1)]+"] over TCP.");
-		tcp_client.write(data);
+	/**
+	 * Send a command to the `slonk` controller.
+	 * 
+	 * @param {object} command The object to be sent to the server.
+	 */
+	sendTCP: function (command) {
+		let command_str = JSON.stringify(command)
+		logger.log.info("Sent command " + command_str + " over TCP.");
+		tcp_client.write(command_str);
 	},
-	destroyTCP: function() {
-		/*
-		Destroys the connection.
-		*/
-
-		if(module.exports.tcp_connected === false) {
-			return;
+	/**
+	 * Destroy the currently active TCP connection.
+	 * 
+	 * This function will do nothing if there is no TCP connection.
+	 */
+	destroyTCP: function () {
+		if (module.exports.tcp_connected) {
+			tcp_client.destroy();
 		}
-
-		tcp_client.destroy();
 	}
 };
 
-tcp_client.on('data', function(data) {
-	/*
-	Emitted when TCP client receives data from the server.
-	*/
+tcp_client.on('data', function (text) {
+	// We just received some data from the controller.
+	// Send that information down the correct pipeline using the emitter.
 
-	logger.log.info("Received data over TCP.");
-	logger.log.warn("Receiving data over TCP is unsupported in RESFET, please make sure that the server is in the right version. Refer to GitHub if necessary.");
+	message = JSON.parse(text)
+	switch (message.type) {
+		case "Configuration":
+			logger.log.info("Received new configuration from dashboard.");
+			module.exports.config = message.config;
+			module.exports.emitter.emit("config", message.config);
+			break;
+		case "SensorValue":
+			// don't log that we received a sensor value since we get a lot of them.
+			module.exports.emitter.emit("sensor_value", message);
+			break;
+		case "DriverValue":
+			// don't log that we received a driver value since we get a lot of them.
+			module_exports.emitter.emit("driver_value", message);
+			break;
+		default:
+			logger.log.error("Unrecognized message type " + message.type);
+			break;
+	}
 });
 
-tcp_client.on('close', function(data) {
+tcp_client.on('close', function (data) {
 	/*
 	Emitted when TCP client is disconnected.
 	*/
 	logger.log.info("Connection closed over TCP.");
 	module.exports.tcp_connected = false;
-
-	// Emit TCP status.
-	module.exports.emitter.emit("status", module.exports.tcp_connected);
+	module.exports.emitter.emit("status", false);
 });
 
-tcp_client.on('connect', function() {
+tcp_client.on('connect', function () {
 	/*
 	Emitted when TCP client connects to the server.
 	*/
 	logger.log.info("Connection established over TCP.");
 	module.exports.tcp_connected = true;
-
-	// Emit TCP status.
-	module.exports.emitter.emit("status", module.exports.tcp_connected);
+	module.exports.emitter.emit("status", true);
 });
 
-tcp_client.on('error', function(err) {
-	if(err.code == 'ECONNREFUSED') {
+tcp_client.on('error', function (err) {
+	if (err.code == 'ECONNREFUSED') {
 		logger.log.warn(`Server could not be reached on ${err.address}:${err.port} over TCP.`);
 	}
 });
