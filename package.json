@@ -1,6 +1,6 @@
 {
   "name": "slonkboard",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Rice Eclipse's engine controller dashboard",
   "main": "main.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.7.3",
+    "chart.js": "2.8.0",
     "chartjs-plugin-streaming": "^1.8.0",
     "jquery": "^3.5.0",
     "moment": "^2.24.0",

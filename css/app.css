@@ -5,6 +5,7 @@
 body {
   font: caption;
   -webkit-user-select: none;
+  user-select: none;
   padding-bottom: 30px;
 }
 

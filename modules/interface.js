@@ -55,14 +55,13 @@ module.exports = {
 	 */
 	connectTcp: function (port, ip) {
 
+		module.exports.destroyTcp();
+
 		// Don't bother connecting if TCP is already running.
-		// TODO: should this instead destroy the TCP conenction?
-		if (!module.exports.tcpConnected) {
 
-			logger.log.info("Connecting to " + ip + ":" + port + " over TCP.");
+		logger.log.info("Connecting to " + ip + ":" + port + " over TCP.");
 
-			tcpClient.connect(port, ip);
-		}
+		tcpClient.connect(port, ip);
 	},
 	/**
 	 * Send a command to the `slonk` controller.
@@ -99,11 +98,11 @@ tcpClient.on('data', function (text) {
 			break;
 		case "SensorValue":
 			// don't log that we received a sensor value since we get a lot of them.
-			module.exports.emitter.emit("sensor_value", message);
+			module.exports.emitter.emit("sensorValue", message);
 			break;
 		case "DriverValue":
 			// don't log that we received a driver value since we get a lot of them.
-			module_exports.emitter.emit("driver_value", message);
+			module_exports.emitter.emit("driverValue", message);
 			break;
 		default:
 			logger.log.error("Unrecognized message type " + message.type);

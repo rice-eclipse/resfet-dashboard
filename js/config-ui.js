@@ -1,9 +1,10 @@
 // Modules for config management.
-const interface = require("electron").remote.require("./modules/interface")
+
 
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
 const { config } = require("winston");
+const interface = require("electron").remote.require("./modules/interface.js");
 
 /**
  * Update the control panel buttons based on the current configuration.
@@ -44,7 +45,7 @@ function updatePanelButtons() {
         panelButtonsList[i].onclick = function () {
             var buffer = Buffer.alloc(1);
             buffer.fill(config.config.commands[this.dataset.action]);
-            ipcRenderer.send('sendTCP', buffer);
+            ipcRenderer.send('sendTcp', buffer);
         }
     }
 }
@@ -61,7 +62,7 @@ function make_driver_button(label, id, direction) {
     button.className = "btn btn-primary";
     button.innerHTML = label;
     button.onclick((_) => {
-        interface.sendTCP({
+        interface.sendTcp({
             "type": "Actuate",
             "driver_id": id,
             "value": direction,

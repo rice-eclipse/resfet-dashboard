@@ -18,12 +18,19 @@
             <div class="container">
                 <span class="navbar-brand">slonk</span>
 
-                <div class="navbar-nav ml-auto">
+                <div class="navbar-nav ml-auto col-7">
                     <div class="input-group">
-                        <select class="custom-select" id="configSelect"></select>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Address</span>
+                        </div>
+                        <input type="text" id="ipInput" value="192.168.1.138" class="form-control" />
+                        <div class="input-group-text">
+                            :
+                        </div>
+                        <input type="number" id="portInput" value="1234" class="form-control" />
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="serverConnect">Connect</button>
-                            <button class="btn btn-outline-secondary" id="serverDisconnect">Disconnect</button>
+                            <button class="btn btn-primary" id="serverConnect">Connect</button>
+                            <button class="btn btn-primary" id="serverDisconnect">Disconnect</button>
                         </div>
                     </div>
                 </div>
@@ -143,12 +150,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-9">
-                    Config: <span id="currentConfig">N/A</span> | Logging Directory: <span id="currentLogDir">N/A</span>
-                    | TCP Address: <span id="tcpAddress">N/A</span>
+                    Logging Directory: <span id="currentLogDir">N/A</span>
                 </div>
                 <div class="col-3 text-right">
-                    <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span> <span
-                        class="badge badge-pill badge-danger" id="sourceLogging">SRC LOG</span>
+                    <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span>
                 </div>
             </div>
         </div>

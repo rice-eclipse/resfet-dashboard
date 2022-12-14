@@ -1,5 +1,3 @@
-// Modules for config management.
-let config = require("electron").remote.require("./modules/config")
 
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
@@ -45,7 +43,7 @@ for (var i = 0; i < 4; i++) {
                 }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     },
                     scaleLabel: {
                         display: true,
@@ -88,7 +86,7 @@ function reformatChart(chartid, panel) {
             borderColor: config.config.panels[panel].data[i].color,
             datasource: config.config.panels[panel].data[i].source
         });
-        
+
         chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit ? config.config.panels[panel].unit : "N/A";
     }
     chart.update({
@@ -100,16 +98,16 @@ function reformatChart(chartid, panel) {
 
 // Allow different modules to call plotData method.
 module.exports = {
-    plotData : function(time, source, data) {
+    plotData: function (time, source, data) {
         /**
          * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
          * event, which includes the timestamp and value of the datapoint.
          */
         for (var i = 0; i < 4; i++) {
-            for(var j = 0; j < charts[i].data.datasets.length; j++) {
+            for (var j = 0; j < charts[i].data.datasets.length; j++) {
                 var chart_source = charts[i].data.datasets[j].datasource
 
-                if(chart_source == source) {
+                if (chart_source == source) {
                     charts[i].data.datasets[j].data.push({
                         x: time,
                         y: data
@@ -121,9 +119,9 @@ module.exports = {
             }
         }
     },
-    updateSensorValue : function(source, data) {
-        var sensor = document.getElementById("sensor-"+source);
-    
+    updateSensorValue: function (source, data) {
+        var sensor = document.getElementById("sensor-" + source);
+
         if (sensor != null) {
             sensor.innerHTML = data;
         }
@@ -131,20 +129,20 @@ module.exports = {
 }
 
 // Watch the 'panelSelect' objects in HTML and look for any change.
-document.getElementById('panelSelect1').addEventListener('change', function() {
+document.getElementById('panelSelect1').addEventListener('change', function () {
     reformatChart(0, this.value)
 });
-document.getElementById('panelSelect2').addEventListener('change', function() {
+document.getElementById('panelSelect2').addEventListener('change', function () {
     reformatChart(1, this.value)
 });
-document.getElementById('panelSelect3').addEventListener('change', function() {
+document.getElementById('panelSelect3').addEventListener('change', function () {
     reformatChart(2, this.value)
 });
-document.getElementById('panelSelect4').addEventListener('change', function() {
+document.getElementById('panelSelect4').addEventListener('change', function () {
     reformatChart(3, this.value)
 });
 
 // Watch for chart reformat request.
-ipcRenderer.on('reformatChart' , function(event , data){
+ipcRenderer.on('reformatChart', function (event, data) {
     reformatChart(data.chartid, data.panel);
 });
