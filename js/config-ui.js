@@ -56,18 +56,22 @@ function updatePanelButtons() {
  * @param {int} id The ID of the driver to be actuated.
  * @param {bool} direction The direction of the button to be actuated (true for active, false for 
  *  inactive).
+ * 
+ * @return {Node} a newly-made button.
  */
 function make_driver_button(label, id, direction) {
     let button = document.createElement("button");
     button.className = "btn btn-primary";
     button.innerHTML = label;
-    button.onclick((_) => {
+    button.onclick = (_) => {
         interface.sendTcp({
             "type": "Actuate",
             "driver_id": id,
             "value": direction,
         });
-    })
+    };
+
+    return button;
 }
 
 /**

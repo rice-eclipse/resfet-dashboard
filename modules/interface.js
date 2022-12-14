@@ -11,6 +11,13 @@ const logger = require("./runtime_logging");
 
 const tcpClient = new net.Socket();
 
+/**
+ * The message we're getting from the controller.
+ * We'll build up this buffer until we have something that can be parsed as a JSON object, and then
+ * empty the buffer again.
+ */
+let msg_buf = "";
+
 module.exports = {
 	/**
 	 * The currently active configuration.
@@ -85,29 +92,74 @@ module.exports = {
 	}
 };
 
+/**
+ * Try to extract the first JSON object from a buffer.
+ * @param {string} buf The buffer to extract a JSON from
+ * @return {str|null} A str which is possibly JSON made from buf, or `null` if no such substring exists.
+ */
+function try_extract_json(buf) {
+	let sub_buf = "";
+	let in_string = false;
+	let depth = 0;
+	let backslashed = false;
+	for (c of buf) {
+		sub_buf += c;
+		switch (c) {
+			case '{':
+				if (!in_string) {
+					depth++;
+				}
+				break;
+			case '}':
+				if (!in_string) {
+					if (depth == 0) {
+						throw "extra closing brace";
+					}
+					depth--;
+					if (depth == 0) {
+						return sub_buf;
+					}
+				}
+				break;
+			case '"':
+				in_string ^= !backslashed;
+				break;
+		}
+		backslashed = c == '\\' && !backslashed;
+	}
+
+	return null;
+}
+
+
 tcpClient.on('data', function (text) {
 	// We just received some data from the controller.
 	// Send that information down the correct pipeline using the emitter.
 
-	logger.log.info(text);
-	message = JSON.parse(text)
-	switch (message.type) {
-		case "Configuration":
-			logger.log.info("Received new configuration from dashboard.");
-			module.exports.config = message.config;
-			module.exports.emitter.emit("config", message.config);
-			break;
-		case "SensorValue":
-			// don't log that we received a sensor value since we get a lot of them.
-			module.exports.emitter.emit("sensorValue", message);
-			break;
-		case "DriverValue":
-			// don't log that we received a driver value since we get a lot of them.
-			module_exports.emitter.emit("driverValue", message);
-			break;
-		default:
-			logger.log.error("Unrecognized message type " + message.type);
-			break;
+	msg_buf += text;
+	json_str = try_extract_json(msg_buf);
+	if (json_str != null) {
+		msg_buf = msg_buf.slice(json_str.length);
+		logger.log.info(json_str);
+		message = JSON.parse(json_str);
+		switch (message.type) {
+			case "Config":
+				logger.log.info("Received new configuration from dashboard.");
+				module.exports.config = message.config;
+				module.exports.emitter.emit("config", message.config);
+				break;
+			case "SensorValue":
+				// don't log that we received a sensor value since we get a lot of them.
+				module.exports.emitter.emit("sensorValue", message);
+				break;
+			case "DriverValue":
+				// don't log that we received a driver value since we get a lot of them.
+				module_exports.emitter.emit("driverValue", message);
+				break;
+			default:
+				logger.log.error("Unrecognized message type " + message.type);
+				break;
+		}
 	}
 });
 

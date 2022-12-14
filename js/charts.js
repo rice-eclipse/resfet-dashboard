@@ -3,23 +3,15 @@
 const { ipcRenderer } = require('electron');
 
 // Initializing all the variables.
-var chartElems = [];
-chartElems.push(document.getElementById("chart1").getContext('2d'));
-chartElems.push(document.getElementById("chart2").getContext('2d'));
-chartElems.push(document.getElementById("chart3").getContext('2d'));
-chartElems.push(document.getElementById("chart4").getContext('2d'));
+let chartElems = [];
+let panelSelects = [];
+let panelLabels = [];
 
-var panelSelects = [];
-panelSelects.push(document.getElementById("panelSelect1"));
-panelSelects.push(document.getElementById("panelSelect2"));
-panelSelects.push(document.getElementById("panelSelect3"));
-panelSelects.push(document.getElementById("panelSelect4"));
-
-var panelLabels = [];
-panelLabels.push(document.getElementById("panelLabel1"));
-panelLabels.push(document.getElementById("panelLabel2"));
-panelLabels.push(document.getElementById("panelLabel3"));
-panelLabels.push(document.getElementById("panelLabel4"));
+for (let i = 0; i < 4; i++) {
+    chartElems.push(document.getElementById("chart" + i).getContext("2d"));
+    panelSelects.push(document.getElementById("panelSelect" + i));
+    panelLabels.push(document.getElementById("panelLabel" + i));
+}
 
 // Initializing all the charts.
 var charts = []
@@ -128,20 +120,12 @@ module.exports = {
     }
 }
 
-// Watch the 'panelSelect' objects in HTML and look for any change.
-document.getElementById('panelSelect1').addEventListener('change', function () {
-    reformatChart(0, this.value)
-});
-document.getElementById('panelSelect2').addEventListener('change', function () {
-    reformatChart(1, this.value)
-});
-document.getElementById('panelSelect3').addEventListener('change', function () {
-    reformatChart(2, this.value)
-});
-document.getElementById('panelSelect4').addEventListener('change', function () {
-    reformatChart(3, this.value)
-});
-
+for (let i = 0; i < 4; i++) {
+    // when things change on the panel selectors, reformat their associated charts
+    panelSelects[i].addEventListener('change', () => {
+        reformatChart(i, this.value)
+    });
+}
 // Watch for chart reformat request.
 ipcRenderer.on('reformatChart', function (event, data) {
     reformatChart(data.chartid, data.panel);
