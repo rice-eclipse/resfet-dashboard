@@ -89,6 +89,7 @@ tcpClient.on('data', function (text) {
 	// We just received some data from the controller.
 	// Send that information down the correct pipeline using the emitter.
 
+	logger.log.info(text);
 	message = JSON.parse(text)
 	switch (message.type) {
 		case "Configuration":

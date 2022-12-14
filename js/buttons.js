@@ -3,6 +3,7 @@
 // Module for network hook calls.
 const { ipcRenderer, remote } = require('electron');
 const interface = require("electron").remote.require("./modules/interface.js");
+const logger = require("electron").remote.require("./modules/runtime_logging.js");
 
 // Retrieving server connection buttons.
 const btnConnect = document.getElementById('serverConnect');
@@ -41,6 +42,13 @@ btnStopIgnition.addEventListener('click', function (event) {
   unstageIgnition();
 
   ipcRenderer.send('sendTcp', { "type": "EmergencyStop" });
+});
+
+interface.emitter.on("status", (state) => {
+  logger.log.info("status update!! state is now " + state);
+  btnIgnition.disabled = !state;
+  btnStopIgnition.disabled = !state;
+  btnDisconnect.disabled = !state;
 });
 
 function startInterval() {
