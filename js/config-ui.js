@@ -31,6 +31,15 @@ function updatePanelButtons() {
         badge.id = "driver-state-badge-" + i;
         badge.style = "font-family: 'Courier New', Courier, monospace;"
         badge.innerHTML = "" + i;
+        interface.emitter.on("driverValue", (message) => {
+            // Register that badge color changes upon driver status messages
+            badge.class = "badge ";
+            if (message.values[i]) {
+                badge.class += "badge-success";
+            } else {
+                badge.class += "badge-danger";
+            }
+        })
         label.appendChild(badge);
 
         // add driver name
