@@ -24,19 +24,34 @@ function updatePanelButtons() {
         // Label for the driver
         let label = document.createElement("h6");
         label.className = "text-muted";
-        label.innerHTML = driver.label
+
+        // add badge for driver state
+        let badge = document.createElement("span");
+        badge.class = "badge badge-danger";
+        badge.id = "driver-state-badge-" + i;
+        badge.style = "font-family: 'Courier New', Courier, monospace;"
+        badge.innerHTML = "" + i;
+        label.appendChild(badge);
+
+        // add driver name
+        label.innerHTML += driver.label;
         panelButtons.appendChild(label);
 
-        // Group containing the buttons
-        let btngroup = document.createElement("div");
-        btngroup.className = "btn-group btn-block mb-3";
-        btngroup.role = "group";
+        if (!driver.protected) {
+            // unprotected drivers get manual actuation controls
 
-        // Add actuate and deactuate buttons
-        btngroup.appendChild(make_driver_button("Actuate", i, true));
-        btngroup.appendChild(make_driver_button("Deactuate", i, false));
+            // Group containing the buttons
+            let group = document.createElement("div");
+            group.className = "btn-group";
+            group.role = "group";
 
-        panelButtons.appendChild(btngroup);
+            // Add actuate and deactuate buttons
+            group.appendChild(make_driver_button("Actuate", i, true));
+            group.appendChild(make_driver_button("Deactuate", i, false));
+
+            panelButtons.appendChild(group);
+        }
+
     }
 }
 
