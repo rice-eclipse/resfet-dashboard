@@ -1,6 +1,7 @@
 
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
+const interface = require("electron").remote.require("./modules/interface");
 
 // Initializing all the variables.
 let chartElems = [];
@@ -59,65 +60,34 @@ for (var i = 0; i < 4; i++) {
     }));
 }
 
-function reformatChart(chartid, panel) {
-    /**
-     * Takes chartid, which is the id [0, 1, 2, 3] of the chart displayed on the dashboard; panel, which is the index of the panel in json.
-     */
+/**
+ * Reformat a chart with a new sensor group.
+ * @param {int} chartid the ID of the chart to be reformatted
+ * @param {int} groupId the ID of the group to pull from 
+ * 
+ */
+function reformatChart(chartid, groupId) {
     var chart = charts[chartid];
-    var label = panelLabels[chartid];
 
     chart.data.datasets = []
 
-    for (var i = 0; i < config.config.panels[panel].data.length; i++) {
+    console.log(groupId);
+    for (sensor of interface.config.sensor_groups[groupId].sensors) {
         chart.data.datasets.push({
-            label: config.config.panels[panel].data[i].label,
+            label: sensor.label,
             data: [],
             lineTension: 0,
             fill: false,
-            backgroundColor: config.config.panels[panel].data[i].color,
-            borderColor: config.config.panels[panel].data[i].color,
-            datasource: config.config.panels[panel].data[i].source
-        });
+            backgroundColor: sensor.color,
+            borderColor: sensor.color,
+            source_label: sensor.label,
+        })
 
-        chart.options.scales.yAxes[0].scaleLabel.labelString = config.config.panels[panel].unit ? config.config.panels[panel].unit : "N/A";
+        chart.options.scales.yAxes[0].scaleLabel.labelString = sensor.units;
     }
     chart.update({
         preservation: true
     });
-
-    //label.innerHTML = config.config.panels[panel].label;
-}
-
-// Allow different modules to call plotData method.
-module.exports = {
-    plotData: function (time, source, data) {
-        /**
-         * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
-         * event, which includes the timestamp and value of the datapoint.
-         */
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < charts[i].data.datasets.length; j++) {
-                var chart_source = charts[i].data.datasets[j].datasource
-
-                if (chart_source == source) {
-                    charts[i].data.datasets[j].data.push({
-                        x: time,
-                        y: data
-                    });
-                    charts[i].update({
-                        preservation: true
-                    });
-                }
-            }
-        }
-    },
-    updateSensorValue: function (source, data) {
-        var sensor = document.getElementById("sensor-" + source);
-
-        if (sensor != null) {
-            sensor.innerHTML = data;
-        }
-    }
 }
 
 for (let i = 0; i < 4; i++) {

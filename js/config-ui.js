@@ -38,16 +38,6 @@ function updatePanelButtons() {
 
         panelButtons.appendChild(btngroup);
     }
-
-    // When buttons are clicked, a new TCP call is being made.
-    var panelButtonsList = panelButtons.getElementsByTagName('button');
-    for (var i = 0, len = panelButtonsList.length; i < len; i++) {
-        panelButtonsList[i].onclick = function () {
-            var buffer = Buffer.alloc(1);
-            buffer.fill(config.config.commands[this.dataset.action]);
-            ipcRenderer.send('sendTcp', buffer);
-        }
-    }
 }
 
 /**
@@ -92,21 +82,19 @@ function updateChartSelectorList() {
 
     // collect new sources of chart-able data
     let source_id = 0;
-    for (group in interface.config.sensor_groups) {
-        for (sensor in group.sensors) {
-            // need a new option for each selector
-            for (let i = 0; i < 4; i++) {
-                let option = document.createElement("option");
-                option.value = sensor.label;
-                option.text = sensor.label;
-                if (i == source_id) {
-                    // by default, first four sources get to be on
-                    option.selected = true;
-                }
-                selectionDropdowns[i].appendChild(option);
+    for (group of interface.config.sensor_groups) {
+        // need a new option for each selector
+        for (let i = 0; i < 4; i++) {
+            let option = document.createElement("option");
+            option.value = source_id;
+            option.text = group.label;
+            if (i == source_id) {
+                // by default, first four sources get to be on
+                option.selected = true;
             }
-            source_id += 1;
+            selectionDropdowns[i].appendChild(option);
         }
+        source_id += 1;
     }
 
     // notify charts that it needs to be reformatted with this new data
@@ -129,7 +117,7 @@ function updateSensorList() {
         label.innerHTML = group.label
         sensorList.appendChild(label);
 
-        sensorList.innerHTML += '<table id="groups-' + i + '" class="table table-sm table-dark"></table>';
+        sensorList.innerHTML += '<table id="group-"' + group.label + '" class="table table-sm table-dark"></table>';
         for (sensor in group.sensors) {
             let row = table.insertRow();
             let labelCell = row.insertCell(0);

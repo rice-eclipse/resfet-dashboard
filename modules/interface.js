@@ -140,7 +140,6 @@ tcpClient.on('data', function (text) {
 	json_str = try_extract_json(msg_buf);
 	if (json_str != null) {
 		msg_buf = msg_buf.slice(json_str.length);
-		logger.log.info(json_str);
 		message = JSON.parse(json_str);
 		switch (message.type) {
 			case "Config":
@@ -154,7 +153,7 @@ tcpClient.on('data', function (text) {
 				break;
 			case "DriverValue":
 				// don't log that we received a driver value since we get a lot of them.
-				module_exports.emitter.emit("driverValue", message);
+				module.exports.emitter.emit("driverValue", message);
 				break;
 			default:
 				logger.log.error("Unrecognized message type " + message.type);
