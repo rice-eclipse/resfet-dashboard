@@ -11,7 +11,7 @@ const sensor_logger = require("./modules/sensor_logging");
 const interface = require("./modules/interface")
 global.sensor_logger = sensor_logger;
 
-logger.log.info("Initializing RESFET Dashboard.");
+logger.log.info("Initializing slonkboard");
 
 // Initializing the window.
 let mainWindow

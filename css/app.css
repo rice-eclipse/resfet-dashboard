@@ -8,8 +8,12 @@ body {
   padding-bottom: 30px;
 }
 
-main > .container {
+main>.container {
   padding: 30px 15px 0;
+}
+
+.navbar-brand {
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .footer {
