@@ -141,3 +141,9 @@ function updateSensorList() {
         }
     }
 }
+
+interface.emitter.on("config", (_event, _config) => {
+    updatePanelButtons();
+    updateChartSelectorList();
+    updateSensorList();
+})
