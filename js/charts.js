@@ -71,7 +71,6 @@ function reformatChart(chartid, groupId) {
 
     chart.data.datasets = []
 
-    console.log(groupId);
     for (sensor of interface.config.sensor_groups[groupId].sensors) {
         chart.data.datasets.push({
             label: sensor.label,
@@ -93,7 +92,7 @@ function reformatChart(chartid, groupId) {
 for (let i = 0; i < 4; i++) {
     // when things change on the panel selectors, reformat their associated charts
     panelSelects[i].addEventListener('change', () => {
-        reformatChart(i, this.value)
+        reformatChart(i, panelSelects[i].value)
     });
 }
 // Watch for chart reformat request.

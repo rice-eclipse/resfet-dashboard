@@ -4,6 +4,7 @@
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
 const { config } = require("winston");
+const { emitter } = require('../modules/runtime_logging');
 const interface = require("electron").remote.require("./modules/interface.js");
 
 /**
@@ -27,19 +28,9 @@ function updatePanelButtons() {
 
         // add badge for driver state
         let badge = document.createElement("span");
-        badge.className = "badge badge-danger";
+        badge.className = "badge badge-secondary";
         badge.id = "driver-state-badge-" + i;
-        badge.style = "font-family: 'Courier New', Courier, monospace;"
         badge.innerHTML = "" + i;
-        interface.emitter.on("driverValue", (message) => {
-            // Register that badge color changes upon driver status messages
-            badge.class = "badge ";
-            if (message.values[i]) {
-                badge.className += "badge-success";
-            } else {
-                badge.className += "badge-danger";
-            }
-        })
         label.appendChild(badge);
 
         // add driver name
@@ -51,7 +42,7 @@ function updatePanelButtons() {
 
             // Group containing the buttons
             let group = document.createElement("div");
-            group.className = "btn-group";
+            group.className = "btn-group mb-2";
             group.role = "group";
 
             // Add actuate and deactuate buttons
@@ -59,6 +50,7 @@ function updatePanelButtons() {
             group.appendChild(make_driver_button("Deactuate", i, false));
 
             panelButtons.appendChild(group);
+            panelButtons.appendChild(document.createElement("br"))
         }
 
     }
@@ -75,7 +67,13 @@ function updatePanelButtons() {
  */
 function make_driver_button(label, id, direction) {
     let button = document.createElement("button");
-    button.className = "btn btn-primary";
+    button.id = "driver-actuate-btn-" + id + "-" + direction;
+    button.className = "btn ";
+    if (direction) {
+        button.className += "btn-primary";
+    } else {
+        button.className += "btn-secondary";
+    }
     button.innerHTML = label;
     button.onclick = (_) => {
         interface.sendTcp({
@@ -86,6 +84,31 @@ function make_driver_button(label, id, direction) {
     };
 
     return button;
+}
+
+/**
+ * Update the driver badges based on a newly-received driver value message.
+ * @param {object} message The driver status update that was just received.
+ */
+function update_driver_badges(message) {
+    for (idx = 0; idx < message.values.length; idx++) {
+        let badge = document.getElementById("driver-state-badge-" + idx);
+        let actuateButton = document.getElementById("driver-actuate-btn-" + idx + "-true");
+        let deactuateButton = document.getElementById("driver-actuate-btn-" + idx + "-false");
+        if (message.values[idx]) {
+            badge.className = "badge badge-primary";
+            if (!interface.config.drivers[idx].protected) {
+                actuateButton.className = "btn btn-secondary";
+                deactuateButton.className = "btn btn-primary";
+            }
+        } else {
+            badge.className = "badge badge-secondary";
+            if (!interface.config.drivers[idx].protected) {
+                actuateButton.className = "btn btn-primary";
+                deactuateButton.className = "btn btn-secondary";
+            }
+        }
+    }
 }
 
 /**
@@ -177,3 +200,5 @@ interface.emitter.on("status", (status) => {
         }
     }
 })
+
+interface.emitter.on("driverValue", update_driver_badges);
