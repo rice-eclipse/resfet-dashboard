@@ -93,8 +93,8 @@ interface.emitter.on("driverValue", (message) => {
     global.mainWindow.send("driverValue", message);
 });
 
-ipcMain.on('reformatChart', (_event, arg) => {
-    global.mainWindow.send('reformatChart', arg);
+ipcMain.on('applySensorGroup', (_event, arg) => {
+    global.mainWindow.send('applySensorGroup', arg);
 });
 
 logger.emitter.on('log', function (data) {

@@ -64,9 +64,8 @@ for (var i = 0; i < 4; i++) {
  * Reformat a chart with a new sensor group.
  * @param {int} chartid the ID of the chart to be reformatted
  * @param {int} groupId the ID of the group to pull from 
- * 
  */
-function reformatChart(chartid, groupId) {
+function applySensorGroup(chartid, groupId) {
     var chart = charts[chartid];
 
     chart.data.datasets = []
@@ -89,13 +88,35 @@ function reformatChart(chartid, groupId) {
     });
 }
 
+/**
+ * Update the charts with a new sensor value.
+ * @param {object} message The JSON object for the sensor value message received.
+ */
+function updateSensorValue(message) {
+    let group_cfg = interface.config.sensor_groups[message.group_id];
+    for (let i = 0; i < 4; i++) {
+        if (panelSelects[i].value == message.group_id) {
+            // chart i displays data from the group described in the message.
+            for (datum of message.readings) {
+                let sensor_cfg = group_cfg.sensors[datum.sensor_id];
+                let calibrated_value = sensor_cfg.calibration_slope * datum.reading + sensor_cfg.calibration_intercept;
+                let read_time = moment("" + datum.time.secs_since_epoch + "." + datum.time.nanos_since_epoch / 1000000, "X")
+                charts[i].data.datasets[datum.sensor_id].data.push({ x: read_time, y: calibrated_value });
+            }
+            charts[i].update({ preservation: true });
+        }
+    }
+}
+
 for (let i = 0; i < 4; i++) {
     // when things change on the panel selectors, reformat their associated charts
     panelSelects[i].addEventListener('change', () => {
-        reformatChart(i, panelSelects[i].value)
+        applySensorGroup(i, panelSelects[i].value)
     });
 }
 // Watch for chart reformat request.
-ipcRenderer.on('reformatChart', function (event, data) {
-    reformatChart(data.chartid, data.panel);
+ipcRenderer.on("applySensorGroup", function (event, data) {
+    applySensorGroup(data.chartid, data.panel);
 });
+
+interface.emitter.on("sensorValue", updateSensorValue);

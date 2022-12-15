@@ -146,7 +146,8 @@ function updateChartSelectorList() {
 
     // notify charts that it needs to be reformatted with this new data
     for (let i = 0; i < 4; i++) {
-        ipcRenderer.send("reformatChart", { chartid: i, panel: selectionDropdowns[i].value });
+        console.log("sensor group update")
+        ipcRenderer.send("applySensorGroup", { chartid: i, panel: selectionDropdowns[i].value });
     }
 }
 
@@ -195,7 +196,6 @@ interface.emitter.on("status", (status) => {
         document.getElementById("panelButtons").innerHTML = "";
         for (let i = 0; i < 4; i++) {
             let selectionDropdown = document.getElementById("panelSelect" + i);
-            selectionDropdowns.push(selectionDropdown);
             selectionDropdown.innerHTML = "";
         }
     }
