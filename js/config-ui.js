@@ -27,7 +27,7 @@ function updatePanelButtons() {
 
         // add badge for driver state
         let badge = document.createElement("span");
-        badge.class = "badge badge-danger";
+        badge.className = "badge badge-danger";
         badge.id = "driver-state-badge-" + i;
         badge.style = "font-family: 'Courier New', Courier, monospace;"
         badge.innerHTML = "" + i;
@@ -35,15 +35,15 @@ function updatePanelButtons() {
             // Register that badge color changes upon driver status messages
             badge.class = "badge ";
             if (message.values[i]) {
-                badge.class += "badge-success";
+                badge.className += "badge-success";
             } else {
-                badge.class += "badge-danger";
+                badge.className += "badge-danger";
             }
         })
         label.appendChild(badge);
 
         // add driver name
-        label.innerHTML += driver.label;
+        label.innerHTML += " " + driver.label;
         panelButtons.appendChild(label);
 
         if (!driver.protected) {
@@ -159,8 +159,21 @@ function updateSensorList() {
     }
 }
 
-interface.emitter.on("config", (_event, _config) => {
+interface.emitter.on("config", (_event) => {
     updatePanelButtons();
     updateChartSelectorList();
     updateSensorList();
+})
+
+interface.emitter.on("status", (status) => {
+    if (!status) {
+        // clear out dashboard on disconnect
+        document.getElementById("panelSensors").innerHTML = "";
+        document.getElementById("panelButtons").innerHTML = "";
+        for (let i = 0; i < 4; i++) {
+            let selectionDropdown = document.getElementById("panelSelect" + i);
+            selectionDropdowns.push(selectionDropdown);
+            selectionDropdown.innerHTML = "";
+        }
+    }
 })
