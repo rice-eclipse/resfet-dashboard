@@ -22,7 +22,6 @@ function updatePanelButtons() {
 
         // Label for the driver
         let label = document.createElement("h6");
-        label.className = "text-muted";
 
         // add badge for driver state
         let badge = document.createElement("span");
@@ -156,7 +155,6 @@ function updateSensorList() {
 
     for (group of interface.config.sensor_groups) {
         let label = document.createElement("h6");
-        label.className = "text-muted";
         label.innerHTML = group.label
         sensorList.appendChild(label);
 
