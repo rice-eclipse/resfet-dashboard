@@ -58,28 +58,35 @@ interface.emitter.on("status", (state) => {
     btnDisconnect.disabled = !state;
 });
 
+/**
+ * Begin the ignition countdown process.
+ * Will be a no-op if the ignition countdown is currently happening.
+ */
 function startIgnitionCountdown() {
-    if (ignitionTimer != null) {
+    if (ignitionTimer == null) {
         // do not double-ignite
-        return;
+
+        ignitionTimer = -10;
+
+        interval = setInterval(() => {
+            logger.log.warn("" + ignitionTimer + " seconds until ignition");
+
+            if (ignitionTimer == 0) {
+                // send ignition message to dashboard
+                logger.log.warn("Igniting.")
+                ipcRenderer.send('sendTcp', { "type": "Ignition" });
+                endIgnitionCountdown();
+            }
+
+            ignitionTimer += 1;
+        }, 1000);
     }
-
-    ignitionTimer = -10;
-
-    interval = setInterval(() => {
-        logger.log.warn("" + ignitionTimer + " seconds until ignition");
-
-        if (ignitionTimer == 0) {
-            // send ignition message to dashboard
-            logger.log.warn("Igniting.")
-            ipcRenderer.send('sendTcp', { "type": "Ignition" });
-            endIgnitionCountdown();
-        }
-
-        ignitionTimer += 1;
-    }, 1000);
 }
 
+/**
+ * Stop the ignition countdown timer. 
+ * Will be a no-op if the ignition countdown is not currently happening.
+ */
 function endIgnitionCountdown() {
     if (interval != null) {
         clearInterval(interval);
