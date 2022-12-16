@@ -15,76 +15,74 @@ const portInput = document.getElementById("portInput");
 const btnIgnition = document.getElementById('btnIgnition');
 const btnStopIgnition = document.getElementById('btnStopIgnition');
 
-// Iterval variable
-let interval;
-let currentTimer = null;
+/**
+ * The callback interval object, calling regularly on countdown.
+ * To stop countdown, this interval can be cleared.
+ */
+let interval = null;
+/**
+ * The current ignition timer. 
+ * Is null if there is no ignition process going on.
+ * Is negative before the ignition start, and positive after.
+ */
+let ignitionTimer = null;
 
 // BTN: Connect
-btnConnect.addEventListener('click', function (event) {
-  ipcRenderer.send('connectTcp', {
-    port: portInput.value,
-    ip: ipInput.value
-  });
+btnConnect.addEventListener('click', (_event) => {
+    ipcRenderer.send('connectTcp', {
+        port: portInput.value,
+        ip: ipInput.value
+    });
 });
 
 // BTN: Disconnect
-btnDisconnect.addEventListener('click', function (event) {
-  ipcRenderer.send('destroyTcp', {});
+btnDisconnect.addEventListener('click', (_event) => {
+    ipcRenderer.send('destroyTcp', {});
 });
 
 // BTN: Ignition
-btnIgnition.addEventListener('click', function (event) {
-  stageIgnition();
+btnIgnition.addEventListener('click', (_event) => {
+    console.log("starting countdown?");
+    startIgnitionCountdown();
 });
 
 // BTN: Anti-Ignition
 btnStopIgnition.addEventListener('click', function (event) {
-  unstageIgnition();
-
-  ipcRenderer.send('sendTcp', { "type": "EmergencyStop" });
+    endIgnitionCountdown();
+    ipcRenderer.send('sendTcp', { "type": "EmergencyStop" });
 });
 
 interface.emitter.on("status", (state) => {
-  logger.log.info("status update!! state is now " + state);
-  btnIgnition.disabled = !state;
-  btnStopIgnition.disabled = !state;
-  btnDisconnect.disabled = !state;
+    btnIgnition.disabled = !state;
+    btnStopIgnition.disabled = !state;
+    btnDisconnect.disabled = !state;
 });
 
-function startInterval() {
-  if (currentTimer != config.config.test.starttime) {
-    return false;
-  }
-
-  interval = setInterval(function () {
-    if (currentTimer < 0) {
-      livelog.log("", "", `<span style="color:yellow;">` + currentTimer + ` seconds until ignition.</span>`);
-    }
-    if (currentTimer > 0) {
-      livelog.log("", "", `<span style="color:yellow;">` + currentTimer + ` seconds elapsed since ignition.</span>`);
+function startIgnitionCountdown() {
+    if (ignitionTimer != null) {
+        // do not double-ignite
+        return;
     }
 
-    if (currentTimer == 0) {
-      var buffer = Buffer.alloc(1);
-      buffer.fill(config.config.commands[config.config.maincontrols.ignition.action]);
-      ipcRenderer.send('sendTcp', buffer);
-    }
+    ignitionTimer = -10;
 
-    if (currentTimer >= config.config.test.finishtime) {
-      unstageIgnition();
-      return false;
-    }
+    interval = setInterval(() => {
+        logger.log.warn("" + ignitionTimer + " seconds until ignition");
 
-    currentTimer += 1;
-  }, 1000);
+        if (ignitionTimer == 0) {
+            // send ignition message to dashboard
+            logger.log.warn("Igniting.")
+            ipcRenderer.send('sendTcp', { "type": "Ignition" });
+            endIgnitionCountdown();
+        }
+
+        ignitionTimer += 1;
+    }, 1000);
 }
 
-// Start countdown delay and send buffer
-function stageIgnition() {
-  startInterval();
-}
-
-function unstageIgnition() {
-  clearInterval(interval);
-  currentTimer = config.config.test.starttime;
+function endIgnitionCountdown() {
+    if (interval != null) {
+        clearInterval(interval);
+    }
+    currentTimer = null;
 }

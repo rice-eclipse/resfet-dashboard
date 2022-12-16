@@ -66,7 +66,7 @@ module.exports = {
 
 		// Don't bother connecting if TCP is already running.
 
-		logger.log.info("Connecting to " + ip + ":" + port + " over TCP.");
+		logger.log.info("Connecting to " + ip + ":" + port);
 
 		tcpClient.connect(port, ip);
 	},
@@ -77,7 +77,7 @@ module.exports = {
 	 */
 	sendTcp: function (command) {
 		let command_str = JSON.stringify(command)
-		logger.log.info("Sent command " + command_str + " over TCP.");
+		logger.log.info("Sent command " + command_str + " to controller.");
 		tcpClient.write(command_str);
 	},
 	/**
@@ -166,7 +166,7 @@ tcpClient.on('close', function (data) {
 	/*
 	Emitted when TCP client is disconnected.
 	*/
-	logger.log.info("Connection closed over TCP.");
+	logger.log.info("Connection to controller closed.");
 	module.exports.tcpConnected = false;
 	module.exports.emitter.emit("status", false);
 });
@@ -175,13 +175,13 @@ tcpClient.on('connect', function () {
 	/*
 	Emitted when TCP client connects to the server.
 	*/
-	logger.log.info("Connection established over TCP.");
+	logger.log.info("Connection established to controller.");
 	module.exports.tcpConnected = true;
 	module.exports.emitter.emit("status", true);
 });
 
 tcpClient.on('error', function (err) {
 	if (err.code == 'ECONNREFUSED') {
-		logger.log.warn(`Server could not be reached on ${err.address}:${err.port} over TCP.`);
+		logger.log.warn(`Controller server could not be reached on ${err.address}:${err.port}`);
 	}
 });
