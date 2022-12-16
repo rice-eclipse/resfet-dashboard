@@ -48,7 +48,6 @@ function updatePanelButtons() {
             group.appendChild(make_driver_button("Deactuate", i, false));
 
             panelButtons.appendChild(group);
-            panelButtons.appendChild(document.createElement("br"))
         }
 
     }
