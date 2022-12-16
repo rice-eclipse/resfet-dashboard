@@ -19,8 +19,8 @@ global.mainWindow = mainWindow
 
 function createWindow() {
     global.mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 940,
+        width: 1250,
+        height: 1000,
         minWidth: 1200,
         minHeight: 940,
         webPreferences: {
