@@ -21,9 +21,9 @@ function createWindow() {
     global.mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         width: 1200,
-        height: 1000,
+        height: 900,
         minWidth: 1200,
-        minHeight: 940,
+        minHeight: 900,
         webPreferences: {
             nodeIntegration: true
         }

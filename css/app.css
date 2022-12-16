@@ -17,16 +17,6 @@ main>.container {
     font-family: 'Courier New', Courier, monospace;
 }
 
-.footer {
-    bottom: 0;
-    width: 100%;
-    position: absolute;
-    height: 30px;
-    background-color: #343a40 !important;
-    color: #FFF;
-    padding-top: 6px;
-}
-
 h5 {
     text-align: center;
 }
