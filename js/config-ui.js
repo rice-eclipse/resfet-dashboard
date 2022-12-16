@@ -3,8 +3,6 @@
 
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
-const { config } = require("winston");
-const { emitter } = require('../modules/runtime_logging');
 const interface = require("electron").remote.require("./modules/interface.js");
 
 /**
@@ -90,7 +88,7 @@ function make_driver_button(label, id, direction) {
  * Update the driver badges based on a newly-received driver value message.
  * @param {object} message The driver status update that was just received.
  */
-function update_driver_badges(message) {
+function updateDriverBadges(message) {
     for (idx = 0; idx < message.values.length; idx++) {
         let badge = document.getElementById("driver-state-badge-" + idx);
         let actuateButton = document.getElementById("driver-actuate-btn-" + idx + "-true");
@@ -146,7 +144,6 @@ function updateChartSelectorList() {
 
     // notify charts that it needs to be reformatted with this new data
     for (let i = 0; i < 4; i++) {
-        console.log("sensor group update")
         ipcRenderer.send("applySensorGroup", { chartid: i, panel: selectionDropdowns[i].value });
     }
 }
@@ -158,15 +155,17 @@ function updateSensorList() {
     var sensorList = document.getElementById("panelSensors");
     sensorList.innerHTML = "";
 
-    let source_id = 0;
-    for (group in interface.config.sensor_groups) {
+    for (group of interface.config.sensor_groups) {
         let label = document.createElement("h6");
         label.className = "text-muted";
         label.innerHTML = group.label
         sensorList.appendChild(label);
 
-        sensorList.innerHTML += '<table id="group-"' + group.label + '" class="table table-sm table-dark"></table>';
-        for (sensor in group.sensors) {
+        table = document.createElement("table");
+        table.id = "group-" + group.label;
+        table.className = "table table-sm";
+        sensorList.appendChild(table);
+        for (sensor of group.sensors) {
             let row = table.insertRow();
             let labelCell = row.insertCell(0);
             let adcCell = row.insertCell(1);
@@ -180,6 +179,23 @@ function updateSensorList() {
             calibCell.id = "sensor-calib-" + sensor.label;
             calibCell.classList.add("text-right"); // right align calibrated reading
         }
+    }
+}
+
+/**
+ * Update the sensor values panel based on a new sensor value message.
+ * @param {object} message The message that was sent to the dashboard with sensor values.
+ */
+function updateSensorListValues(message) {
+    let groupCfg = interface.config.sensor_groups[message.group_id];
+    for (datum of message.readings) {
+        let sensorCfg = groupCfg.sensors[datum.sensor_id];
+        let calibValue = sensorCfg.calibration_slope * datum.reading + sensorCfg.calibration_intercept;
+
+        let adcCell = document.getElementById("sensor-adc-" + sensorCfg.label);
+        adcCell.innerHTML = datum.reading;
+        let calibCell = document.getElementById("sensor-calib-" + sensorCfg.label);
+        calibCell.innerHTML = Math.round(calibValue) + " " + sensorCfg.units;
     }
 }
 
@@ -201,4 +217,6 @@ interface.emitter.on("status", (status) => {
     }
 })
 
-interface.emitter.on("driverValue", update_driver_badges);
+interface.emitter.on("driverValue", updateDriverBadges);
+
+interface.emitter.on("sensorValue", updateSensorListValues)

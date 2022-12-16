@@ -9,6 +9,7 @@ It is based off of our previous dashboard,
 This project uses [Node.JS and NPM](https://nodejs.org/). 
 
 ## Installation
+
 Clone the repository into your desktop:
 
 ```bash
@@ -31,6 +32,13 @@ Run the software:
 
 ```bash
 npm start
+```
+
+While debugging, you may find it useful to include backtrace information from Electron.
+To do this, set the environment variable `ELECTRON_ENABLE_LOGGING` to 1.
+
+```bash
+ELECTRON_ENABLE_LOGGING=1 npm start
 ```
 
 ## License

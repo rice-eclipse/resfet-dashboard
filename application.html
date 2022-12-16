@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="card" style="background-color:black; color:white;">
+                    <div class="card">
                         <div class="card-body">
                             <div id="logs" style="height: 100px; overflow-y: scroll;">
 
@@ -135,19 +135,6 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-9">
-                    Logging Directory: <span id="currentLogDir">N/A</span>
-                </div>
-                <div class="col-3 text-right">
-                    <span class="badge badge-pill badge-danger" id="bannerTCP">TCP</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/chart.js/dist/Chart.min.js"></script>
@@ -156,7 +143,6 @@
     <script>
         require('./js/connection-status.js');
         require('./js/config-ui.js');
-        require('./js/logging-ui.js');
         let charts = require("./js/charts.js");
         require('./js/buttons.js');
         let livelog = require("./js/livelogging.js");
