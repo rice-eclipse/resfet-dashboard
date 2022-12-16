@@ -3,26 +3,26 @@
 /* Not required for template or sticky footer method. */
 
 body {
-  font: caption;
-  -webkit-user-select: none;
-  user-select: none;
-  padding-bottom: 30px;
+    font: caption;
+    -webkit-user-select: none;
+    user-select: none;
+    padding-bottom: 30px;
 }
 
 main>.container {
-  padding: 30px 15px 0;
+    padding: 30px 15px 0;
 }
 
 .navbar-brand {
-  font-family: 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .footer {
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  height: 30px;
-  background-color: #343a40 !important;
-  color: #FFF;
-  padding-top: 6px;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    height: 30px;
+    background-color: #343a40 !important;
+    color: #FFF;
+    padding-top: 6px;
 }
