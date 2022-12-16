@@ -174,6 +174,7 @@ function updateSensorList() {
             adcCell.classList.add("text-right"); // right align ADC value
             calibCell.innerHTML = "N/A";
             calibCell.id = "sensor-calib-" + sensor.label;
+            calibCell.style = "width:25%";
             calibCell.classList.add("text-right"); // right align calibrated reading
         }
     }

@@ -26,3 +26,7 @@ main>.container {
     color: #FFF;
     padding-top: 6px;
 }
+
+h5 {
+    text-align: center;
+}
