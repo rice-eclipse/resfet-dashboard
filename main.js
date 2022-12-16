@@ -19,7 +19,8 @@ global.mainWindow = mainWindow
 
 function createWindow() {
     global.mainWindow = new BrowserWindow({
-        width: 1250,
+        autoHideMenuBar: true,
+        width: 1200,
         height: 1000,
         minWidth: 1200,
         minHeight: 940,
