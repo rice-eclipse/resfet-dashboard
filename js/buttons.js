@@ -42,7 +42,6 @@ btnDisconnect.addEventListener('click', (_event) => {
 
 // BTN: Ignition
 btnIgnition.addEventListener('click', (_event) => {
-    console.log("starting countdown?");
     startIgnitionCountdown();
 });
 
@@ -77,8 +76,9 @@ function startIgnitionCountdown() {
                 ipcRenderer.send('sendTcp', { "type": "Ignition" });
                 endIgnitionCountdown();
             }
-
-            ignitionTimer += 1;
+            else {
+                ignitionTimer += 1;
+            }
         }, 1000);
     }
 }
@@ -91,5 +91,5 @@ function endIgnitionCountdown() {
     if (interval != null) {
         clearInterval(interval);
     }
-    currentTimer = null;
+    ignitionTimer = null;
 }

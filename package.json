@@ -22,9 +22,7 @@
         "bootstrap": "^4.3.1",
         "chart.js": "2.8.0",
         "chartjs-plugin-streaming": "^1.8.0",
-        "jquery": "^3.5.0",
         "moment": "^2.24.0",
-        "popper.js": "^1.14.3",
         "winston": "^3.2.1",
         "mkdirp": "^0.5.4"
     }
