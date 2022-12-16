@@ -20,8 +20,15 @@ function updatePanelButtons() {
     for (let i = 0; i < interface.config.drivers.length; i++) {
         let driver = interface.config.drivers[i];
 
+        // Group containing the buttons
+        let group = document.createElement("div");
+        group.className = "btn-group mb-2 float-right col-12 pl-0";
+
         // Label for the driver
-        let label = document.createElement("h6");
+        let label = document.createElement("div");
+        label.className = "input-group-text text-left";
+        label.style = "flex: 1";
+        // label.className = "input-group-prepend";
 
         // add badge for driver state
         let badge = document.createElement("span");
@@ -31,23 +38,26 @@ function updatePanelButtons() {
         label.appendChild(badge);
 
         // add driver name
-        label.innerHTML += " " + driver.label;
-        panelButtons.appendChild(label);
+        label.innerHTML += "&nbsp;" + driver.label;
+        group.appendChild(label);
 
-        if (!driver.protected) {
-            // unprotected drivers get manual actuation controls
+        let buttonSet = document.createElement("div");
+        buttonSet.className = "input-group-append";
 
-            // Group containing the buttons
-            let group = document.createElement("div");
-            group.className = "btn-group mb-2";
-            group.role = "group";
+        // unprotected drivers get manual actuation controls
 
-            // Add actuate and deactuate buttons
-            group.appendChild(make_driver_button("Actuate", i, true));
-            group.appendChild(make_driver_button("Deactuate", i, false));
-
-            panelButtons.appendChild(group);
+        // Add actuate and deactuate buttons
+        let actButton = make_driver_button("Actuate", i, true);
+        let deactButton = make_driver_button("Deactuate", i, false);
+        if (driver.protected) {
+            actButton.disabled = true;
+            deactButton.disabled = true;
         }
+        buttonSet.appendChild(actButton);
+        buttonSet.appendChild(deactButton);
+        group.appendChild(buttonSet);
+
+        panelButtons.appendChild(group);
 
     }
 }
