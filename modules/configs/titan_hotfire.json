@@ -22,7 +22,7 @@
                         "label": "Oxidizer Tank",
                         "source": "TC1_SEND",
                         "color": "rgba(255, 99, 132, 0.8)",
-                        "calibration": "-0.1676*x + 308.4"
+                        "calibration": "0.161 * x - 219"
                     },
                     {
                         "label": "Nozzle Casing",
