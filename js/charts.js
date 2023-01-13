@@ -40,7 +40,7 @@ var psiMostRecentOxTankPressure = null;
  * This is a hack! 
  * My hope is that RESFET is sunsetted before this hack becomes obvious.
  */
-const FEEDLINE_PT_SOURCE = "PT4_SEND";
+const FEEDLINE_PT_SOURCE = "PT2_SEND";
 /**
  * The most recently received oxidizer feedline pressure in psi.
  * 
@@ -181,6 +181,7 @@ module.exports = {
             // convert psi to Pa
             let paFeedPressure = 6895 * psiMostRecentFeedlinePressure;
             let paOxTankPressure = 6895 * psiMostRecentOxTankPressure;
+            
 
             // Density of the oxidizer in kg/m^3
             let kgPM3Rho = 950.16 - 9.185 * celsiusMostRecentOxTemp;
@@ -191,19 +192,21 @@ module.exports = {
             let kgPSecMassFlowRate = dischargeCoefficient 
                 * (Math.PI / 4 * M_D2 * M_D2) 
                 * Math.sqrt(2 * (paOxTankPressure - paFeedPressure) / (kgPM3Rho * (1.0 - Math.pow(M_D2 / M_D1, 4))));
-            
+
             let lbPSecMassFlowRate = 2.205 * kgPSecMassFlowRate;
 
-            for (let chart of charts) {
-                for (let dataset of chart) {
-                    if (dataset.datasource === MASS_FLOW_SOURCE) {
-                        dataset.data.push({
-                            x: Date.now(),
-                            y: lbPSecMassFlowRate,
-                        });
-                        chart.update({
-                            preservation: true
-                        });
+            if (lbPSecMassFlowRate != NaN) {
+                for (let chart of charts) {
+                    for (let dataset of chart.data.datasets) {
+                        if (dataset.datasource === MASS_FLOW_SOURCE) {
+                            dataset.data.push({
+                                x: Date.now(),
+                                y: lbPSecMassFlowRate,
+                            });
+                            chart.update({
+                                preservation: true
+                            });
+                        }
                     }
                 }
             }
