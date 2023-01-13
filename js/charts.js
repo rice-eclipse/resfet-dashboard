@@ -196,19 +196,8 @@ module.exports = {
             let lbPSecMassFlowRate = 2.205 * kgPSecMassFlowRate;
 
             if (lbPSecMassFlowRate != NaN) {
-                for (let chart of charts) {
-                    for (let dataset of chart.data.datasets) {
-                        if (dataset.datasource === MASS_FLOW_SOURCE) {
-                            dataset.data.push({
-                                x: Date.now(),
-                                y: lbPSecMassFlowRate,
-                            });
-                            chart.update({
-                                preservation: true
-                            });
-                        }
-                    }
-                }
+                module.exports.plotData(time, MASS_FLOW_SOURCE, lbPSecMassFlowRate);
+                module.exports.updateSensorValue(MASS_FLOW_SOURCE, lbPSecMassFlowRate.toFixed(3));
             }
         }
 

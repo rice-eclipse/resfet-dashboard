@@ -28,7 +28,7 @@
                         "label": "Nozzle Casing",
                         "source": "TC2_SEND",
                         "color": "rgba(180, 212, 85, 0.8)",
-                        "calibration": "1.8 * ((0.2832 * x - 269.17) - 32)"
+                        "calibration": "((0.2832 * x - 269.17) - 32) / 1.8"
                     },
                     {
                         "label": "Combustion Chamber",
