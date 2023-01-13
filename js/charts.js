@@ -4,6 +4,54 @@ let config = require("electron").remote.require("./modules/config")
 // Module for network hook calls.
 const { ipcRenderer } = require('electron');
 
+/**
+ * The source for oxidizer TC data.
+ * 
+ * This is a hack! 
+ * My hope is that RESFET is sunsetted before this hack becomes obvious.
+ */
+const OX_TC_SOURCE = "TC1_SEND";
+/**
+ * The most recently received oxidizer TC datum, in degrees Celsius.
+ * 
+ * If this value is `null`, no oxidizer temperature has been measured since the start of the 
+ * controller.
+ */
+var celsiusMostRecentOxTemp = null;
+
+/**
+ * The source for the oxidizer tank PT data.
+ * 
+ * This is a hack! 
+ * My hope is that RESFET is sunsetted before this hack becomes obvious.
+ */
+const OX_TANK_PT_SOURCE = "PT4_SEND";
+/**
+ * The most recently received oxidizer tank pressure in psi.
+ * 
+ * If this value is `null`, no oxidizer tank pressure mas been measured since the start of the 
+ * controller.
+ */
+var psiMostRecentOxTankPressure = null;
+
+/**
+ * The source for the oxidizer feedline PT data.
+ * 
+ * This is a hack! 
+ * My hope is that RESFET is sunsetted before this hack becomes obvious.
+ */
+const FEEDLINE_PT_SOURCE = "PT4_SEND";
+/**
+ * The most recently received oxidizer feedline pressure in psi.
+ * 
+ * If this value is `null`, no oxidizer tank pressure mas been measured since the start of the 
+ * controller.
+ */
+var psiMostRecentFeedlinePressure = null;
+
+const MASS_FLOW_SOURCE = "FLOW";
+
+
 // Initializing all the variables.
 var chartElems = [];
 chartElems.push(document.getElementById("chart1").getContext('2d'));
@@ -105,6 +153,63 @@ module.exports = {
          * Takes panel, which is the index of the panel in json; source, which is the index of the data source in json;
          * event, which includes the timestamp and value of the datapoint.
          */
+
+        // hack for creating mass flow rate
+        // Update most recently read values which are relevant 
+        let updateMassFlowRate = false;
+        if (source === OX_TANK_PT_SOURCE) {
+            psiMostRecentOxTankPressure = data;
+            updateMassFlowRate = true;
+        }
+        else if (source === OX_TC_SOURCE) {
+            celsiusMostRecentOxTemp = data;
+            updateMassFlowRate = true;
+        }
+        else if (source === FEEDLINE_PT_SOURCE) {
+            psiMostRecentFeedlinePressure = data;
+            updateMassFlowRate = true;
+        }
+
+        if (updateMassFlowRate && psiMostRecentFeedlinePressure != null && psiMostRecentOxTankPressure != null && celsiusMostRecentOxTemp != null) {
+            // calculate mass flow rate from most recent data and plot it on the panel
+
+            // smallest diameter in meters
+            const M_D2 = 0.00475;
+            // diameter at feed PT in meters
+            const M_D1 = 0.0109;
+
+            // convert psi to Pa
+            let paFeedPressure = 6895 * psiMostRecentFeedlinePressure;
+            let paOxTankPressure = 6895 * psiMostRecentOxTankPressure;
+
+            // Density of the oxidizer in kg/m^3
+            let kgPM3Rho = 950.16 - 9.185 * celsiusMostRecentOxTemp;
+
+            // TODO use experimentally derived discharge coefficient
+            let dischargeCoefficient = 1.0
+
+            let kgPSecMassFlowRate = dischargeCoefficient 
+                * (Math.PI / 4 * M_D2 * M_D2) 
+                * Math.sqrt(2 * (paOxTankPressure - paFeedPressure) / (kgPM3Rho * (1.0 - Math.pow(M_D2 / M_D1, 4))))
+            
+            let lbPSecMassFlowRate = 2.205 * kgPSecMassFlowRate;
+
+            for (let chart of charts) {
+                for (let dataset of chart) {
+                    if (dataset.datasource === MASS_FLOW_SOURCE) {
+                        dataset.data.push({
+                            x: Date.now(),
+                            y: lbPSecMassFlowRate,
+                        });
+                        chart.update({
+                            preservation: true
+                        });
+                    }
+                }
+            }
+        }
+
+
         for (var i = 0; i < 4; i++) {
             for(var j = 0; j < charts[i].data.datasets.length; j++) {
                 var chart_source = charts[i].data.datasets[j].datasource
@@ -120,6 +225,8 @@ module.exports = {
                 }
             }
         }
+
+        
     },
     updateSensorValue : function(source, data) {
         var sensor = document.getElementById("sensor-"+source);

@@ -80,6 +80,17 @@
                     }
                 ],
                 "unit": "LBS"
+            },
+            {
+                "label": "Mass Flow Rate",
+                "data": [
+                    {
+                        "label": "Feed to Ox Tank",
+                        "source": "FLOW",
+                        "color": "rgba(252, 2, 114, 1)"
+                    }
+                ],
+                "unit": "lb/sec"
             }
         ],
         "controls": [
