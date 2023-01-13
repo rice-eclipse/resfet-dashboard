@@ -186,7 +186,7 @@ module.exports = {
             let kgPM3Rho = 950.16 - 9.185 * celsiusMostRecentOxTemp;
 
             // TODO use experimentally derived discharge coefficient
-            let dischargeCoefficient = 1.0;
+            let dischargeCoefficient = 0.25;
 
             let kgPSecMassFlowRate = dischargeCoefficient 
                 * (Math.PI / 4 * M_D2 * M_D2) 
